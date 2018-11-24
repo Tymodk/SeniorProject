@@ -2,6 +2,6 @@
 
 - Project clonen
 
-` Composer install `
-` php artisan migrate:fresh `
-` php artisan create:admin `
+` Composer install ` <br>
+` php artisan migrate:fresh ` <br>
+` php artisan create:admin ` <br>
