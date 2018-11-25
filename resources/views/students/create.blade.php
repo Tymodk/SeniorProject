@@ -9,9 +9,9 @@
 
 
 
-<h1>Create a Student</h1>
+<h1 class="mt-5">Create a Student</h1>
 
-<!-- if there are creation errors, they will show here -->
+
 
 
 {{ Form::open(array('url' => 'students')) }}
@@ -26,7 +26,7 @@
     </div>
    
 
-    {{ Form::submit('Create the Course!', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Submit!', array('class' => 'btn btn-success')) }}
 
 {{ Form::close() }}
 

@@ -6,11 +6,11 @@
 @include('layouts.adminnav',['active' => "teachers"])
 @include('layouts.teachernav')
 
-<div class="container">
+<div class="container mt-5">
 
 
 
-<h1>Create a teacher</h1>
+<h1 class="mt-5">Create a Teacher</h1>
 
 <!-- if there are creation errors, they will show here -->
 
@@ -31,7 +31,7 @@
     </div>
    
 
-    {{ Form::submit('Create the teacher!', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Submit', array('class' => 'btn btn-success')) }}
 
 {{ Form::close() }}
 

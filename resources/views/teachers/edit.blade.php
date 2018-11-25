@@ -9,7 +9,7 @@
 
 
 
-<h1>Edit {{ $teacher->name }}</h1>
+<h1 class="mt-5">Edit {{ $teacher->name }}</h1>
 
 <!-- if there are creation errors, they will show here -->
 
@@ -30,7 +30,7 @@
     </div>
    
 
-    {{ Form::submit('Edit the Nerd!', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Save', array('class' => 'btn btn-primary')) }}
 
 {{ Form::close() }}
 

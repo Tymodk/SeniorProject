@@ -4,7 +4,7 @@
 
 @section('content')
 @include('layouts.adminnav',['active' => "students"])
-@include('layouts.teachernav')
+@include('layouts.studentnav')
 <div class="container">
 
 

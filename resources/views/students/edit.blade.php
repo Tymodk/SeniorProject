@@ -4,13 +4,13 @@
 
 @section('content')
 @include('layouts.adminnav',['active' => "students"])
-@include('layouts.teachernav')
+@include('layouts.studentnav')
 <div class="container">
 
 
-<h1>Edit {{ $student->name }}</h1>
+<h1 class="mt-5">Edit {{ $student->name }}</h1>
 
-<!-- if there are creation errors, they will show here -->
+
 
 
 {{ Form::model($student, array('route' => array('students.update', $student->id), 'method' => 'PUT')) }}
@@ -22,7 +22,7 @@
 
     
 
-    {{ Form::submit('Edit the Nerd!', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Save', array('class' => 'btn btn-success')) }}
 
 {{ Form::close() }}
 

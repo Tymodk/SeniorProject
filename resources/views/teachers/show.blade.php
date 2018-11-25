@@ -9,11 +9,11 @@
 
 
 
-<h1>Showing {{ $teacher->name }}</h1>
+<h1 class="mt-5">Showing {{ $teacher->name }}</h1>
 
     <div class="jumbotron text-center">
         <h2>{{ $teacher->name }}</h2>
-        
+        <h2>{{ $teacher->email }}</h2>
     </div>
 
 </div>

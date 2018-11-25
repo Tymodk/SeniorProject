@@ -53,7 +53,7 @@ class TeachersController extends Controller
     {
         $teacher = Teachers::find($id);
 
-        return view('teachers.show', ['teachers' => $teacher]);
+        return view('teachers.show', ['teacher' => $teacher]);
     }
 
     public function edit($id)
