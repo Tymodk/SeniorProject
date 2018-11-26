@@ -11,5 +11,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('courses', 'CoursesController');
     Route::resource('students', 'StudentsController');
     Route::resource('teachers', 'TeachersController');
+    Route::post('/upload','TeachersController@upload')->name('admin.upload');
 });
 Auth::routes();

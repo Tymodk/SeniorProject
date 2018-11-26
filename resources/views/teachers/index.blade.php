@@ -25,7 +25,7 @@
             <td>ID</td>
             <td>Name</td>
             <td>Email</td>
-            <td>Nerd Level</td>
+            <td>Password</td>
             <td>Actions</td>
         </tr>
     </thead>
@@ -56,6 +56,14 @@
     @endforeach
     </tbody>
 </table>
+
+            {!! Form::open(['route' => 'admin.upload', 'files' => true]) !!}
+
+            {!! Form::file('excel') !!}
+       
+            {!! Form::submit('Aanmaken', ['class' => 'btn btngreen mb-5 white']) !!}
+
+            {!! Form::close() !!}
 
 </div>
 @endsection

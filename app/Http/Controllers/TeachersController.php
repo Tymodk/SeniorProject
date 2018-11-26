@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Redirect;
 use Session;
+use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Http\Request;
+use Excel;
+use App\Imports\UsersImport;
 
 class TeachersController extends Controller
 {
@@ -97,5 +102,16 @@ class TeachersController extends Controller
 
         Session::flash('message', 'Successfully deleted the nerd!');
         return Redirect::to('teachers');
+    }
+
+    public function upload(Request $request)
+    {
+        //\Maatwebsite\Excel\Excel::XLSX
+
+        Excel::import(new UsersImport,  request()->file('excel'),null,\Maatwebsite\Excel\Excel::XLSX );
+        
+        Session::flash('message', 'Successfully uploaded excel file!');
+        return Redirect::to('admin/teachers');
+    
     }
 }
