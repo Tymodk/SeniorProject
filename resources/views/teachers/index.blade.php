@@ -11,7 +11,7 @@
 
 @include('layouts.adminnav',['active' => "teachers"])
 @include('layouts.teachernav')
-<div class="container">
+<div class="container mb-5">
 
 
 
@@ -32,6 +32,10 @@
     <tbody>
     @foreach($teachers as $key => $value)
         <tr>
+            <td><span class="custom-checkbox">
+                                <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                                <label for="checkbox1"></label>
+                            </span></td>
             <td>{{ $value->id }}</td>
             <td>{{ $value->name }}</td>
             <td>{{ $value->email }}</td>
@@ -41,16 +45,17 @@
             <td>
 
             
-                <a class="btn btn-small btn-info" href="{{ URL::to('teachers/' . $value->id) }}">Show</a>
+                <a class="btn btn-small btn-info" href="{{ URL::to('admin/teachers/' . $value->id) }}"><i class="far fa-eye"></i></a>
 
                 
-                <a class="btn btn-small btn-warning" href="{{ URL::to('teachers/' . $value->id . '/edit') }}">Edit</a>
-<a>
-                {{ Form::open(array('url' => 'teachers/' . $value->id, 'class' => 'pull-right')) }}
+                <a class="btn btn-small btn-warning" href="{{ URL::to('admin/teachers/' . $value->id . '/edit') }}"><i class="far fa-edit"></i></a>
+<a class="btn btn-small btn-danger p-0">
+                {{ Form::open(array('url' => '/admin/teachers/' . $value->id, 'class' => 'pull-right')) }}
                     {{ Form::hidden('_method', 'DELETE') }}
+
                     {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
                 {{ Form::close() }}
-</a>
+
             </td>
         </tr>
     @endforeach
@@ -61,7 +66,7 @@
 
             {!! Form::file('excel') !!}
        
-            {!! Form::submit('Aanmaken', ['class' => 'btn btngreen mb-5 white']) !!}
+            {!! Form::submit('Excel uploaden', ['class' => 'btn btn-outline-primary']) !!}
 
             {!! Form::close() !!}
 

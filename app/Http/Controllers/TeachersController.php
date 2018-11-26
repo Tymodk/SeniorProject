@@ -50,7 +50,7 @@ class TeachersController extends Controller
             $teacher->save();
 
             Session::flash('message', 'Successfully created nerd!');
-            return Redirect::to('teachers');
+            return Redirect::to('admin/teachers');
         }
     }
 
@@ -91,7 +91,7 @@ class TeachersController extends Controller
             $teacher->save();
 
             Session::flash('message', 'Successfully updated nerd!');
-            return Redirect::to('teachers');
+            return Redirect::to('admin/teachers');
         }
     }
 
@@ -101,7 +101,7 @@ class TeachersController extends Controller
         $teacher->delete();
 
         Session::flash('message', 'Successfully deleted the nerd!');
-        return Redirect::to('teachers');
+        return Redirect::to('/admin/teachers');
     }
 
     public function upload(Request $request)
