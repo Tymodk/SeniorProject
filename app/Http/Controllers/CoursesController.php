@@ -33,7 +33,7 @@ class CoursesController extends Controller
         $validator = Validator::make(Input::all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('courses/create')
+            return Redirect::to('admin/courses/create')
                 ->withErrors($validator)
                 ->withInput();
         } else {
@@ -73,7 +73,7 @@ class CoursesController extends Controller
         $validator = Validator::make(Input::all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('courses/' . $id . '/edit')
+            return Redirect::to('admin/courses/' . $id . '/edit')
                 ->withErrors($validator)
                 ->withInput();
         } else {

@@ -44,6 +44,28 @@ class TeachersCoursesController extends Controller
         return view('teachercourses.index', ['data' => $data,'data2'=>$data2]);
     }
 
+    public function single($id)
+    {
+        $tCourses = TeachersCourses::where('teacher_id',$id)->pluck('course_id');
+        $tCourses = $tCourses->toArray();
+
+        $courses = Courses::whereIn('id',$tCourses)->get();
+        $teacher = Teachers::select('name','id')->where('id',$id)->first();
+
+
+        return view('teachers.courses',['data'=>$courses,'teacher'=>$teacher]);
+    }
+
+
+    public function deleteCourse($teacherid,$courseid)
+    {
+        $item = TeachersCourses::where('teacher_id',$teacherid)->where('course_id',$courseid)->first();
+        $item->delete();
+
+        return back()->withInput(); 
+    }
+
+
     public function teacherLink()
     {
         #create view

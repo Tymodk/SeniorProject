@@ -3,12 +3,13 @@
 
 
 @section('content')
-@include('layouts.adminnav',['active' => "courses"])
-@include('layouts.teachernav')
-<div class="container">
+@include('layouts.adminnav',['active'=> null])
+
+<div class="container mt-5">
 
 
 <h1>Courses overview</h1>
+<p>List of courses and teachers</p>
 
 <!-- will be used to show any messages -->
 @if (Session::has('message'))
@@ -17,13 +18,36 @@
 
 
 
-@foreach($data2 as $key => $value )
 
-<p>{{ $key }} wordt gegeven door: {{ $value }}</p>
+<table class="table table-striped table-bordered">
+	<thead>
+	<tr class="text-center">
+		
+		<td>Course</td>
+		<td>Teachers</td>
+		<td>Actions</td>
+
+	</tr>
+	</thead>
+	<tbody>
+		@foreach($data2 as $key => $value )
+		<tr>
+			
+			<td>{{ $key }}</td>
+			<td>{{ $value }}</td>
+			<td>add</td>
+			
+		</tr>
+		@endforeach
+	</tbody>
+
+</table>
 
 
-@endforeach
-<p>lengte: {{ count($data) }}</p>
+
+
+
+
 
 </div>
 @endsection

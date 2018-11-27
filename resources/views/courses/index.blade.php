@@ -4,7 +4,7 @@
 
 @section('content')
 @include('layouts.adminnav',['active' => "courses"])
-@include('layouts.teachernav')
+@include('layouts.coursenav')
 <div class="container">
 
 
@@ -45,7 +45,7 @@
                 <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
                 <a class="btn btn-small btn-info" href="{{ URL::to('admin/courses/' . $value->id . '/edit') }}">Edit this Nerd</a>
 
-                {{ Form::open(array('url' => 'courses/' . $value->id, 'class' => 'pull-right')) }}
+                {{ Form::open(array('url' => 'admin/courses/' . $value->id, 'class' => 'pull-right')) }}
                     {{ Form::hidden('_method', 'DELETE') }}
                     {{ Form::submit('Delete this Nerd', array('class' => 'btn btn-warning')) }}
                 {{ Form::close() }}

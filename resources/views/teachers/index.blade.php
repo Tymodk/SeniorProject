@@ -26,9 +26,9 @@
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
     <a class="dropdown-item" href="{{ Request::fullUrl() . '?filter=name' }}">Naam</a>
-    <a class="dropdown-item" href="{{ Request::url() . '?filter=email' }}">Email</a>
-    <a class="dropdown-item" href="{{ Request::url() . '?filter=created-first' }}">Datum aflopend</a>
-    <a class="dropdown-item" href="{{ Request::url() . '?filter=created-last' }}">Datum oplopend</a>
+    <a class="dropdown-item" href="{{ Request::fullUrl() . '?filter=email' }}">Email</a>
+    <a class="dropdown-item" href="{{ Request::fullUrl() . '?filter=created-first' }}">Datum aflopend</a>
+    <a class="dropdown-item" href="{{ Request::fullUrl() . '?filter=created-last' }}">Datum oplopend</a>
   </div>
 </div>
 
@@ -40,7 +40,7 @@
             <td>Name</td>
             <td>Email</td>
             <td>Password</td>
-            <td>Actions</td>
+            <td>Courses</td>
         </tr>
     </thead>
     <tbody>
@@ -53,7 +53,7 @@
             <td>{{ $value->id }}</td>
             <td>{{ $value->name }}</td>
             <td>{{ $value->email }}</td>
-            <td>{{ $value->password }}</td>
+            <td><a href="{{ '/admin/teachercourses/' . $value->id }}">view</a></td>
 
            
             <td>
