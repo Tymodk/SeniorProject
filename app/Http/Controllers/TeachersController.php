@@ -2,23 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\UsersImport;
 use App\Teachers;
+use Excel;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Redirect;
 use Session;
-use Illuminate\Support\Facades\Hash;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Illuminate\Http\Request;
-use Excel;
-use App\Imports\UsersImport;
 
 class TeachersController extends Controller
 {
     public function index()
     {
-        $teachers = Teachers::all();
-        return view('teachers.index', ['teachers' => $teachers]);
+
+        $para     = Input::all();
+        $teachers = Teachers::paginate(10);
+
+        if (Input::get('filter')) {
+            if (Input::get('filter') == 'created-first') {
+                $teachers = Teachers::OrderBy('created_at', 'ASC')->paginate(10);
+                            }
+            elseif (Input::get('filter') == 'created-last') {
+                $teachers = Teachers::OrderBy('created_at', 'DESC')->paginate(10);
+               
+            } else {
+                $teachers = Teachers::OrderBy(Input::get('filter'))->paginate(10);
+                
+            }
+
+        }
+        return view('teachers.index', ['teachers' => $teachers, 'para' => $para]);
 
     }
 
@@ -108,10 +122,10 @@ class TeachersController extends Controller
     {
         //\Maatwebsite\Excel\Excel::XLSX
 
-        Excel::import(new UsersImport,  request()->file('excel'),null,\Maatwebsite\Excel\Excel::XLSX );
-        
+        Excel::import(new UsersImport, request()->file('excel'), null, \Maatwebsite\Excel\Excel::XLSX);
+
         Session::flash('message', 'Successfully uploaded excel file!');
         return Redirect::to('admin/teachers');
-    
+
     }
 }

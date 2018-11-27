@@ -12,7 +12,7 @@ class CoursesController extends Controller
 {
     public function index()
     {
-        $courses = Courses::all();
+        $courses = Courses::paginate(15);
         return view('courses.index', ['courses' => $courses]);
 
     }
@@ -44,7 +44,7 @@ class CoursesController extends Controller
             $course->save();
 
             Session::flash('message', 'Successfully created nerd!');
-            return Redirect::to('courses');
+            return Redirect::to('admin/courses');
         }
     }
 
@@ -84,7 +84,7 @@ class CoursesController extends Controller
             $course->save();
 
             Session::flash('message', 'Successfully updated nerd!');
-            return Redirect::to('courses');
+            return Redirect::to('admin/courses');
         }
     }
 
@@ -94,6 +94,6 @@ class CoursesController extends Controller
         $course->delete();
 
         Session::flash('message', 'Successfully deleted the nerd!');
-        return Redirect::to('courses');
+        return Redirect::to('admin/courses');
     }
 }

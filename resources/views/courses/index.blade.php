@@ -40,10 +40,10 @@
                 <!-- we will add this later since its a little more complicated than the other two buttons -->
 
                 <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
-                <a class="btn btn-small btn-success" href="{{ URL::to('courses/' . $value->id) }}">Show this Nerd</a>
+                <a class="btn btn-small btn-success" href="{{ URL::to('admin/courses/' . $value->id) }}">Show this Nerd</a>
 
                 <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-                <a class="btn btn-small btn-info" href="{{ URL::to('courses/' . $value->id . '/edit') }}">Edit this Nerd</a>
+                <a class="btn btn-small btn-info" href="{{ URL::to('admin/courses/' . $value->id . '/edit') }}">Edit this Nerd</a>
 
                 {{ Form::open(array('url' => 'courses/' . $value->id, 'class' => 'pull-right')) }}
                     {{ Form::hidden('_method', 'DELETE') }}

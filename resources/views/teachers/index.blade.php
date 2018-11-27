@@ -7,6 +7,7 @@
     <div class="alert alert-success"> <h5 class="m-0"> {{ Session::get('message') }} </h5> </div>
 @endif
 
+<?= var_dump($para)?>
 
 
 @include('layouts.adminnav',['active' => "teachers"])
@@ -17,6 +18,19 @@
 
 <h1 class="mt-5">Teachers</h1>
 
+
+
+<div class="dropdown mt-5 mb-3 ">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Filter
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="{{ Request::fullUrl() . '?filter=name' }}">Naam</a>
+    <a class="dropdown-item" href="{{ Request::url() . '?filter=email' }}">Email</a>
+    <a class="dropdown-item" href="{{ Request::url() . '?filter=created-first' }}">Datum aflopend</a>
+    <a class="dropdown-item" href="{{ Request::url() . '?filter=created-last' }}">Datum oplopend</a>
+  </div>
+</div>
 
 
 <table class="table table-striped table-bordered">
@@ -61,6 +75,7 @@
     @endforeach
     </tbody>
 </table>
+{{ $teachers->links() }}
 
             {!! Form::open(['route' => 'admin.upload', 'files' => true]) !!}
 

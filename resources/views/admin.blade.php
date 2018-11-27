@@ -13,4 +13,12 @@
         courses <span class="badge badge-light">{{ $info[2] }}</span>
     </a>
 </div>
+
+<div class="container mt-5 mb-5">
+    
+    <a class="btn btn-outline-primary" href="/admin/teachercourses">
+        Courses with teachers<span class="badge badge-light"></span>
+    </a>
+    
+</div>
 @endsection
