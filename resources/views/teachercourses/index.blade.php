@@ -3,6 +3,9 @@
 
 
 @section('content')
+@if (Session::has('message'))
+    <div class="alert alert-info">{{ Session::get('message') }}</div>
+@endif
 @include('layouts.adminnav',['active'=> null])
 
 <div class="container mt-5">
@@ -10,14 +13,6 @@
 
 <h1>Courses overview</h1>
 <p>List of courses and teachers</p>
-
-<!-- will be used to show any messages -->
-@if (Session::has('message'))
-    <div class="alert alert-info">{{ Session::get('message') }}</div>
-@endif
-
-
-
 
 <table class="table table-striped table-bordered">
 	<thead>
@@ -35,7 +30,7 @@
 			
 			<td>{{ $key }}</td>
 			<td>{{ $value }}</td>
-			<td>add</td>
+			<td><a href="{{ route('tc.add',['id'=>$key]) }}" class="btn btn-success">add</a></td>
 			
 		</tr>
 		@endforeach

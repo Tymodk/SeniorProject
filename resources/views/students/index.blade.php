@@ -35,14 +35,14 @@
 
             <td>
 
-                <a class="btn btn-small btn-success" href="{{ URL::to('students/' . $value->id) }}">Show</a>
+                <a class="btn btn-small btn-info" href="{{ URL::to('admin/students/' . $value->id) }}">Show</a>
 
-                <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-                <a class="btn btn-small btn-info" href="{{ URL::to('students/' . $value->id . '/edit') }}">Edit</a>
+           
+                <a class="btn btn-small btn-warning" href="{{ URL::to('admin/students/' . $value->id . '/edit') }}">Edit</a>
 
-                {{ Form::open(array('url' => 'students/' . $value->id, 'class' => 'display:inline-block')) }}
+                {{ Form::open(array('url' => 'students/' . $value->id, 'class' => 'float-right')) }}
                     {{ Form::hidden('_method', 'DELETE') }}
-                    {{ Form::submit('Delete', array('class' => 'btn btn-warning')) }}
+                    {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
                 {{ Form::close() }}
 
             </td>

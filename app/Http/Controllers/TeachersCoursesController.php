@@ -65,29 +65,25 @@ class TeachersCoursesController extends Controller
         return back()->withInput(); 
     }
 
+    
+    public function addCourse($id)
+    {
+        $course = Courses::where('id',$id)->first();
+        return view('teachercourses.create',['course'=>$course]);
+    }
+  
 
-    public function teacherLink()
+    public function store(Request $request)
     {
-        #create view
-        #link teacher to a course
-        return;
-    }
-    public function courseLink()
-    {
-        #link course to a teacher
-        #create view
-        return;
+        $new = new TeachersCourses();
+
+        $new->course_id = $request->input('courseid') ;
+        $new->teacher_id = $request->input('teacherid');
+        $new->save();
+      return redirect()->action('TeachersCourses@index');
     }
 
-    public function store()
-    {
-        return;
-    }
-
-    public function show()
-    {
-        return;
-    }
+ 
     public function delete()
     {
         return;

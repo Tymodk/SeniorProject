@@ -23,12 +23,6 @@ class StudentsCoursesController extends Controller
     {
     	$student = Students::where('id',$id)->first();
         $allcourses = Courses::all();
-        //$studentcourses = StudentsCourses::where('student_id',$student->id)->pluck('id')->get();
-        //$studentcourses->toArray();
-        //$courses = StudentsCourses::whereIn('id',$studentcourses)->get();
-    	//$noCourses = StudentsCourses::select('name','id')->whereNotIn('id',$studentcourses)->get();
-
-        //id van vakken die je volg
 
         $followed = StudentsCourses::where('student_id',$student->id)->pluck('course_id');
         if(count($followed)> 0)
@@ -44,10 +38,6 @@ class StudentsCoursesController extends Controller
             $followedCourses = null;
             $notfollowed = Courses::all();
         }
-
-
-
-        //id van vakken die je niet volgt
 
         $studentcourses = null;
     	return view('studentcourses.add',['courses'=>$notfollowed,'student'=>$student ,'followed'=>$followedCourses  ]);
@@ -81,7 +71,11 @@ class StudentsCoursesController extends Controller
 
     public function deletecourse($studentid, $courseid)
     {
-        #delete course
+       
+
+        $studentcourse = StudentsCourses::where('student_id',$studentid)->where('course_id',$courseid)->first();
+        $studentcourse->delete();
+
 
         return back()->withInput();
     }
