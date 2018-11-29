@@ -17,5 +17,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/teachercourses/{id}','TeachersCoursesController@single')->name('tc.single');
     Route::get('teachercourses/{teacherid}/{courseid}/','TeachersCoursesController@deleteCourse');
 
+     Route::get('/studentcourses','StudentsCoursesController@index')->name('sc.index');
+      Route::get('/studentcourses/{name}','StudentsCoursesController@addcourse')->name('sc.addcourse');
+            Route::get('/studentcourses/{studentid}/{courseid}','StudentsCoursesController@deletecourse')->name('sc.addcourse');
+      Route::post('/test','StudentsCoursesController@store')->name('sc.store');
+
+
 });
 Auth::routes();
