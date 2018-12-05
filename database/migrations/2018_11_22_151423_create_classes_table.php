@@ -16,14 +16,12 @@ class CreateClassesTable extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('course_id');
-            $table->unsignedInteger('teachers_courses_id');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
-            $table->unsignedInteger('students_courses_id');
+
 
             $table->foreign('course_id')->references('id')->on('courses');
-            $table->foreign('teachers_courses_id')->references('id')->on('teachers_courses');
-            $table->foreign('students_courses_id')->references('id')->on('students_courses');
+           
 
             $table->timestamps();
         });
