@@ -9,9 +9,19 @@
 @include('layouts.adminnav',['active'=> null])
 <div class="container mt-5">
 
-<h1>Add a teacher to </h1>
+<h1>Add a course(s) to {{$teacher->name}} </h1>
 
-<h2>List of teachers</h2>
-list
+    {{ Form::open(array('route' => 'tc.store')) }}
+    {{Form::hidden('id',$teacher->id)}}
+    <div class="form-group">
 
+        {{ Form::select('courses', $courses,null, array('class' => 'form-control','multiple'=>'multiple','name'=>'courses[]','id'=>'courses')) }}
+    </div>
+
+
+
+{{ Form::submit('Submit', array('class' => 'btn btn-success')) }}
+
+{{ Form::close() }}
+</div>
 @endsection

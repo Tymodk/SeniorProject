@@ -19,41 +19,22 @@ class TeachersCoursesController extends Controller
 
     public function index()
     {
-        #get all courses
-        $courses = TeachersCourses::all();
-        $data2= array();
-        foreach ($courses as $value) {
-        	$coursename= Courses::select('name')->where('id',$value->course_id)->first();
-        	if(!array_key_exists($coursename->name, $data2))
-        	{
-        			$data2[$coursename->name] = '' ;
-        		
-        	}
-
-        }
-        foreach ($courses as $value) {
-        	$teachername = Teachers::select('name')->where('id',$value->teacher_id)->first();
-        	$coursename= Courses::select('name')->where('id',$value->course_id)->first();
-        	$data2[$coursename->name] =  $data2[$coursename->name] . ' ' .$teachername->name;
-
-        }
-
-        #for loop
+        $courses = Courses::all();
 
         $data = $courses;
-        return view('teachercourses.index', ['data' => $data,'data2'=>$data2]);
+        return view('teachercourses.index', ['data' => $data]);
     }
 
     public function single($id)
     {
-        $tCourses = TeachersCourses::where('teacher_id',$id)->pluck('course_id');
-        $tCourses = $tCourses->toArray();
+        $course = Courses::where('id',$id)->firstOrFail();
 
-        $courses = Courses::whereIn('id',$tCourses)->get();
-        $teacher = Teachers::select('name','id')->where('id',$id)->first();
+        $teachers = TeachersCourses::where('course_id',$course->id)->pluck('teacher_id');
+
+        $teachersinfo = Teachers::whereIn('id',$teachers)->get();
 
 
-        return view('teachers.courses',['data'=>$courses,'teacher'=>$teacher]);
+        return view('teachercourses.show',['course'=>$course,'teachers'=>$teachersinfo]);
     }
 
 
@@ -68,8 +49,13 @@ class TeachersCoursesController extends Controller
     
     public function addCourse($id)
     {
-        $course = Courses::where('id',$id)->first();
-        return view('teachercourses.create',['course'=>$course]);
+        $teacher = Teachers::where('id',$id)->firstOrFail();
+        $tCourses = TeachersCourses::where('teacher_id',$id)->pluck('course_id');
+
+        $coursesleft = Courses::WhereNotIn('id',$tCourses)->pluck('name','id');
+
+
+        return view('teachercourses.create',['courses'=>$coursesleft,'teacher'=>$teacher]);
     }
   
 
@@ -83,7 +69,29 @@ class TeachersCoursesController extends Controller
       return redirect()->action('TeachersCourses@index');
     }
 
- 
+    public function teacher($id)
+    {
+        $courses = TeachersCourses::where('teacher_id',$id)->pluck('course_id');
+        $coursesinfo = Courses::whereIn('id',$courses)->get();
+        $teacher = Teachers::where('id',$id)->first();
+        return view('teachers.courses',['courses'=>$coursesinfo,'teacher'=>$teacher]);
+    }
+
+
+    public function storeCourse(Request $request)
+    {
+        foreach($request->input('courses') as $value)
+        {
+            $course = new TeachersCourses();
+            $course->teacher_id = $request->input('id');
+             $course->course_id = $value;
+             $course->save();
+        }
+
+        return view('studentcourses.test',['test'=>$request->input('courses')]);
+
+    }
+
     public function delete()
     {
         return;

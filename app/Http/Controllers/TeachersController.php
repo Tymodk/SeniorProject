@@ -79,7 +79,7 @@ class TeachersController extends Controller
     {
         $teacher = Teachers::find($id);
 
-        // show the edit form and pass the nerd
+
         return view('teachers.edit')
             ->with('teacher', $teacher);
     }
@@ -98,7 +98,7 @@ class TeachersController extends Controller
                 ->withInput();
         } else {
 
-            $teacher           = new Teachers;
+            $teacher           = Teachers::where('id',$id)->firstOrFail();
             $teacher->name     = Input::get('name');
             $teacher->email    = Input::get('email');
             $teacher->password = Input::get('password');
