@@ -14,7 +14,7 @@
 
 
 
-{{ Form::open(array('url' => 'students')) }}
+{{ Form::open(array('url' => 'admin/students')) }}
 
     <div class="form-group">
         {{ Form::label('name', 'Name') }}

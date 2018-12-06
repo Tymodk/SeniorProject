@@ -18,11 +18,7 @@ class CreateClassesTable extends Migration
             $table->unsignedInteger('course_id');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
-
-
             $table->foreign('course_id')->references('id')->on('courses');
-
-
             $table->timestamps();
         });
     }

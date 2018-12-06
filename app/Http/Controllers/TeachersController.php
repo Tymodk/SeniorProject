@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Courses;
 use App\Imports\UsersImport;
 use App\Teachers;
+use App\TeachersCourses;
+use App\User;
+use App\Classes;
 use Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Redirect;
 use Session;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class TeachersController extends Controller
 {
@@ -52,10 +58,18 @@ class TeachersController extends Controller
         $validator = Validator::make(Input::all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('teachers/create')
+            return back()
                 ->withErrors($validator)
                 ->withInput();
         } else {
+
+            //check if email already exists
+            if(User::where('email',Input::get('email'))->exists())
+            {
+                return back()
+                    ->withErrors(['message'=>'email already exists'])
+                    ->withInput();
+            }
 
             $teacher           = new Teachers;
             $teacher->name     = Input::get('name');
@@ -63,8 +77,17 @@ class TeachersController extends Controller
             $teacher->password = Input::get('password');
             $teacher->save();
 
-            Session::flash('message', 'Successfully created nerd!');
-            return Redirect::to('admin/teachers');
+            $user        =  new User();
+            $user->name = Input::get('name');
+            $user->email = Input::get('email') ;
+            $user->password = Hash::make(Input::get('password'));
+            $user->teacher_id = $teacher->id;
+            $user->save();
+
+
+
+            Session::flash('message', 'Successfully created teacher!');
+            return Redirect::to('/admin/teachers');
         }
     }
 
@@ -93,7 +116,7 @@ class TeachersController extends Controller
         $validator = Validator::make(Input::all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('teachers/' . $id . '/edit')
+            return Redirect::to('/teachers/' . $id . '/edit')
                 ->withErrors($validator)
                 ->withInput();
         } else {
@@ -104,17 +127,19 @@ class TeachersController extends Controller
             $teacher->password = Input::get('password');
             $teacher->save();
 
-            Session::flash('message', 'Successfully updated nerd!');
-            return Redirect::to('admin/teachers');
+            Session::flash('message', 'Successfully updated teacher!');
+            return Redirect::to('/admin/teachers');
         }
     }
 
     public function destroy($id)
     {
         $teacher = Teachers::find($id);
+        $user = User::where('teacher_id',$teacher->id)->first();
         $teacher->delete();
+        $user->delete();
 
-        Session::flash('message', 'Successfully deleted the nerd!');
+        Session::flash('message', 'Successfully deleted the teacher!');
         return Redirect::to('/admin/teachers');
     }
 
@@ -127,5 +152,16 @@ class TeachersController extends Controller
         Session::flash('message', 'Successfully uploaded excel file!');
         return Redirect::to('admin/teachers');
 
+    }
+
+
+    public function classes()
+    {
+        $id = Auth::user()->teacher_id;
+        $courses = TeachersCourses::where('teacher_id',$id)->pluck('course_id');
+        $classes = Classes::whereIn('course_id',$courses)->get();
+
+
+        return view('user.index',['classes'=>$classes]);
     }
 }
