@@ -13,7 +13,7 @@
 <!-- if there are creation errors, they will show here -->
 
 
-{{ Form::open(array('url' => 'courses')) }}
+{{ Form::open(array('url' => 'admin/courses')) }}
 
     <div class="form-group">
         {{ Form::label('name', 'Name') }}

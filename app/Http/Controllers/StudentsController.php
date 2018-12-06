@@ -38,13 +38,13 @@ class StudentsController extends Controller
                 ->withInput();
         } else {
 
-            $student       = new Students;
-            $student->name = Input::get('name');
+            $student          = new Students;
+            $student->name    = Input::get('name');
             $student->card_id = Input::get('card_id');
             $student->save();
 
             Session::flash('message', 'Successfully created nerd!');
-            return Redirect::to('students');
+            return Redirect::to('admin/students');
         }
     }
 
@@ -84,7 +84,7 @@ class StudentsController extends Controller
             $student->save();
 
             Session::flash('message', 'Successfully updated nerd!');
-            return Redirect::to('students');
+            return Redirect::to('admin/students');
         }
     }
 
@@ -94,6 +94,6 @@ class StudentsController extends Controller
         $student->delete();
 
         Session::flash('message', 'Successfully deleted the nerd!');
-        return Redirect::to('students');
+        return Redirect::to('admin/students');
     }
 }

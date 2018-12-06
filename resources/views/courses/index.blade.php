@@ -3,25 +3,23 @@
 
 
 @section('content')
+@if (Session::has('message'))
+    <div class="alert alert-success"><h5>{{ Session::get('message') }}</h5></div>
+@endif
+
 @include('layouts.adminnav',['active' => "courses"])
-@include('layouts.teachernav')
+@include('layouts.coursenav')
 <div class="container">
 
 
-<h1>All the Nerds</h1>
-
-<!-- will be used to show any messages -->
-@if (Session::has('message'))
-    <div class="alert alert-info">{{ Session::get('message') }}</div>
-@endif
+<h1 class="mt-5">All the Nerds</h1>
 
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
             <td>ID</td>
             <td>Name</td>
-            <td>Email</td>
-            <td>Nerd Level</td>
+        
             <td>Actions</td>
         </tr>
     </thead>
@@ -30,24 +28,18 @@
         <tr>
             <td>{{ $value->id }}</td>
             <td>{{ $value->name }}</td>
-            <td>{{ $value->email }}</td>
-            <td>{{ $value->nerd_level }}</td>
-
-            <!-- we will also add show, edit, and delete buttons -->
+    
             <td>
 
-                <!-- delete the nerd (uses the destroy method DESTROY /nerds/{id} -->
-                <!-- we will add this later since its a little more complicated than the other two buttons -->
 
-                <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
-                <a class="btn btn-small btn-success" href="{{ URL::to('courses/' . $value->id) }}">Show this Nerd</a>
 
-                <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-                <a class="btn btn-small btn-info" href="{{ URL::to('courses/' . $value->id . '/edit') }}">Edit this Nerd</a>
+                <a class="btn btn-small btn-info" href="{{ URL::to('admin/courses/' . $value->id) }}">Show</a>
 
-                {{ Form::open(array('url' => 'courses/' . $value->id, 'class' => 'pull-right')) }}
+                <a class="btn btn-small btn-warning" href="{{ URL::to('admin/courses/' . $value->id . '/edit') }}">Edit</a>
+
+                {{ Form::open(array('url' => 'admin/courses/' . $value->id, 'class' => 'float-right')) }}
                     {{ Form::hidden('_method', 'DELETE') }}
-                    {{ Form::submit('Delete this Nerd', array('class' => 'btn btn-warning')) }}
+                    {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
                 {{ Form::close() }}
 
             </td>

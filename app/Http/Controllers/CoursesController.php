@@ -12,7 +12,7 @@ class CoursesController extends Controller
 {
     public function index()
     {
-        $courses = Courses::all();
+        $courses = Courses::paginate(15);
         return view('courses.index', ['courses' => $courses]);
 
     }
@@ -33,7 +33,7 @@ class CoursesController extends Controller
         $validator = Validator::make(Input::all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('courses/create')
+            return Redirect::to('admin/courses/create')
                 ->withErrors($validator)
                 ->withInput();
         } else {
@@ -44,7 +44,7 @@ class CoursesController extends Controller
             $course->save();
 
             Session::flash('message', 'Successfully created nerd!');
-            return Redirect::to('courses');
+            return Redirect::to('admin/courses');
         }
     }
 
@@ -73,7 +73,7 @@ class CoursesController extends Controller
         $validator = Validator::make(Input::all(), $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('courses/' . $id . '/edit')
+            return Redirect::to('admin/courses/' . $id . '/edit')
                 ->withErrors($validator)
                 ->withInput();
         } else {
@@ -84,7 +84,7 @@ class CoursesController extends Controller
             $course->save();
 
             Session::flash('message', 'Successfully updated nerd!');
-            return Redirect::to('courses');
+            return Redirect::to('admin/courses');
         }
     }
 
@@ -94,6 +94,6 @@ class CoursesController extends Controller
         $course->delete();
 
         Session::flash('message', 'Successfully deleted the nerd!');
-        return Redirect::to('courses');
+        return Redirect::to('admin/courses');
     }
 }

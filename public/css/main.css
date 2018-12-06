@@ -1,0 +1,25 @@
+.courses input:checked+div>h3 {
+    color: white;
+}
+.courses input:checked+label {
+    background-color: blue;
+}
+.courses input {
+    position: absolute;
+    /* or absolute */
+    left: 50%;
+}
+.notselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.checked {
+    background-color: lightblue;
+    color: white;
+}
+
+

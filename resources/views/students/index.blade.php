@@ -15,15 +15,13 @@
 <h1 class="mt-5">Students</h1>
 
 
-
-
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
             <td>ID</td>
             <td>Name</td>
-            <td>Email</td>
-            <td>Nerd Level</td>
+            
+            <td>Courses</td>
             <td>Actions</td>
         </tr>
     </thead>
@@ -32,28 +30,25 @@
         <tr>
             <td>{{ $value->id }}</td>
             <td>{{ $value->name }}</td>
-            <td>{{ $value->email }}</td>
-            <td>{{ $value->nerd_level }}</td>
+            
+            <td><a href="{{ 'studentcourses/'.$value->id }}" class="btn btn-success ">show / add </a></td>
 
-            <!-- we will also add show, edit, and delete buttons -->
             <td>
 
-                <!-- delete the nerd (uses the destroy method DESTROY /nerds/{id} -->
-                <!-- we will add this later since its a little more complicated than the other two buttons -->
+                <a class="btn btn-small btn-info" href="{{ URL::to('admin/students/' . $value->id) }}">Show</a>
 
-                <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
-                <a class="btn btn-small btn-success" href="{{ URL::to('students/' . $value->id) }}">Show this Nerd</a>
+           
+                <a class="btn btn-small btn-warning" href="{{ URL::to('admin/students/' . $value->id . '/edit') }}">Edit</a>
 
-                <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-                <a class="btn btn-small btn-info" href="{{ URL::to('students/' . $value->id . '/edit') }}">Edit this Nerd</a>
-
-                {{ Form::open(array('url' => 'students/' . $value->id, 'class' => 'pull-right')) }}
+                {{ Form::open(array('url' => 'students/' . $value->id, 'class' => 'float-right')) }}
                     {{ Form::hidden('_method', 'DELETE') }}
-                    {{ Form::submit('Delete this Nerd', array('class' => 'btn btn-warning')) }}
+                    {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
                 {{ Form::close() }}
 
             </td>
+         
         </tr>
+
     @endforeach
     </tbody>
 </table>
