@@ -8,7 +8,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('/homepage','TeachersController@classes')->middleware('auth')->name('user.index');
-
+Route::get('/wireframe',function ()
+{
+    return view('wireframe');
+});
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index')->name('admin.home');
