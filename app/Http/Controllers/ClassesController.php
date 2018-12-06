@@ -9,6 +9,7 @@ use App\StudentsCourses;
 use App\Teachers;
 use App\TeachersCourses;
 
+use http\Env\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Redirect;
@@ -25,7 +26,8 @@ class ClassesController extends Controller
     }
     public function create()
     {
-        return view('classes.create');
+        $courses = Courses::pluck('name','id');
+        return view('classes.create',['courses'=>$courses]);
     }
     public function edit($id)
     {
@@ -44,8 +46,18 @@ class ClassesController extends Controller
 
 
     }
-    public function store()
+    public function store(Request $request)
     {
+        //carbon gebruiken
+
+
+        $startdate = $request->startdate . ' '.$request->starthour;
+        $enddate = $request->enddate . ' ' .$request->endhour;
+
+        $course = $request->course;
+
+
+
         return view('');
     }
 

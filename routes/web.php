@@ -6,6 +6,10 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
+Route::get('/homepage','TeachersController@classes')->middleware('auth')->name('user.index');
+
+
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index')->name('admin.home');
     Route::resource('courses', 'CoursesController');
