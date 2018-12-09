@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Redirect;
 use Session;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
+use Exception;
 
 class CoursesController extends Controller
 {
@@ -34,34 +37,47 @@ class CoursesController extends Controller
 
         if ($validator->fails()) {
             return Redirect::to('admin/courses/create')
-                ->withErrors($validator)
+                ->withErrors('message', 'The course could not be saved')
                 ->withInput();
         } else {
+            try {
+                $course = new Courses;
+                $course->name = Input::get('name');
+                $course->save();
 
-            $course       = new Courses;
-            $course->name = Input::get('name');
+                Session::flash('message', 'Successfully created the course!');
+                return Redirect::to('admin/courses');
+            } catch (Exception $e) {
+                return back()->withInput()->withErrors('message', 'The course could not be saved, there is a problem with the database');
+            }
 
-            $course->save();
-
-            Session::flash('message', 'Successfully created nerd!');
-            return Redirect::to('admin/courses');
         }
     }
 
     public function show($id)
     {
-        $course = Courses::find($id);
+        try {
+            $course = Courses::findOrFail($id);
+            return view('courses.show', ['course' => $course]);
 
-        return view('courses.show', ['course' => $course]);
+        } catch (ModelNotFoundException $ex) {
+            return back()->withInput()->withErrors('message', 'The course could not be found');
+        }
+
+
     }
 
     public function edit($id)
     {
-        $course = Courses::find($id);
+        try {
+            $course = Courses::findOrFail($id);
+            return view('courses.edit')
+                ->with('course', $course);
+        } catch (ModelNotFoundException $ex) {
+            return back()->withInput()->withErrors('message', 'The course could not be found!');
+        }
 
-        // show the edit form and pass the nerd
-        return view('courses.edit')
-            ->with('course', $course);
+
     }
 
     public function update($id)
@@ -74,26 +90,37 @@ class CoursesController extends Controller
 
         if ($validator->fails()) {
             return Redirect::to('admin/courses/' . $id . '/edit')
-                ->withErrors($validator)
+                ->withErrors('message', 'The course could not be updated')
                 ->withInput();
         } else {
 
-            $course       = Courses::find($id);
-            $course->name = Input::get('name');
+            try {
+                $course = Courses::findOrFail($id);
+                $course->name = Input::get('name');
+                $course->save();
 
-            $course->save();
+                Session::flash('message', 'Successfully updated the course!');
+                return Redirect::to('admin/courses');
 
-            Session::flash('message', 'Successfully updated nerd!');
-            return Redirect::to('admin/courses');
+            } catch (ModelNotFoundException $e) {
+                return back()->withInput()->withErrors('message', 'The course could not be updated');
+            }
+
+
         }
     }
 
     public function destroy($id)
     {
-        $course = Courses::find($id);
-        $course->delete();
+        try {
+            $course = Courses::findOrFail($id);
+            $course->delete();
 
-        Session::flash('message', 'Successfully deleted the nerd!');
-        return Redirect::to('admin/courses');
+            Session::flash('message', 'Successfully deleted the nerd!');
+            return Redirect::to('admin/courses');
+
+        } catch (ModelNotFoundException $e) {
+            return back()->withInput()->withErrors('message', 'The course could not be destroyed');
+        }
     }
 }

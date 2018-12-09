@@ -5,7 +5,9 @@ Route::get('/', function () {
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get('/wireframes',function(){
+  return view('wireframe');
+});
 
 Route::get('/homepage','TeachersController@classes')->middleware('auth')->name('user.index');
 
@@ -26,7 +28,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/teachercourses/{id}', 'TeachersCoursesController@single')->name('tc.single');
 
     Route::get('teachercourses/{teacherid}/{courseid}/', 'TeachersCoursesController@deleteCourse')->name('tc.delete');
-    
+
     Route::get('/studentcourses', 'StudentsCoursesController@index')->name('sc.index');
     Route::get('/studentcourses/{name}', 'StudentsCoursesController@addcourse')->name('sc.addcourse');
     Route::get('/studentcourses/{studentid}/{courseid}', 'StudentsCoursesController@deletecourse')->name('sc.addcourse');
