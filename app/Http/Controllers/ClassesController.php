@@ -24,6 +24,8 @@ class ClassesController extends Controller
         return view('classes.index',['classes'=>$classes]);
 
     }
+
+
     public function create()
     {
         $courses = Courses::pluck('name','id');

@@ -17,6 +17,7 @@ use Redirect;
 use Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Events\addPresence;
 
 class TeachersController extends Controller
 {
@@ -73,7 +74,7 @@ class TeachersController extends Controller
                 $user->teacher_id = $teacher->id;
                 $user->save();
 
-
+                broadcast(new addPresence($teacher))->toOthers();
                 Session::flash('message', 'Successfully created teacher!');
                 return Redirect::to('/admin/teachers');
             } catch (Exception $e) {
@@ -178,5 +179,34 @@ class TeachersController extends Controller
         $courses = TeachersCourses::where('teacher_id', $id)->pluck('course_id');
         $classes = Classes::whereIn('course_id', $courses)->get();
         return view('user.index', ['classes' => $classes]);
+    }
+
+
+
+
+    // api routes
+
+
+
+
+    public  function myClasses()
+    {
+        #$id = Auth::user()->teacher_id;
+        #$courses = TeachersCourses::where('teacher_id', $id)->pluck('course_id');
+        $classes = Teachers::get();
+        return  response()->json($classes);
+    }
+
+    public function storeclasses(Request $request){
+
+        $teacher = new Teachers();
+        $teacher->name = $request->body;
+        $teacher->email = 'testtest'.$request->body;
+        $teacher->password = 'fsdfsdf';
+        $teacher->save();
+
+        broadcast(new addPresence($teacher))->toOthers();
+        return response()->json($teacher);
+
     }
 }
