@@ -85,6 +85,7 @@
         </nav>
 
         <main class="container-fluid m-0 p-0">
+            @include('layouts.errors')
             @yield('content')
         </main>
     </div>
