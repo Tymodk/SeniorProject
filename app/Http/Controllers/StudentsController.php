@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Students;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Redirect;
 use Session;
+use Illuminate\Database\QueryException;
+use Exception;
 
 class StudentsController extends Controller
 {
@@ -34,34 +37,48 @@ class StudentsController extends Controller
 
         if ($validator->fails()) {
             return Redirect::to('students/create')
-                ->withErrors($validator)
+                ->withErrors('message', 'All fields should be filled in')
                 ->withInput();
         } else {
+            try {
+                $student = new Students;
+                $student->name = Input::get('name');
+                $student->card_id = Input::get('card_id');
+                $student->save();
 
-            $student          = new Students;
-            $student->name    = Input::get('name');
-            $student->card_id = Input::get('card_id');
-            $student->save();
+                Session::flash('message', 'Successfully created nerd!');
+                return Redirect::to('admin/students');
+            } catch (ModelNotFoundException $e) {
+                return back()->withInput()->withErrors();
+            }
 
-            Session::flash('message', 'Successfully created nerd!');
-            return Redirect::to('admin/students');
         }
     }
 
     public function show($id)
     {
-        $student = Students::find($id);
+        try {
+            $student = Students::findOrFail($id);
+            return view('students.show', ['student' => $student]);
 
-        return view('students.show', ['student' => $student]);
+        } catch (ModelNotFoundException $e) {
+            return back()->withInput()->withErrors();
+        }
+
+
     }
 
     public function edit($id)
     {
-        $student = Students::find($id);
+        try {
+            $student = Students::findOrFail($id);
 
-        // show the edit form and pass the nerd
-        return view('students.edit')
-            ->with('student', $student);
+            // show the edit form and pass the nerd
+            return view('students.edit')
+                ->with('student', $student);
+        } catch (ModelNotFoundException $e) {
+            return back()->withInput()->withErrors();
+        }
     }
 
     public function update($id)
@@ -77,23 +94,32 @@ class StudentsController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
+            try {
+                $student = Students::find($id);
+                $student->name = Input::get('name');
 
-            $student       = Students::find($id);
-            $student->name = Input::get('name');
+                $student->save();
 
-            $student->save();
+                Session::flash('message', 'Successfully updated nerd!');
+                return Redirect::to('admin/students');
+            } catch (Exception $e) {
+                return back()->withInput()->withErrors();
+            }
 
-            Session::flash('message', 'Successfully updated nerd!');
-            return Redirect::to('admin/students');
         }
     }
 
     public function destroy($id)
     {
-        $student = Students::find($id);
-        $student->delete();
+        try {
+            $student = Students::findOrFail($id);
+            $student->delete();
 
-        Session::flash('message', 'Successfully deleted the nerd!');
-        return Redirect::to('admin/students');
+            Session::flash('message', 'Successfully deleted the nerd!');
+            return Redirect::to('admin/students');
+
+        } catch (ModelNotFoundException $e) {
+            return back()->withInput()->withErrors();
+        }
     }
 }

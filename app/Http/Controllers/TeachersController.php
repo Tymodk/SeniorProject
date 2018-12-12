@@ -9,6 +9,7 @@ use App\TeachersCourses;
 use App\User;
 use App\Classes;
 use Excel;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -21,20 +22,15 @@ class TeachersController extends Controller
 {
     public function index()
     {
-
-        $para     = Input::all();
+        $para = Input::all();
         $teachers = Teachers::paginate(10);
-
         if (Input::get('filter')) {
             if (Input::get('filter') == 'created-first') {
                 $teachers = Teachers::OrderBy('created_at', 'ASC')->paginate(10);
-                            }
-            elseif (Input::get('filter') == 'created-last') {
+            } elseif (Input::get('filter') == 'created-last') {
                 $teachers = Teachers::OrderBy('created_at', 'DESC')->paginate(10);
-               
             } else {
                 $teachers = Teachers::OrderBy(Input::get('filter'))->paginate(10);
-                
             }
 
         }
@@ -50,11 +46,7 @@ class TeachersController extends Controller
 
     public function store()
     {
-
-        $rules = array(
-            'name' => 'required',
-
-        );
+        $rules = array('name' => 'required');
         $validator = Validator::make(Input::all(), $rules);
 
         if ($validator->fails()) {
@@ -62,57 +54,61 @@ class TeachersController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
-
-            //check if email already exists
-            if(User::where('email',Input::get('email'))->exists())
-            {
+            if (User::where('email', Input::get('email'))->exists()) {
                 return back()
-                    ->withErrors(['message'=>'email already exists'])
+                    ->withErrors(['message' => 'email already exists'])
                     ->withInput();
             }
+            try {
+                $teacher = new Teachers;
+                $teacher->name = Input::get('name');
+                $teacher->email = Input::get('email');
+                $teacher->password = Input::get('password');
+                $teacher->save();
 
-            $teacher           = new Teachers;
-            $teacher->name     = Input::get('name');
-            $teacher->email    = Input::get('email');
-            $teacher->password = Input::get('password');
-            $teacher->save();
-
-            $user        =  new User();
-            $user->name = Input::get('name');
-            $user->email = Input::get('email') ;
-            $user->password = Hash::make(Input::get('password'));
-            $user->teacher_id = $teacher->id;
-            $user->save();
+                $user = new User();
+                $user->name = Input::get('name');
+                $user->email = Input::get('email');
+                $user->password = Hash::make(Input::get('password'));
+                $user->teacher_id = $teacher->id;
+                $user->save();
 
 
+                Session::flash('message', 'Successfully created teacher!');
+                return Redirect::to('/admin/teachers');
+            } catch (Exception $e) {
+                return back()->withInput()->withErrors();
+            }
 
-            Session::flash('message', 'Successfully created teacher!');
-            return Redirect::to('/admin/teachers');
         }
     }
 
     public function show($id)
     {
-        $teacher = Teachers::find($id);
+        try {
+            $teacher = Teachers::findOrFail($id);
+            return view('teachers.show', ['teacher' => $teacher]);
+        } catch (ModelNotFoundException $e) {
+            return back()->withInput()->withErrors();
+        }
 
-        return view('teachers.show', ['teacher' => $teacher]);
     }
 
     public function edit($id)
     {
-        $teacher = Teachers::find($id);
+        try {
+            $teacher = Teachers::findOrFail($id);
+            return view('teachers.edit')
+                ->with('teacher', $teacher);
+        } catch (ModelNotFoundException $e) {
+            return back()->withInput()->withErrors();
+        }
 
-
-        return view('teachers.edit')
-            ->with('teacher', $teacher);
     }
 
     public function update($id)
     {
-        $rules = array(
-            'name' => 'required',
-
-        );
+        $rules = array('name' => 'required');
         $validator = Validator::make(Input::all(), $rules);
 
         if ($validator->fails()) {
@@ -120,48 +116,67 @@ class TeachersController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
+            try {
+                $teacher = Teachers::where('id', $id)->firstOrFail();
+                $teacher->name = Input::get('name');
+                $teacher->email = Input::get('email');
+                $teacher->password = Input::get('password');
+                $teacher->save();
 
-            $teacher           = Teachers::where('id',$id)->firstOrFail();
-            $teacher->name     = Input::get('name');
-            $teacher->email    = Input::get('email');
-            $teacher->password = Input::get('password');
-            $teacher->save();
+                Session::flash('message', 'Successfully updated teacher!');
+                return Redirect::to('/admin/teachers');
+            } catch (Exception $e) {
+                return back()->withInput()->withErrors();
+            }
 
-            Session::flash('message', 'Successfully updated teacher!');
-            return Redirect::to('/admin/teachers');
         }
     }
 
     public function destroy($id)
     {
-        $teacher = Teachers::find($id);
-        $user = User::where('teacher_id',$teacher->id)->first();
-        $teacher->delete();
-        $user->delete();
+        try {
+            $teacher = Teachers::findOrFail($id);
+            $user = User::where('teacher_id', $teacher->id)->first();
+            $teacher->delete();
+            $user->delete();
 
-        Session::flash('message', 'Successfully deleted the teacher!');
-        return Redirect::to('/admin/teachers');
+            Session::flash('message', 'Successfully deleted the teacher!');
+            return Redirect::to('/admin/teachers');
+        } catch (ModelNotFoundException $e) {
+            return back()->withInput()->withErrors();
+        }
+
     }
 
     public function upload(Request $request)
     {
-        //\Maatwebsite\Excel\Excel::XLSX
+        try {
+            Excel::import(new UsersImport, request()->file('excel'), null, \Maatwebsite\Excel\Excel::XLSX);
+            $excel = 'test';
+            Session::flash('message', 'Successfully uploaded excel file!');
+            return Redirect::to('admin/teachers')->withInput(['excel' => $excel]);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $array = [];
 
-        Excel::import(new UsersImport, request()->file('excel'), null, \Maatwebsite\Excel\Excel::XLSX);
+            foreach ($failures as $failure) {
+                $failure->row(); // row that went wrong
+                $failure->attribute(); // either heading key (if using heading row concern) or column index
+                $failure->errors(); // Actual error messages from Laravel validator
+            }
+                return back()->withInput()->withErrors(['failures'=>$failures]);
+            }
+        }
 
-        Session::flash('message', 'Successfully uploaded excel file!');
-        return Redirect::to('admin/teachers');
 
-    }
+
 
 
     public function classes()
     {
         $id = Auth::user()->teacher_id;
-        $courses = TeachersCourses::where('teacher_id',$id)->pluck('course_id');
-        $classes = Classes::whereIn('course_id',$courses)->get();
-
-
-        return view('user.index',['classes'=>$classes]);
+        $courses = TeachersCourses::where('teacher_id', $id)->pluck('course_id');
+        $classes = Classes::whereIn('course_id', $courses)->get();
+        return view('user.index', ['classes' => $classes]);
     }
 }
