@@ -18,8 +18,10 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('test-component', require('./components/test.vue'));
+Vue.component('presence', require('./components/presence.vue'));
 
-// const files = require.context('./', true, /\.vue$/i)
+const files = require.context('./', true, /\.vue$/i)
 
 // files.keys().map(key => {
 //     return Vue.component(_.last(key.split('/')).split('.')[0], files(key))
