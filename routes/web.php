@@ -17,8 +17,6 @@ Route::post('/start-class','ClassesController@start')->middleware('auth')->name(
 Route::get('/class','ClassesController@overview')->middleware('auth')->name('user.overview');
 
 
-
-
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index')->name('admin.home');
     Route::resource('courses', 'CoursesController');
