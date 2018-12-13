@@ -8,9 +8,7 @@
 
     </div>
 
-    @foreach($errors->first('failures') as $test)
-        {{$test}}
-    @endforeach
+
 
 @endif
 @if (Session::has('message'))

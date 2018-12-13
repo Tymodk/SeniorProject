@@ -17,6 +17,7 @@ use Redirect;
 use Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Events\addPresence;
 
 class TeachersController extends Controller
 {
@@ -73,7 +74,7 @@ class TeachersController extends Controller
                 $user->teacher_id = $teacher->id;
                 $user->save();
 
-
+                broadcast(new addPresence($teacher))->toOthers();
                 Session::flash('message', 'Successfully created teacher!');
                 return Redirect::to('/admin/teachers');
             } catch (Exception $e) {
@@ -138,7 +139,11 @@ class TeachersController extends Controller
             $teacher = Teachers::findOrFail($id);
             $user = User::where('teacher_id', $teacher->id)->first();
             $teacher->delete();
-            $user->delete();
+            if(isset($user))
+            {
+                $user->delete();
+            }
+
 
             Session::flash('message', 'Successfully deleted the teacher!');
             return Redirect::to('/admin/teachers');
@@ -177,6 +182,36 @@ class TeachersController extends Controller
         $id = Auth::user()->teacher_id;
         $courses = TeachersCourses::where('teacher_id', $id)->pluck('course_id');
         $classes = Classes::whereIn('course_id', $courses)->get();
-        return view('user.index', ['classes' => $classes]);
+        $active = Classes::where('active',1)->get();
+        return view('user.index', ['classes' => $classes,'active'=>$active]);
+    }
+
+
+
+
+    // api routes
+
+
+
+
+    public  function myClasses()
+    {
+        #$id = Auth::user()->teacher_id;
+        #$courses = TeachersCourses::where('teacher_id', $id)->pluck('course_id');
+        $classes = Teachers::get();
+        return  response()->json($classes);
+    }
+
+    public function storeclasses(Request $request){
+
+        $teacher = new Teachers();
+        $teacher->name = $request->body;
+        $teacher->email = 'testtest'.$request->body;
+        $teacher->password = 'fsdfsdf';
+        $teacher->save();
+
+        broadcast(new addPresence($teacher))->toOthers();
+        return response()->json($teacher);
+
     }
 }
