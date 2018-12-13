@@ -34,44 +34,44 @@
             <div class="col-md-3">
               <h5>IWT/PB-MT 3 WP a</h5>
             </div>
-            <div class="col-md-2 p-1 border mb-2 text-center ">
+            <button type="button" onclick="window.location='{{ url('/lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
               <h5 class="m-0">Start Lesson</h5>
-            </div>
+            </button>
           </div>
-          <div class="row mt-2 vertical-align-text border-bottom border-dark">
-            <div class="col-md-2">
-              <h5>10u30 - 13u</h5>
+            <div class="row mt-2 vertical-align-text border-bottom border-dark">
+              <div class="col-md-2">
+                <h5>9u - 10u</h5>
+              </div>
+              <div class="col-md-3">
+                <h3>Senior Project</h3>
+              </div>
+              <div class="col-md-2">
+                <h5>A102</h5>
+              </div>
+              <div class="col-md-3">
+                <h5>IWT/PB-MT 3 WP a</h5>
+              </div>
+              <button type="button" onclick="window.location='{{ url('/lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
+                <h5 class="m-0">Start Lesson</h5>
+              </button>
             </div>
-            <div class="col-md-3">
-              <h3>Web Development</h3>
+            <div class="row mt-2 vertical-align-text border-bottom border-dark">
+              <div class="col-md-2">
+                <h5>9u - 10u</h5>
+              </div>
+              <div class="col-md-3">
+                <h3>Senior Project</h3>
+              </div>
+              <div class="col-md-2">
+                <h5>A102</h5>
+              </div>
+              <div class="col-md-3">
+                <h5>IWT/PB-MT 3 WP a</h5>
+              </div>
+              <button type="button" onclick="window.location='{{ url('/lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
+                <h5 class="m-0">Start Lesson</h5>
+              </button>
             </div>
-            <div class="col-md-2">
-              <h5>B108</h5>
-            </div>
-            <div class="col-md-3">
-              <h5>IWT/PB-MT 3 WP a</h5>
-            </div>
-            <div class="col-md-2 p-1 border mb-2 text-center ">
-              <h5 class="m-0">Start Lesson</h5>
-            </div>
-          </div>
-          <div class="row mt-2 vertical-align-text border-bottom border-dark">
-            <div class="col-md-2">
-              <h5>15u15 - 17</h5>
-            </div>
-            <div class="col-md-3">
-              <h3>Web Research</h3>
-            </div>
-            <div class="col-md-2">
-              <h5>A106</h5>
-            </div>
-            <div class="col-md-3">
-              <h5>IWT/PB-MT 3 WP a</h5>
-            </div>
-            <div class="col-md-2 p-1 border mb-2 text-center ">
-              <h5 class="m-0">Start Lesson</h5>
-            </div>
-          </div>
       	</div>
       </div>
       <div class="container-fluid row mt-2 border-bottom border-dark pb-3">
@@ -91,43 +91,26 @@
             <div class="col-md-3">
               <h5>IWT/PB-MT 3 WP a</h5>
             </div>
-            <div class="col-md-2 p-1 border mb-2 text-center ">
+            <button type="button" onclick="window.location='{{ url('/lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
               <h5 class="m-0">Start Lesson</h5>
-            </div>
+            </button>
           </div>
           <div class="row mt-2 vertical-align-text border-bottom border-dark">
             <div class="col-md-2">
-              <h5>10u30 - 13u</h5>
+              <h5>9u - 10u</h5>
             </div>
             <div class="col-md-3">
-              <h3>Web Development</h3>
+              <h3>Senior Project</h3>
             </div>
             <div class="col-md-2">
-              <h5>B108</h5>
+              <h5>A102</h5>
             </div>
             <div class="col-md-3">
               <h5>IWT/PB-MT 3 WP a</h5>
             </div>
-            <div class="col-md-2 p-1 border mb-2 text-center ">
+            <button type="button" onclick="window.location='{{ url('/lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
               <h5 class="m-0">Start Lesson</h5>
-            </div>
-          </div>
-          <div class="row mt-2 vertical-align-text border-bottom border-dark">
-            <div class="col-md-2">
-              <h5>15u15 - 17</h5>
-            </div>
-            <div class="col-md-3">
-              <h3>Web Research</h3>
-            </div>
-            <div class="col-md-2">
-              <h5>A106</h5>
-            </div>
-            <div class="col-md-3">
-              <h5>IWT/PB-MT 3 WP a</h5>
-            </div>
-            <div class="col-md-2 p-1 border mb-2 text-center ">
-              <h5 class="m-0">Start Lesson</h5>
-            </div>
+            </button>
           </div>
       	</div>
       </div>

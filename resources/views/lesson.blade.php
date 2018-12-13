@@ -33,9 +33,9 @@
             </div>
             <div class="col-md-5">
             </div>
-            <div class="col-md-2 p-1 border mb-2 text-center ">
+            <button type="button" onclick="window.location='{{ url('/lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
               <h5 class="m-0">Start Lesson</h5>
-            </div>
+            </button>
           </div>
       	</div>
       </div>

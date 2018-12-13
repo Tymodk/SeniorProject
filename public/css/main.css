@@ -22,6 +22,11 @@
     color: white;
 }
 
+button:hover {
+  background-color: #606060;
+  color: #fff
+}
+
 .vertical-align-text {
   display: flex;
   align-items: center;
