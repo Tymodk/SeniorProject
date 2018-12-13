@@ -73,7 +73,7 @@
                     {{ $value->email }}
                 </td>
                 <td>
-                    <a href="{{ '/admin/teachercourses/' . $value->id }}">
+                    <a href="{{ route('tc.teacher',['id'=>$value->id])}}">
                         view
                     </a>
                 </td>

@@ -3,7 +3,10 @@
 @section('content')
 
 <div class="container">
+
 	<h3 class="mt-5 mb-3">Teacher: <span class="text-success">{{ $teacher->name }}</span></h3>
+
+    <a class="btn btn-success" href="{{route('tc.create',['id'=>$teacher->id])}}">Add course</a>
 <table class="table table-striped table-bordered">
 	<thead>
 		<tr>
@@ -13,7 +16,7 @@
 		</tr>
 	</thead>
 	<tbody>
-			@foreach($data as $value)
+			@foreach($courses as $value)
 		<tr>
 			<td>{{ $value->id }}</td>
 			<td>{{ $value->name }}</td>

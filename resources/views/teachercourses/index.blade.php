@@ -25,12 +25,12 @@
 	</tr>
 	</thead>
 	<tbody>
-		@foreach($data2 as $key => $value )
+		@foreach($data as $key => $value )
 		<tr>
 			
-			<td>{{ $key }}</td>
-			<td>{{ $value }}</td>
-			<td><a href="{{ route('tc.add',['id'=>$key]) }}" class="btn btn-success">add</a></td>
+			<td>{{ $value->name }}</td>
+			<td><a href="{{route('tc.single',['id'=>$value->id])}}">View teachers</a></td>
+			<td><a href="{{ route('tc.add',['id'=>$value->id]) }}" class="btn btn-success">add</a></td>
 			
 		</tr>
 		@endforeach
