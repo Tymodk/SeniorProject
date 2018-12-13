@@ -40,7 +40,7 @@ class addPresence implements ShouldBroadcastNow
     public function broadcastWith()
     {
         return [
-            'body'=> $this->teacher->name,
+            $this->teacher,
 
         ];
     }

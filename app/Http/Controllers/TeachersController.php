@@ -178,7 +178,8 @@ class TeachersController extends Controller
         $id = Auth::user()->teacher_id;
         $courses = TeachersCourses::where('teacher_id', $id)->pluck('course_id');
         $classes = Classes::whereIn('course_id', $courses)->get();
-        return view('user.index', ['classes' => $classes]);
+        $active = Classes::where('active',1)->get();
+        return view('user.index', ['classes' => $classes,'active'=>$active]);
     }
 
 

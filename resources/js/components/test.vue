@@ -54,9 +54,11 @@
             listen(){
                 Echo.channel('teachers')
                     .listen('addPresence',(classes) => {
-                        console.log(classes);
-                        this.classes.unshift(classes);
-                    }).then(bind(this));
+                        console.log(classes[0]);
+                        this.classes = [...this.classes, classes[0]];
+                        console.log(this.classes);
+
+                    });
             }
         },
 
