@@ -22,4 +22,7 @@
     color: white;
 }
 
-
+.vertical-align-text {
+  display: flex;
+  align-items: center;
+}
