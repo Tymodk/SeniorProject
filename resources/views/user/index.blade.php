@@ -51,8 +51,7 @@
 
 
 
-    <test-component>
-    </test-component>
+
 
 @endsection
 
