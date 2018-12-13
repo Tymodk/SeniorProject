@@ -26,3 +26,6 @@
   display: flex;
   align-items: center;
 }
+
+.circle-big {height: 4em; width: 4em;}
+.circle-small {height: 3em; width: 3em;}

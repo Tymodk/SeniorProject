@@ -15,6 +15,11 @@ Route::get('/wireframes',function ()
     return view('wireframe');
 });
 
+Route::get('/lesson',function ()
+{
+    return view('lesson');
+});
+
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index')->name('admin.home');
     Route::resource('courses', 'CoursesController');
