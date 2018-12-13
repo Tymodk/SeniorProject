@@ -27,6 +27,10 @@ button:hover {
   color: #fff
 }
 
+div input {
+  width: 100%;
+}
+
 .vertical-align-text {
   display: flex;
   align-items: center;

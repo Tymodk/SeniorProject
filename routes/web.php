@@ -1,18 +1,17 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/', function () {return view('wireframe');})->name('home')->middleware('auth');
+Route::get('/home', function () {return view('wireframe');})->middleware('auth');
+Route::post('/', function () {return view('wireframe');})->middleware('csrf');
+Route::post('/home', function () {return view('wireframe');})->middleware('csrf');
 
 Route::get('/homepage','TeachersController@classes')->middleware('auth')->name('user.index');
 
-
-
-
-
+Route::get('/lesson', function () {
+    return view('lesson');
+});
 
 Route::post('/start-class','ClassesController@start')->middleware('auth')->name('user.start-course');
 Route::get('/class','ClassesController@overview')->middleware('auth')->name('user.overview');

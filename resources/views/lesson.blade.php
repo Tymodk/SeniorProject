@@ -33,7 +33,7 @@
             </div>
             <div class="col-md-5">
             </div>
-            <button type="button" onclick="window.location='{{ url('/lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
+            <button type="button" onclick="window.location='{{ url('lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
               <h5 class="m-0">Start Lesson</h5>
             </button>
           </div>
@@ -42,7 +42,7 @@
       <div class="container-fluid row mt-2 border-bottom border-dark pb-3">
         <div class="container-fluid">
           <p class="float-md-left"><strong>Present</strong></p>
-          <input class="float-md-right" type="text" name="search-present" placeholder="Search...">
+          <input class="float-md-right col-md-3" type="text" name="search-present" placeholder="Search...">
         </div>
         <div class="container-fluid">
     		<!-- start agenda -->
@@ -56,29 +56,12 @@
             <div class="col-md-4">
               <h3>Arthur Van Passel</h3>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
               <h5>9:02</h5>
             </div>
-            <div class="col-md-2 p-1 border mb-2 text-center ">
+            <button type="button" onclick="window.location='{{ url('lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
               <h5 class="m-0">Undo</h5>
-            </div>
-          </div>
-          <div class="row mt-2 vertical-align-text">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-1">
-              <div class="circle-small rounded-circle border">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <h3>Arthur Van Passel</h3>
-            </div>
-            <div class="col-md-2">
-              <h5>9:02</h5>
-            </div>
-            <div class="col-md-2 p-1 border mb-2 text-center ">
-              <h5 class="m-0">Undo</h5>
-            </div>
+            </button>
           </div>
           <div class="row mt-2 vertical-align-text">
             <div class="col-md-1">
@@ -88,18 +71,21 @@
               </div>
             </div>
             <div class="col-md-4">
-              <input type="text" name="add-present" size="40" placeholder="Insert name or student-id...">
+              <input type="text" name="add-present" placeholder="Insert name or student-id...">
             </div>
-            <div class="col-md-2 p-1 border text-center ">
+            <div class="col-md-1">
+              <!-- spacer -->
+            </div>
+            <button type="button" onclick="window.location='{{ url('lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
               <h5 class="m-0">Add Student</h5>
-            </div>
+            </button>
           </div>
       	</div>
       </div>
       <div class="container-fluid row mt-2 border-bottom border-dark pb-3">
         <div class="container-fluid">
           <p class="float-md-left"><strong>Absent</strong></p>
-          <input class="float-md-right" type="text" name="search-present" placeholder="Search...">
+          <input class="float-md-right col-md-3" type="text" name="search-present" placeholder="Search...">
         </div>
         <div class="container-fluid">
     		<!-- start agenda -->
