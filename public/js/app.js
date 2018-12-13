@@ -57984,13 +57984,16 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         listen: function listen() {
             var _this = this;
 
-            Echo.channel('teachers').listen('addPresence', function (classes) {
-                console.log(classes);
+            Echo.private('class.' + this.class_id).listen('addPresence', function (classes) {
+
                 _this.present = [].concat(_toConsumableArray(_this.present), [classes[0]]);
-                console.log(_this.present);
 
                 _this.getAbsent();
             });
+        },
+        indexWhere: function indexWhere(array, conditionFn) {
+            var item = array.find(conditionFn);
+            return array.indexOf(item);
         }
     }
 
