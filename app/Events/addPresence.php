@@ -11,21 +11,21 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-use App\Teachers;
+use App\Students;
 
 class addPresence implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $teacher;
+    public $student;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Teachers $teacher)
+    public function __construct(Students $student)
     {
-        $this->teacher = $teacher;
+        $this->student = $student;
     }
 
     /**
@@ -40,7 +40,7 @@ class addPresence implements ShouldBroadcastNow
     public function broadcastWith()
     {
         return [
-            $this->teacher,
+            $this->student,
 
         ];
     }

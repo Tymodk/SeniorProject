@@ -63,6 +63,7 @@
                     .then(function (response) {
 
                         this.absent = response.data;
+                        console.log(response)
 
                     }.bind(this));
             },
@@ -77,8 +78,15 @@
             listen(){
                 Echo.channel('teachers')
                     .listen('addPresence',(classes) => {
+                        console.log(classes);
+                        this.present = [...this.present, classes[0]];
+                        console.log(this.present);
+
+
+
+
                         this.getAbsent();
-                        this.getPresent();
+                     
                     });
             }
         },

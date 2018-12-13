@@ -57904,6 +57904,8 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 //
 //
 //
@@ -57970,6 +57972,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/api/classes/absent/' + this.class_id).then(function (response) {
 
                 this.absent = response.data;
+                console.log(response);
             }.bind(this));
         },
         getPresent: function getPresent() {
@@ -57982,8 +57985,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             Echo.channel('teachers').listen('addPresence', function (classes) {
+                console.log(classes);
+                _this.present = [].concat(_toConsumableArray(_this.present), [classes[0]]);
+                console.log(_this.present);
+
                 _this.getAbsent();
-                _this.getPresent();
             });
         }
     }
