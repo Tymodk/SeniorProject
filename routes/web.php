@@ -10,10 +10,6 @@ Route::get('/wireframes',function(){
 });
 
 Route::get('/homepage','TeachersController@classes')->middleware('auth')->name('user.index');
-Route::post('/start-class','ClassesController@start')->middleware('auth')->name('user.start-course');
-Route::get('/class','ClassesController@overview')->middleware('auth')->name('user.overview');
-
-
 
 
 
@@ -22,6 +18,12 @@ Route::get('/wireframe',function ()
 {
     return view('wireframe');
 });
+
+Route::post('/start-class','ClassesController@start')->middleware('auth')->name('user.start-course');
+Route::get('/class','ClassesController@overview')->middleware('auth')->name('user.overview');
+
+
+
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index')->name('admin.home');
