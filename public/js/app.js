@@ -14232,10 +14232,10 @@ window._ = __webpack_require__(18);
  */
 
 try {
-  window.Popper = __webpack_require__(4).default;
-  window.$ = window.jQuery = __webpack_require__(5);
+    window.Popper = __webpack_require__(4).default;
+    window.$ = window.jQuery = __webpack_require__(5);
 
-  __webpack_require__(20);
+    __webpack_require__(20);
 } catch (e) {}
 
 /**
@@ -14257,9 +14257,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -14273,11 +14273,11 @@ if (token) {
 window.Pusher = __webpack_require__(41);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo__["a" /* default */]({
-  broadcaster: 'pusher',
-  cluster: "eu",
-  key: "653e9966bc1de5ee29d1",
+    broadcaster: 'pusher',
+    cluster: "eu",
+    key: "653e9966bc1de5ee29d1",
 
-  encrypted: true
+    encrypted: true
 });
 
 /***/ }),
