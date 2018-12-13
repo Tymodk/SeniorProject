@@ -2,10 +2,10 @@
 
 
 
-Route::get('/', function () {return view('wireframe');})->name('home')->middleware('auth');
-Route::get('/home', function () {return view('wireframe');})->middleware('auth');
-Route::post('/', function () {return view('wireframe');})->middleware('csrf');
-Route::post('/home', function () {return view('wireframe');})->middleware('csrf');
+Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
+Route::get('/home', 'HomeController@index')->middleware('auth');
+Route::post('/', 'HomeController@index')->middleware('csrf');
+Route::post('/home', 'HomeController@index')->middleware('csrf');
 
 Route::get('/homepage','TeachersController@classes')->middleware('auth')->name('user.index');
 

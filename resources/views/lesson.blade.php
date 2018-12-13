@@ -82,48 +82,5 @@
           </div>
       	</div>
       </div>
-      <div class="container-fluid row mt-2 border-bottom border-dark pb-3">
-        <div class="container-fluid">
-          <p class="float-md-left"><strong>Absent</strong></p>
-          <input class="float-md-right col-md-3" type="text" name="search-present" placeholder="Search...">
-        </div>
-        <div class="container-fluid">
-    		<!-- start agenda -->
-          <div class="row mt-2 vertical-align-text">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-1">
-              <div class="circle-small rounded-circle border">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <h3>Arthur Van Passel</h3>
-            </div>
-            <div class="col-md-2">
-              <h5>9:02</h5>
-            </div>
-            <div class="col-md-2 p-1 border mb-2 text-center ">
-              <h5 class="m-0">Undo</h5>
-            </div>
-          </div>
-          <div class="row mt-2 vertical-align-text">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-1">
-              <div class="circle-small rounded-circle border">
-              </div>
-            </div>
-            <div class="col-md-4">
-              <h3>Arthur Van Passel</h3>
-            </div>
-            <div class="col-md-2">
-              <h5>9:02</h5>
-            </div>
-            <div class="col-md-2 p-1 border mb-2 text-center ">
-              <h5 class="m-0">Undo</h5>
-            </div>
-          </div>
-      	</div>
-      </div>
     </div>
     @endsection
