@@ -139,7 +139,11 @@ class TeachersController extends Controller
             $teacher = Teachers::findOrFail($id);
             $user = User::where('teacher_id', $teacher->id)->first();
             $teacher->delete();
-            $user->delete();
+            if(isset($user))
+            {
+                $user->delete();
+            }
+
 
             Session::flash('message', 'Successfully deleted the teacher!');
             return Redirect::to('/admin/teachers');
