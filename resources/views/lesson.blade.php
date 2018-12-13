@@ -40,59 +40,101 @@
       	</div>
       </div>
       <div class="container-fluid row mt-2 border-bottom border-dark pb-3">
-        <p><strong>Present</strong></p>
+        <div class="container-fluid">
+          <p class="float-md-left"><strong>Present</strong></p>
+          <input class="float-md-right" type="text" name="search-present" placeholder="Search...">
+        </div>
         <div class="container-fluid">
     		<!-- start agenda -->
-          <div class="row mt-2 vertical-align-text border-bottom border-dark">
+          <div class="row mt-2 vertical-align-text">
+            <div class="col-md-1">
+            </div>
             <div class="col-md-1">
               <div class="circle-small rounded-circle border">
               </div>
             </div>
-            <div class="col-md-3">
-              <h3>Senior Project</h3>
+            <div class="col-md-4">
+              <h3>Arthur Van Passel</h3>
             </div>
             <div class="col-md-2">
-              <h5>A102</h5>
-            </div>
-            <div class="col-md-3">
-              <h5>IWT/PB-MT 3 WP a</h5>
+              <h5>9:02</h5>
             </div>
             <div class="col-md-2 p-1 border mb-2 text-center ">
-              <h5 class="m-0">Start Lesson</h5>
+              <h5 class="m-0">Undo</h5>
             </div>
           </div>
-          <div class="row mt-2 vertical-align-text border-bottom border-dark">
+          <div class="row mt-2 vertical-align-text">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-1">
+              <div class="circle-small rounded-circle border">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h3>Arthur Van Passel</h3>
+            </div>
             <div class="col-md-2">
-              <h5>10u30 - 13u</h5>
-            </div>
-            <div class="col-md-3">
-              <h3>Web Development</h3>
-            </div>
-            <div class="col-md-2">
-              <h5>B108</h5>
-            </div>
-            <div class="col-md-3">
-              <h5>IWT/PB-MT 3 WP a</h5>
+              <h5>9:02</h5>
             </div>
             <div class="col-md-2 p-1 border mb-2 text-center ">
-              <h5 class="m-0">Start Lesson</h5>
+              <h5 class="m-0">Undo</h5>
             </div>
           </div>
-          <div class="row mt-2 vertical-align-text border-bottom border-dark">
+          <div class="row mt-2 vertical-align-text">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-1">
+              <div class="plus">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <input type="text" name="add-present" size="40" placeholder="Insert name or student-id...">
+            </div>
+            <div class="col-md-2 p-1 border text-center ">
+              <h5 class="m-0">Add Student</h5>
+            </div>
+          </div>
+      	</div>
+      </div>
+      <div class="container-fluid row mt-2 border-bottom border-dark pb-3">
+        <div class="container-fluid">
+          <p class="float-md-left"><strong>Absent</strong></p>
+          <input class="float-md-right" type="text" name="search-present" placeholder="Search...">
+        </div>
+        <div class="container-fluid">
+    		<!-- start agenda -->
+          <div class="row mt-2 vertical-align-text">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-1">
+              <div class="circle-small rounded-circle border">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h3>Arthur Van Passel</h3>
+            </div>
             <div class="col-md-2">
-              <h5>15u15 - 17</h5>
-            </div>
-            <div class="col-md-3">
-              <h3>Web Research</h3>
-            </div>
-            <div class="col-md-2">
-              <h5>A106</h5>
-            </div>
-            <div class="col-md-3">
-              <h5>IWT/PB-MT 3 WP a</h5>
+              <h5>9:02</h5>
             </div>
             <div class="col-md-2 p-1 border mb-2 text-center ">
-              <h5 class="m-0">Start Lesson</h5>
+              <h5 class="m-0">Undo</h5>
+            </div>
+          </div>
+          <div class="row mt-2 vertical-align-text">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-1">
+              <div class="circle-small rounded-circle border">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h3>Arthur Van Passel</h3>
+            </div>
+            <div class="col-md-2">
+              <h5>9:02</h5>
+            </div>
+            <div class="col-md-2 p-1 border mb-2 text-center ">
+              <h5 class="m-0">Undo</h5>
             </div>
           </div>
       	</div>
