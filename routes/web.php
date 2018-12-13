@@ -5,20 +5,20 @@ Route::get('/', function () {
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/wireframes',function(){
-  return view('wireframe');
-});
+
 
 Route::get('/homepage','TeachersController@classes')->middleware('auth')->name('user.index');
-Route::get('/wireframes',function ()
-{
-    return view('wireframe');
-});
 
-Route::get('/lesson',function ()
-{
-    return view('lesson');
-});
+
+
+
+
+
+Route::post('/start-class','ClassesController@start')->middleware('auth')->name('user.start-course');
+Route::get('/class','ClassesController@overview')->middleware('auth')->name('user.overview');
+
+
+
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index')->name('admin.home');
