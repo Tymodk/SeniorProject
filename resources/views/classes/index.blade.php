@@ -27,6 +27,7 @@
                         {{$class->course->name}}
                     </td>
                   <td>
+                      <a href="{!! route('classes.show',['id'=> $class->id]) !!}" class="btn btn-info">Info</a>
                       <a href="{!! route('classes.edit',['id'=>$class->id]) !!}" class="btn btn-warning">Edit class</a>
                       <a href="{!! route('classes.delete',['id'=>$class->id]) !!}" class="btn btn-danger" onclick = "alert('are you sure to delete this class?')">Delete class</a>
                   </td>

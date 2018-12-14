@@ -88,7 +88,9 @@ class TeachersController extends Controller
     {
         try {
             $teacher = Teachers::findOrFail($id);
-            return view('teachers.show', ['teacher' => $teacher]);
+            $tc = TeachersCourses::where('teacher_id',$teacher->id)->pluck('course_id');
+            $courses = Courses::whereIn('id',$tc)->get();
+            return view('teachers.show', ['teacher' => $teacher,'courses'=>$courses]);
         } catch (ModelNotFoundException $e) {
             return back()->withInput()->withErrors();
         }
