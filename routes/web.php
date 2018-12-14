@@ -48,7 +48,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/classes/create','ClassesController@create')->name('classes.create');
     Route::get('/classes/edit/{id}','ClassesController@edit')->name('classes.edit');
     Route::get('/classes/show/{id}','ClassesController@show')->name('classes.show');
-    Route::post('/classes/store','ClassesController@show')->name('classes.store');
+    Route::post('/classes/store','ClassesController@store')->name('classes.store');
+    Route::get('/classes/delete/{id}','ClassesController@delete')->name('classes.delete');
+
 
 });
 Auth::routes();
