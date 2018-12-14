@@ -10,6 +10,7 @@ use App\StudentsCourses;
 use App\Teachers;
 use App\TeachersCourses;
 
+use Carbon\Carbon;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -25,7 +26,7 @@ class ClassesController extends Controller
 
         $classes = Classes::paginate(15);
 
-        return view('classes.index', ['classes' => $classes, 'active' => $active]);
+        return view('classes.index', ['classes' => $classes]);
 
     }
 
@@ -38,7 +39,9 @@ class ClassesController extends Controller
 
     public function edit($id)
     {
-        return view('');
+        $class = Classes::find($id);
+        $courses = Courses::pluck('name','id');
+        return view('classes.edit',['class'=>$class,'courses'=>$courses]);
     }
 
     public function show($id)
@@ -57,16 +60,46 @@ class ClassesController extends Controller
 
     public function store(Request $request)
     {
-        //carbon gebruiken
+        $start = substr($request->start,11);
+        $end = substr($request->start,0,10);
+
+        $start = $start . ' ' . $end;
 
 
-        $startdate = $request->startdate . ' ' . $request->starthour;
-        $enddate = $request->enddate . ' ' . $request->endhour;
+        $start2 = substr($request->end,11);
+        $end = substr($request->end,0,10);
 
-        $course = $request->course;
+        $start2 = $start2 . ' ' . $end;
+        $newClass = new Classes();
+        $newClass->start_time = Carbon::parse($start);
+        $newClass->end_time = Carbon::parse($start2);
+        $newClass->course_id = $request->course;
+        $newClass->active = 0;
+        $newClass->save();
+
+        Session::flash('message', $request->start);
+        return Redirect::to('/admin/classes');
+    }
+
+    public function update(Request $request)
+    {
+        $class = Classes::find($request->id);
 
 
-        return view('');
+        $class->start_time = Carbon::parse($request->start);
+        $class->end_time = Carbon::parse($request->end);
+        $class->course_id = $request->course;
+        $class->save();
+
+        Session::flash('message', 'Successfully updated class!');
+        return Redirect::to('/admin/classes');
+    }
+
+    public function delete($id)
+    {
+        $class = Classes::find($id);
+        $class->delete();
+        return back()->withInput();
     }
 
     public function excelUpload()
@@ -116,18 +149,13 @@ class ClassesController extends Controller
 
         $presentStudentsCourses = Presences::select('students_courses_id')->where('class_id', $classid)->where('present',1)->get();
 
-        if(isset($presentStudentsCourses))
-        {
+        if (isset($presentStudentsCourses)) {
             $studentCourse = StudentsCourses::whereIn('id', $presentStudentsCourses)->pluck('student_id');
-            $present = Students::whereIn('id',$studentCourse)->get();
+            $present = Students::whereIn('id', $studentCourse)->get();
             return response()->json($present);
-        }
-        else
-        {
+        } else {
             return response()->json($presentStudentsCourses);
         }
-
-
 
 
     }
