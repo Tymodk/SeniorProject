@@ -22,5 +22,23 @@ class Classes extends Model
         $end = $dtStart->diff($dtEnd)->format('%H:%i:%s');
         return $end;
     }
+
+    public function start()
+    {
+        $date = Carbon::parse($this->start_time)->format('Y-m-d');
+        $date2 = Carbon::parse($this->start_time)->format('H:i');
+        $final = $date . 'T'. $date2;
+
+        return $final;
+    }
+
+    public function end()
+    {
+        $date = Carbon::parse($this->end_time)->format('Y-m-d');
+        $date2 = Carbon::parse($this->end_time)->format('H:i');
+        $final = $date . 'T'. $date2;
+
+        return $final;
+    }
 }
 
