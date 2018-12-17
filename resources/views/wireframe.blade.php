@@ -6,18 +6,10 @@
     <div class="container-fluid justify-content-center text-center mt-5">
         <div class="row">
             <div class="col-md-4">
-<<<<<<< HEAD
         <h2 class="text-center pt-3">Welcome {{ $user->name }}!</h2>
             </div>
             <div class="col-md-4">
             <h2 class="text-center"> <p><?php date_default_timezone_set("Europe/Brussels"); echo date("H:i"); ?></p>  <p>{{ date("d/m/Y") }}</p> </h2>
-=======
-                <h2 class="text-center pt-3">Welkom Sam!</h2>
-            </div>
-            <div class="col-md-4">
-                <h2 class="text-center"><p>14:22 </p>
-                    <p>17/12/2018</p></h2>
->>>>>>> aa3a444d10dff328c68e6d326cc4b24217caaa0a
             </div>
             <div class="col-md-4">
                 <h2 class="pull-right  active">Volgende les start in 10 min.
