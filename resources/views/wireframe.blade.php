@@ -9,8 +9,7 @@
         <h2 class="text-center pt-3">Welcome {{ $user->name }}!</h2>
             </div>
             <div class="col-md-4">
-            <h2 class="text-center"> <p><?php date_default_timezone_set("Europe/Brussels"); echo date("H:i");
-?></p>  <p>{{ date("Y/m/d") }}</p> </h2>
+            <h2 class="text-center"> <p><?php date_default_timezone_set("Europe/Brussels"); echo date("H:i"); ?></p>  <p>{{ date("d/m/Y") }}</p> </h2>
             </div>
             <div class="col-md-4">
             <h2 class="pull-right p-4 border border-dark">No scannner detected</h2>
