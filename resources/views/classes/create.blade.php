@@ -39,9 +39,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Understood</button>
-                    </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                    </div>
                 </div>
             </div>
         </div>
@@ -62,14 +60,14 @@
 
                 <label for="start">Start</label>
 
-                <input type="datetime-local" id="start" name="start" class="form-control">
+                <input type="datetime-local" id="start" name="start" class="form-control" value={{ date('Y-m-d\T09:00:00') }}>
             </div>
 
             <div class="form-group">
 
                 <label for="end">End</label>
 
-                <input type="datetime-local" id="end" name="end" class="form-control">
+                <input type="datetime-local" id="end" name="end" class="form-control" value={{ date('Y-m-d\T10:30:00') }}>
             </div>
             {{ Form::submit('Save class',array('class' => 'btn btn-success col-md-2 mt-5')) }}
 
