@@ -66,22 +66,33 @@ class ClassesController extends Controller
 
     public function store(Request $request)
     {
-        $start = substr($request->start, 11);
-        $end = substr($request->start, 0, 10);
+        $startTime = substr($request->start, 11);
+        $startDate = substr($request->start, 0, 10);
+        $start = $startDate . ' ' . $startTime;
 
-        $start = $start . ' ' . $end;
+        $endTime = substr($request->end, 11);
+        $endDate = substr($request->end, 0, 10);
+
+        $end = $endDate . ' ' . $endTime;
+        $repeat1 = $request->repeat1;
+
+        $start2 = $start;
+        $end2 = $end;
+        if ($repeat1) {
+          for ($i=0; $i < 6; $i++) {
+            $newClass = new Classes();
+            $newClass->start_time = Carbon::parse($start2);
+            $newClass->end_time = Carbon::parse($end2);
+            $newClass->course_id = $request->course;
+            $newClass->active = 0;
+            $newClass->save();
+
+            $startdate = date("Y/m/d", strtotime("$start2 +1 week"));
+            $enddate = date("Y/m/d", strtotime("$end2 +1 week"));
+          }
+        }
 
 
-        $start2 = substr($request->end, 11);
-        $end = substr($request->end, 0, 10);
-
-        $start2 = $start2 . ' ' . $end;
-        $newClass = new Classes();
-        $newClass->start_time = Carbon::parse($start);
-        $newClass->end_time = Carbon::parse($start2);
-        $newClass->course_id = $request->course;
-        $newClass->active = 0;
-        $newClass->save();
 
         Session::flash('message', $request->start);
         return Redirect::to('/admin/classes');
