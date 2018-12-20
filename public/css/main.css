@@ -31,6 +31,10 @@ div input {
   width: 100%;
 }
 
+div input.checkbox {
+  width: 30px;
+}
+
 .vertical-align-text {
   display: flex;
   align-items: center;

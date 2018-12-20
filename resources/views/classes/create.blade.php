@@ -75,8 +75,18 @@
             <div class="form-group">
 
                 <label for="end">Repeat weekly</label>
-
-                <input type="checkbox" id="repeat" name="repeat" class="form-control float-left" >
+                <div class="vertical-align-center">
+                  <input type="checkbox" id="repeat" name="repeat" class="checkbox float-left" ><label for="checkbox">Periode 1</label>
+                </div>
+                <div class="">
+                  <input type="checkbox" id="repeat" name="repeat" class="form-control float-left" ><label for="checkbox">Periode 1</label>
+                </div>
+                <div class="">
+                  <input type="checkbox" id="repeat" name="repeat" class="form-control float-left" ><label for="checkbox">Periode 1</label>
+                </div>
+                <div class="">
+                  <input type="checkbox" id="repeat" name="repeat" class="form-control float-left" ><label for="checkbox">Periode 1</label>
+                </div>
             </div>
             {{ Form::submit('Save class',array('class' => 'btn btn-success col-md-2 mt-5')) }}
 
