@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use App\Courses;
 use App\Imports\UsersImport;
 use App\Teachers;
@@ -183,25 +184,46 @@ class TeachersController extends Controller
     {
         $id = Auth::user()->teacher_id;
 
-        $classes = TeachersCourses::where('teacher_id',$id)->pluck('course_id');
+        $courses = TeachersCourses::where('teacher_id',$id)->pluck('course_id');
+
+        $firstClass = Classes::
+                whereIn('course_id', $courses)
+                ->where('end_time', '>', date('Y/m/d'))
+                ->firstOrFail();
+
+        $datetime1 = new DateTime($firstClass->start_time);
+        $datetime2 = new DateTime(date("Y-m-d H:i:s"));
+        $interval = $datetime1->diff($datetime2);
+
+        $classesActive = Classes::
+        whereIn('course_id', $courses)
+        ->where('active', 1)
+        ->orderBy('start_time')
+        ->get();
+
+        $classesToday = Classes::
+          whereIn('course_id', $courses)
+          ->where('active', 0)
+          ->where('end_time', '>', date('Y/m/d'))
+          ->where('end_time', '<', date("Y-m-d", strtotime("+1 day")))
+          ->orderBy('start_time')
+          ->get();
+
+        $classesWeek = Classes::
+                whereIn('course_id', $courses)
+                ->where('start_time', '>', date("Y-m-d", strtotime("+1 day")))
+                ->where('end_time', '<', date("Y-m-d", strtotime("+1 Week")))
+                ->orderBy('start_time')
+                ->get();
 
 
-        $classesToday = Classes::whereDate('start_time',Carbon::today())->whereIn('course_id',$classes)->get();
-
-        $nextClass = null;
-
-        if($classesToday)
-        {
-            $nextClass = Classes::whereDate('start_time','>=', Carbon::now()->toDateString())->first();
-
-            if(!isset($nextClass))
-            {
-                $nextClass = null;
-            }
-
-        }
-
-        return view('user.index', ['today'=> $classesToday,'next' => $nextClass]);
+        return view('user.index', [
+          'classesToday' => $classesToday,
+          'classesThisWeek' => $classesWeek,
+          'classesActive' => $classesActive,
+          'firstClass' => $firstClass,
+          'interval' => $interval
+        ]);
     }
 
 

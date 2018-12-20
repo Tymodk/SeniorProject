@@ -15,8 +15,8 @@
             </div>
             <div class="col-md-4">
                 @if(isset($next))
-                    <h2 class="pull-right  active">Volgende les start in {{$next->diffTime()}} min.
-                        <br><span><strong>{{($next->course->name)}}</strong></span></h2>
+                <h2 class="pull-right  active">Volgende les start in {{ $interval->format("%d dagen, %h uur and %i minuten") }}.
+                <br><span><strong>{{ $firstClass->course->name }}</strong></span></h2>
                 @else
                     <h2 class="pull-right  active">Geen les meer vandaag
                     </h2>
@@ -24,78 +24,55 @@
             </div>
         </div>
     </div>
-    <div class="container">
-    <a href="#" class="badge badge-secondary p-2"><strong >Mijn lessen</strong></a>
-    </div>
+
     <div class="mt-5 mb-5">
         <h3 class=" m-5 "><strong>Vandaag</strong></h3>
         <div class="container-fluid m-0 pl-5 pr-5">
             <!-- start agenda -->
             <table class="table   text-center p-5">
-                <thead></thead>
-                <tbody>
 
-
-                @if(count($today)>0)
-                    @foreach($today as $class)
-                        <tr>
-
-                            @if($class->active)
-                                <td><i class="fas fa-satellite-dish" style="color: green;"></i></td>
-                            @else
-                                <td><i class="fas fa-satellite-dish" style="color: lightgray;"></i></td>
-
-                            @endif
-
-
-                            <td>
-                                {{$class->time()}}
-                            </td>
-
-                            <td>{{$class->course->name}}</td>
-                            <td>A102 - IWT/PB-MT 3 WP a</td>
-                            @if($class->active)
-                                <td style="max-width: 15px">
-                                    <a href="{!! route('user.overview') !!}" class="btn btn-success active btn-block ">Bekijk
-                                        resultaten</a>
-                                </td>
-
-                            @else
-                                <td><a href="" class="btn btn-outline-success btn-block">Les starten</a></td>
-                            @endif
-                        </tr>
-                    @endforeach
-                @endif
-
+              <thead></thead>
+              <tbody>
+                <?php foreach ($classesActive as $class): ?>
+                  <tr>
+                    <td><i class="fas fa-satellite-dish text-success"></i></td>
+                    <td>{{ date("H:i", strtotime($class->start_time)) }} - {{ date("H:i", strtotime($class->end_time)) }}</td>
+                    <td>{{ $class->course->name }}</td>
+                    <td style="max-width: 15px">
+                        <a href="{!! route('user.overview') !!}" class="btn btn-success active btn-block ">Bekijk
+                            resultaten</a>
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
+                <?php foreach ($classesToday as $class): ?>
+                  <tr>
+                      <td><i class="fas fa-satellite-dish" style="color: lightgray;"></i></td>
+                      <td>{{ date("H:i", strtotime($class->start_time)) }} - {{ date("H:i", strtotime($class->end_time)) }}</td>
+                      <td>{{ $class->course->name }}</td>
+                      <td><a href="" class="btn btn-outline-success btn-block">Les starten</a></td>
+                  </tr>
+                <?php endforeach; ?>
                 </tbody>
-            </table>
-
-
+              </table>
         </div>
-
     </div>
     <div class="mt-5 mb-5">
-        <h3 class=" m-5 "><strong>Morgen</strong></h3>
+        <h3 class=" m-5 "><strong>This Week</strong></h3>
         <div class="container-fluid m-0 pl-5 pr-5">
             <!-- start agenda -->
             <table class="table   text-center p-5">
                 <thead></thead>
                 <tbody>
-
-                <tr>
-                    <td><i class="fas fa-satellite-dish" style="color: lightgray;"></i></td>
-                    <td>
-                        9u-10u
-                    </td>
-
-                    <td>Senior Project</td>
-                    <td>A102 - IWT/PB-MT 3 WP a</td>
-                    <td><a href="" class="btn btn-outline-light btn-block">Les starten</a></td>
-                </tr>
+                  <?php foreach ($classesThisWeek as $class): ?>
+                    <tr>
+                        <td><i class="fas fa-satellite-dish" style="color: lightgray;"></i></td>
+                        <td><?php setlocale(LC_ALL, 'nl_NL'); echo date("l", strtotime($class->start_time)) ?></td>
+                        <td>{{ date("H:i", strtotime($class->start_time)) }} - {{ date("H:i", strtotime($class->end_time)) }}</td>
+                        <td>{{ $class->course->name }}</td>
+                    </tr>
+                  <?php endforeach; ?>
                 </tbody>
             </table>
-
-
         </div>
     </div>
 @endsection
@@ -114,6 +91,3 @@
         }
     </script>
 @endpush
-
-
-
