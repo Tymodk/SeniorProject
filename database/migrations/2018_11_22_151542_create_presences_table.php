@@ -15,12 +15,12 @@ class CreatePresencesTable extends Migration
     {
         Schema::create('presences', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('students_courses_id');
+            $table->unsignedInteger('student_id');
             $table->unsignedInteger('class_id');
             $table->boolean('present')->default('0');
             $table->timestamps();
 
-              $table->foreign('students_courses_id')->references('id')->on('students_courses');
+              $table->foreign('student_id')->references('id')->on('students');
 
               $table->foreign('class_id')->references('id')->on('classes');
         });

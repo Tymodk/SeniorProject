@@ -63,6 +63,7 @@
                     .then(function (response) {
 
                         this.absent = response.data;
+                        console.log(response)
 
                     }.bind(this));
             },
@@ -75,12 +76,21 @@
                     }.bind(this));
             },
             listen(){
-                Echo.channel('teachers')
+                Echo.private('class.'+this.class_id)
                     .listen('addPresence',(classes) => {
+
+                        this.present = [...this.present, classes[0]];
+
                         this.getAbsent();
-                        this.getPresent();
+
+
+                     
                     });
-            }
+            },
+            indexWhere(array, conditionFn){
+              const item = array.find(conditionFn)
+                return array.indexOf(item);
+            },
         },
 
 

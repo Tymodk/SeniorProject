@@ -14232,10 +14232,10 @@ window._ = __webpack_require__(18);
  */
 
 try {
-  window.Popper = __webpack_require__(4).default;
-  window.$ = window.jQuery = __webpack_require__(5);
+    window.Popper = __webpack_require__(4).default;
+    window.$ = window.jQuery = __webpack_require__(5);
 
-  __webpack_require__(20);
+    __webpack_require__(20);
 } catch (e) {}
 
 /**
@@ -14257,9 +14257,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -14273,11 +14273,11 @@ if (token) {
 window.Pusher = __webpack_require__(41);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo__["a" /* default */]({
-  broadcaster: 'pusher',
-  cluster: "eu",
-  key: "653e9966bc1de5ee29d1",
+    broadcaster: 'pusher',
+    cluster: "eu",
+    key: "653e9966bc1de5ee29d1",
 
-  encrypted: true
+    encrypted: true
 });
 
 /***/ }),
@@ -57904,6 +57904,8 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 //
 //
 //
@@ -57970,6 +57972,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/api/classes/absent/' + this.class_id).then(function (response) {
 
                 this.absent = response.data;
+                console.log(response);
             }.bind(this));
         },
         getPresent: function getPresent() {
@@ -57981,10 +57984,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         listen: function listen() {
             var _this = this;
 
-            Echo.channel('teachers').listen('addPresence', function (classes) {
+            Echo.private('class.' + this.class_id).listen('addPresence', function (classes) {
+
+                _this.present = [].concat(_toConsumableArray(_this.present), [classes[0]]);
+
                 _this.getAbsent();
-                _this.getPresent();
             });
+        },
+        indexWhere: function indexWhere(array, conditionFn) {
+            var item = array.find(conditionFn);
+            return array.indexOf(item);
         }
     }
 
