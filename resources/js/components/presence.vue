@@ -76,19 +76,21 @@
                     }.bind(this));
             },
             listen(){
-                Echo.channel('teachers')
+                Echo.private('class.'+this.class_id)
                     .listen('addPresence',(classes) => {
-                        console.log(classes);
+
                         this.present = [...this.present, classes[0]];
-                        console.log(this.present);
-
-
-
 
                         this.getAbsent();
+
+
                      
                     });
-            }
+            },
+            indexWhere(array, conditionFn){
+              const item = array.find(conditionFn)
+                return array.indexOf(item);
+            },
         },
 
 

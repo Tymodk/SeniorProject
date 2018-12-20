@@ -2,117 +2,93 @@
 
 @section('content')
 
+<div class="container mt-3">
+    <a href="">Terug gaan</a>
+</div>
+    <div class="container mt-5">
+        <h2><strong>Web Research</strong></h2>
 
-    <div class="container-fluid justify-content-center text-center mt-5 border-bottom border-dark">
-        <div class="row">
-            <div class="col-md-4">
-        <h2 class="text-center pt-3">Welcome Sam!</h2>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample">
+            Klik voor algemene statistieken
+        </button>
+        <div class="collapse" id="collapseExample">
+            <div class="col-md-9 mt-2">
+                <div class="row">
+                    <div class="col-md-5 pt-3 pl-0">
+                        <h4>Aanwezigheden over 3 lessen</h4>
+
+                        Totaal<span class="pull-right strong"></span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="85"
+                                 aria-valuemin="0" aria-valuemax="100" style="width:85%">85%
+                            </div>
+                        </div>
+
+                        Gem. per les<span class="pull-right strong"></span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80"
+                                 aria-valuemin="0" aria-valuemax="100" style="width:80%">80%
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4">
-            <h2 class="text-center"> <p>14:22 </p>  <p>17/12/2018</p> </h2>
+        </div>
+
+        <h4 class="mt-5 pb-2">Overzicht studenten</h4>
+
+        <div class="row pt-2">
+            <div class="col-md-6">
+                <h5><strong>Maxim Ganses</strong></h5>
+        </div>
+            <div class="col-md-6">
+
+                <span class="pull-right">6</span>
+
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="4"
+                         aria-valuemin="0" aria-valuemax="100" style="width:80%">4
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4">
-            <h2 class="pull-right p-4 border border-dark">No scannner detected</h2>
+        </div>
+
+        <div class="row pt-2">
+            <div class="col-md-6">
+                <h5><strong>Arthur van Passel</strong></h5>
             </div>
+            <div class="col-md-6">
+
+                <span class="pull-right">6</span>
+
+                <div class="progress">
+                    <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="4"
+                         aria-valuemin="0" aria-valuemax="100" style="width:20%">2
+                    </div>
+                </div>
             </div>
+        </div>
+
+
+        <div class="row pt-2">
+            <div class="col-md-6">
+                <h5><strong>Tymo de Kock</strong></h5>
+            </div>
+            <div class="col-md-6">
+
+                <span class="pull-right">6</span>
+
+                <div class="progress">
+                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="4"
+                         aria-valuemin="0" aria-valuemax="100" style="width:50%">3
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="container-fluid">
-      <div class="container-fluid row mt-2 border-bottom border-dark pb-3">
-        <p><strong>Today</strong></p>
-        <div class="container-fluid">
-    		<!-- start agenda -->
-          <div class="row mt-2 vertical-align-text border-bottom border-dark">
-            <div class="col-md-2">
-              <h5>9u - 10u</h5>
-            </div>
-            <div class="col-md-3">
-              <h3>Senior Project</h3>
-            </div>
-            <div class="col-md-2">
-              <h5>A102</h5>
-            </div>
-            <div class="col-md-3">
-              <h5>IWT/PB-MT 3 WP a</h5>
-            </div>
-            <button type="button" onclick="window.location='{{ url('/lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
-              <h5 class="m-0">Start Lesson</h5>
-            </button>
-          </div>
-            <div class="row mt-2 vertical-align-text border-bottom border-dark">
-              <div class="col-md-2">
-                <h5>9u - 10u</h5>
-              </div>
-              <div class="col-md-3">
-                <h3>Senior Project</h3>
-              </div>
-              <div class="col-md-2">
-                <h5>A102</h5>
-              </div>
-              <div class="col-md-3">
-                <h5>IWT/PB-MT 3 WP a</h5>
-              </div>
-              <button type="button" onclick="window.location='{{ url('/lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
-                <h5 class="m-0">Start Lesson</h5>
-              </button>
-            </div>
-            <div class="row mt-2 vertical-align-text border-bottom border-dark">
-              <div class="col-md-2">
-                <h5>9u - 10u</h5>
-              </div>
-              <div class="col-md-3">
-                <h3>Senior Project</h3>
-              </div>
-              <div class="col-md-2">
-                <h5>A102</h5>
-              </div>
-              <div class="col-md-3">
-                <h5>IWT/PB-MT 3 WP a</h5>
-              </div>
-              <button type="button" onclick="window.location='{{ url('/lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
-                <h5 class="m-0">Start Lesson</h5>
-              </button>
-            </div>
-      	</div>
-      </div>
-      <div class="container-fluid row mt-2 border-bottom border-dark pb-3">
-        <p><strong>Today</strong></p>
-        <div class="container-fluid">
-    		<!-- start agenda -->
-          <div class="row mt-2 vertical-align-text border-bottom border-dark">
-            <div class="col-md-2">
-              <h5>9u - 10u</h5>
-            </div>
-            <div class="col-md-3">
-              <h3>Senior Project</h3>
-            </div>
-            <div class="col-md-2">
-              <h5>A102</h5>
-            </div>
-            <div class="col-md-3">
-              <h5>IWT/PB-MT 3 WP a</h5>
-            </div>
-            <button type="button" onclick="window.location='{{ url('/lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
-              <h5 class="m-0">Start Lesson</h5>
-            </button>
-          </div>
-          <div class="row mt-2 vertical-align-text border-bottom border-dark">
-            <div class="col-md-2">
-              <h5>9u - 10u</h5>
-            </div>
-            <div class="col-md-3">
-              <h3>Senior Project</h3>
-            </div>
-            <div class="col-md-2">
-              <h5>A102</h5>
-            </div>
-            <div class="col-md-3">
-              <h5>IWT/PB-MT 3 WP a</h5>
-            </div>
-            <button type="button" onclick="window.location='{{ url('/lesson') }}'" class="col-md-2 p-1 border mb-2 text-center ">
-              <h5 class="m-0">Start Lesson</h5>
-            </button>
-          </div>
-      	</div>
-      </div>
     </div>
-    @endsection
+
+
+
+@endsection

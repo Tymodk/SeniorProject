@@ -1,22 +1,27 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/wireframe',function (){
+    return view('wireframe');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/wireframe2',function (){
+    return view('wireframe2 ');
+});
 
+Route::get('/', function () {return view('wireframe');})->name('home')->middleware('auth');
+Route::get('/home', function () {return view('wireframe');})->middleware('auth');
+Route::post('/', function () {return view('wireframe');})->middleware('csrf');
+Route::post('/home', function () {return view('wireframe');})->middleware('csrf');
 
 Route::get('/homepage','TeachersController@classes')->middleware('auth')->name('user.index');
 
-
-
-
-
+Route::get('/lesson', function () {
+    return view('lesson');
+});
 
 Route::post('/start-class','ClassesController@start')->middleware('auth')->name('user.start-course');
-Route::get('/class','ClassesController@overview')->middleware('auth')->name('user.overview');
-
+Route::get('/mijn-les','ClassesController@overview')->middleware('auth')->name('user.overview');
+ROute::get('/mijn-lessen','ClassesController@classesPerTeacher')->middleware('auth')->name('user.list');
 
 
 
@@ -49,7 +54,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/classes/create','ClassesController@create')->name('classes.create');
     Route::get('/classes/edit/{id}','ClassesController@edit')->name('classes.edit');
     Route::get('/classes/show/{id}','ClassesController@show')->name('classes.show');
-    Route::post('/classes/store','ClassesController@show')->name('classes.store');
+    Route::post('/classes/store','ClassesController@store')->name('classes.store');
+    Route::get('/classes/delete/{id}','ClassesController@delete')->name('classes.delete');
+
 
 });
 Auth::routes();

@@ -19,6 +19,10 @@
     <a class="btn btn-outline-primary" href="/admin/teachercourses">
         Courses with teachers<span class="badge badge-light"></span>
     </a>
+    <a class="btn btn-outline-primary" href="/admin/classes">
+        Classes <span class="badge badge-light"></span>
+    </a>
+
 
 </div>
 @endsection
