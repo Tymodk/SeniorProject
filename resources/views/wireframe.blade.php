@@ -2,73 +2,100 @@
 
 @section('content')
 
+<div class="container mt-3">
+    <a href="">Terug gaan</a>
+</div>
+    <div class="container mt-5">
+        <h2><strong>Web Research</strong></h2>
 
-    <div class="container-fluid justify-content-center text-center mt-5">
-        <div class="row">
-            <div class="col-md-4">
-        <h2 class="text-center pt-3">Welcome {{ $user->name }}!</h2>
+
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample">
+            Klik voor algemene statistieken
+        </button>
+        <div class="collapse" id="collapseExample">
+            <div class="col-md-9 mt-2">
+                <div class="row">
+                    <div class="col-md-5 pt-3 pl-0">
+                        <h4>Aanwezigheden over 3 lessen</h4>
+
+                        Totaal<span class="pull-right strong"></span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="85"
+                                 aria-valuemin="0" aria-valuemax="100" style="width:85%">85%
+                            </div>
+                        </div>
+
+                        Gem. per les<span class="pull-right strong"></span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80"
+                                 aria-valuemin="0" aria-valuemax="100" style="width:80%">80%
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4">
-            <h2 class="text-center"> <p>{{ date("H:i") }}</p>  <p>{{ date("d/m/Y") }}</p> </h2>
+        </div>
+
+        <h4 class="mt-5 pb-2">Overzicht studenten</h4>
+
+        <div class="row pt-2">
+            <div class="col-md-6">
+                <h5><strong>Maxim Ganses</strong></h5>
+        </div>
+            <div class="col-md-6">
+
+                <span class="pull-right">6</span>
+
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="4"
+                         aria-valuemin="0" aria-valuemax="100" style="width:80%">4
+                    </div>
+                </div>
+
             </div>
-            <div class="col-md-4">
-                <h2 class="pull-right  active">Volgende les start in {{ $interval->format("%d dagen, %h uur and %i minuten") }}.
-                    <br><span><strong>{{ $firstClass->course->name }}</strong></span></h2>
+        </div>
+
+
+
+        <div class="row pt-2">
+            <div class="col-md-6">
+                <h5><strong>Arthur van Passel</strong></h5>
+            </div>
+            <div class="col-md-6">
+
+
+                <span class="pull-right">6</span>
+
+                <div class="progress">
+                    <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="4"
+                         aria-valuemin="0" aria-valuemax="100" style="width:20%">2
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row pt-2">
+            <div class="col-md-6">
+                <h5><strong>Tymo de Kock</strong></h5>
+            </div>
+            <div class="col-md-6">
+
+                <span class="pull-right">6</span>
+
+                <div class="progress">
+                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="4"
+                         aria-valuemin="0" aria-valuemax="100" style="width:50%">3
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="mt-5 mb-5">
-        <h3 class=" m-5 "><strong>Vandaag</strong></h3>
-        <div class="container-fluid m-0 pl-5 pr-5">
-            <!-- start agenda -->
-            <table class="table   text-center p-5">
-                <thead></thead>
-                <tbody>
-                <?php foreach ($classesActive as $class): ?>
-                  <tr>
-                    <td><i class="fas fa-satellite-dish text-success"></i></td>
-                    <td>{{ date("H:i", strtotime($class->start_time)) }} - {{ date("H:i", strtotime($class->end_time)) }}</td>
-                    <td>{{ $class->course->name }}</td>
-                    <td style="max-width: 15px"><a href="" class="btn btn-success active btn-block ">Bekijk
-                            resultaten</a></td>
-                  </tr>
-                <?php endforeach; ?>
-
-                <?php foreach ($classesToday as $class): ?>
-                  <tr>
-                      <td><i class="fas fa-satellite-dish" style="color: lightgray;"></i></td>
-                      <td>{{ date("H:i", strtotime($class->start_time)) }} - {{ date("H:i", strtotime($class->end_time)) }}</td>
-                      <td>{{ $class->course->name }}</td>
-                      <td><a href="" class="btn btn-outline-success btn-block">Les starten</a></td>
-                  </tr>
-                <?php endforeach; ?>
-                </tbody>
-            </table>
-
-
-        </div>
-
     </div>
-    <div class="mt-5 mb-5">
-        <h3 class=" m-5 "><strong>This Week</strong></h3>
-        <div class="container-fluid m-0 pl-5 pr-5">
-            <!-- start agenda -->
-            <table class="table   text-center p-5">
-                <thead></thead>
-                <tbody>
-                  <?php foreach ($classesThisWeek as $class): ?>
-                    <tr>
-                        <td><i class="fas fa-satellite-dish" style="color: lightgray;"></i></td>
-                        <td><?php setlocale(LC_ALL, 'nl_NL'); echo date("l", strtotime($class->start_time)) ?></td>
-                        <td>{{ date("H:i", strtotime($class->start_time)) }} - {{ date("H:i", strtotime($class->end_time)) }}</td>
-                        <td>{{ $class->course->name }}</td>
-                    </tr>
-                  <?php endforeach; ?>
-                </tbody>
-            </table>
 
 
-        </div>
-    </div>
+
 @endsection
