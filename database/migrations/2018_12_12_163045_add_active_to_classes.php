@@ -15,6 +15,7 @@ class AddActiveToClasses extends Migration
     {
         Schema::table('classes', function($table) {
             $table->boolean('active');
+            $table->boolean('archive')->default('0');
         });
     }
 

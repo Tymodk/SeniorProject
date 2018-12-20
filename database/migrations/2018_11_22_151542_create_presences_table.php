@@ -18,6 +18,7 @@ class CreatePresencesTable extends Migration
             $table->unsignedInteger('student_id');
             $table->unsignedInteger('class_id');
             $table->boolean('present')->default('0');
+            $table->boolean('ill')->default('0');
             $table->timestamps();
 
               $table->foreign('student_id')->references('id')->on('students');
