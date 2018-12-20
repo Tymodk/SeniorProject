@@ -27,5 +27,6 @@ class TeacherTabelSeeder extends Seeder
 
             ]);
         }
+
     }
 }
