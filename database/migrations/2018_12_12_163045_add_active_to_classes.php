@@ -26,7 +26,7 @@ class AddActiveToClasses extends Migration
     public function down()
     {
         Schema::table('classes', function($table) {
-            $table->boolean('active');
+            $table->dropColumn('active');
         });
     }
 }
