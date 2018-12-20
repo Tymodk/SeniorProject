@@ -69,3 +69,11 @@ div input {
   bottom: 5px;
   z-index: 9;
 }
+
+.deleteIcon{
+    display: none;
+}
+
+.delete:hover .deleteIcon{
+    display: inline;
+}
