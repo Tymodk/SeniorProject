@@ -1,12 +1,6 @@
 <?php
 
-Route::get('/wireframe',function (){
-    return view('wireframe');
-});
 
-Route::get('/wireframe2',function (){
-    return view('wireframe2 ');
-});
 
 Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/home', 'HomeController@index')->middleware('auth');
@@ -20,8 +14,8 @@ Route::get('/lesson', function () {
 });
 
 Route::post('/start-class','ClassesController@start')->middleware('auth')->name('user.start-course');
-Route::get('/mijn-les','ClassesController@overview')->middleware('auth')->name('user.overview');
-ROute::get('/mijn-lessen','ClassesController@classesPerTeacher')->middleware('auth')->name('user.list');
+Route::get('/class','ClassesController@overview')->middleware('auth')->name('user.overview');
+
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index')->name('admin.home');

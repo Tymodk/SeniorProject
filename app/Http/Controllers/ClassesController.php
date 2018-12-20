@@ -12,7 +12,6 @@ use App\TeachersCourses;
 
 use Carbon\Carbon;
 use http\Env\Response;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -41,39 +40,34 @@ class ClassesController extends Controller
     public function edit($id)
     {
         $class = Classes::find($id);
-        $courses = Courses::pluck('name', 'id');
-        return view('classes.edit', ['class' => $class, 'courses' => $courses]);
+        $courses = Courses::pluck('name','id');
+        return view('classes.edit',['class'=>$class,'courses'=>$courses]);
     }
 
     public function show($id)
     {
-        try{
-            $class = Classes::findOrFail($id);
+        $class = Classes::where('id', $id)->firstOrFail();
 
-            $teachers = TeachersCourses::where('course_id', $class->course_id)->pluck('teacher_id');
-            $teachers = Teachers::whereIn('id', $teachers)->get();
+        $teachers = TeachersCourses::where('course_id', $class->course_id)->pluck('teacher_id');
+        $teachers = Teachers::whereIn('id', $teachers)->get();
 
-            $totalStudents = StudentsCourses::where('course_id', $class->course_id)->count();
+        $totalStudents = StudentsCourses::where('course_id', $class->course_id)->count();
 
-            return view('classes.show', ['teachers' => $teachers, 'students' => $totalStudents, 'class' => $class]);
-
-        }catch (ModelNotFoundException $e){
-            return back()->withInput()->withErrors('message','Class not found');
-        }
+        return view('classes.show', ['teachers' => $teachers, 'students' => $totalStudents, 'class' => $class]);
 
 
     }
 
     public function store(Request $request)
     {
-        $start = substr($request->start, 11);
-        $end = substr($request->start, 0, 10);
+        $start = substr($request->start,11);
+        $end = substr($request->start,0,10);
 
         $start = $start . ' ' . $end;
 
 
-        $start2 = substr($request->end, 11);
-        $end = substr($request->end, 0, 10);
+        $start2 = substr($request->end,11);
+        $end = substr($request->end,0,10);
 
         $start2 = $start2 . ' ' . $end;
         $newClass = new Classes();
@@ -91,16 +85,9 @@ class ClassesController extends Controller
     {
         $class = Classes::find($request->id);
 
-        $start = substr($request->start, 11);
-        $end = substr($request->start, 0, 10);
-        $start = $start . ' ' . $end;
 
-        $start2 = substr($request->end, 11);
-        $end = substr($request->end, 0, 10);
-        $start2 = $start2 . ' ' . $end;
-
-        $class->start_time = Carbon::parse($start);
-        $class->end_time = Carbon::parse($start2);
+        $class->start_time = Carbon::parse($request->start);
+        $class->end_time = Carbon::parse($request->end);
         $class->course_id = $request->course;
         $class->save();
 
@@ -138,35 +125,41 @@ class ClassesController extends Controller
 
     public function overview()
     {
+        #get active of current user
+        $teachercourse = TeachersCourses::where('teacher_id', Auth::id())->pluck('course_id');
 
-        $teachercourse = TeachersCourses::where('teacher_id', Auth::user()->teacherid())->pluck('course_id');
         $class = Classes::where('active', 1)->whereIn('course_id', $teachercourse)->first();
-        $allStudents = StudentsCourses::where('course_id', $class)->get();
+
+        // get al students that have this class and are not registered
+
+        $allStudents = StudentsCourses::where('course_id', $class->course_id)->get();
+
+
+        $notPresent = '';
         return view('user.overview', ['notpresent' => $allStudents, 'class' => $class]);
-
-    }
-
-
-    public function classesPerTeacher()
-    {
 
     }
 
     public function api_class_absent($classid)
     {
-        $class = Classes::where('id', $classid)->first();
-        $presence = Presences::where('class_id', $classid)->where('present', 1)->pluck('students_courses_id');
-        $studentC = StudentsCourses::whereNotIn('id', $presence)->where('course_id', $class->course_id)->pluck('student_id');
-        $notPresentStudents = Students::whereIn('id', $studentC)->get();
 
-        return response()->json($notPresentStudents);
+        $presentStudentsCourses = Presences::select('students_courses_id')->where('class_id', $classid)->get();
+
+        if (isset($presentStudentsCourses)) {
+            $studentCourse = StudentsCourses::whereNotIn('id', $presentStudentsCourses)->pluck('student_id');
+            $present = Students::whereIn('id', $studentCourse)->get();
+            return response()->json($present);
+        } else {
+            return response()->json($presentStudentsCourses);
+        }
+
 
     }
 
     public function api_class_present($classid)
     {
 
-        $presentStudentsCourses = Presences::select('students_courses_id')->where('class_id', $classid)->where('present', 1)->get();
+        $presentStudentsCourses = Presences::select('students_courses_id')->where('class_id', $classid)->get();
 
         if (isset($presentStudentsCourses)) {
             $studentCourse = StudentsCourses::whereIn('id', $presentStudentsCourses)->pluck('student_id');

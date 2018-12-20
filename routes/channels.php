@@ -11,18 +11,9 @@
 |
 */
 
-use App\Classes;
-use App\TeachersCourses;
-
 Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int)$user->id === (int)$id;
+    return (int) $user->id === (int) $id;
 });
-Broadcast::channel('class.{id}', function ($user, $id) {
-
-    $class = Classes::where('id', $id)->first();
-    $count = TeachersCourses::where('teacher_id', $user->teacher_id)->where('course_id', $class->course_id)->count();
-    if ($count > 0) {
-        return true;
-    }
-    return false;
+Broadcast::channel('teachers', function () {
+    return true;
 });

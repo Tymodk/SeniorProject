@@ -38,10 +38,4 @@ class User extends Authenticatable
 
         return $state;
     }
-
-
-    public function teacherid()
-    {
-        return $this->teacher_id;
-    }
 }
