@@ -15,7 +15,7 @@
             <tr>
 
                 <td>Web research</td>
-                <td><a href=""> Bekijk statistieken </a></td>
+                <td><a href="/wireframe"> Bekijk statistieken </a></td>
 
             </tr>
 
