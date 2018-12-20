@@ -68,28 +68,52 @@ class ClassesController extends Controller
     {
         $startTime = substr($request->start, 11);
         $startDate = substr($request->start, 0, 10);
-        $start = $startDate . ' ' . $startTime;
+        $start = $startTime . ' ' . $startDate;
 
         $endTime = substr($request->end, 11);
         $endDate = substr($request->end, 0, 10);
 
-        $end = $endDate . ' ' . $endTime;
+        $end = $endTime . ' ' . $endDate;
         $repeat1 = $request->repeat1;
 
-        $start2 = $start;
-        $end2 = $end;
         if ($repeat1) {
-          for ($i=0; $i < 6; $i++) {
+          while($startDate < "2018-10-26" && $startDate > "2018-10-01") {
             $newClass = new Classes();
-            $newClass->start_time = Carbon::parse($start2);
-            $newClass->end_time = Carbon::parse($end2);
+            $newClass->start_time = Carbon::parse($start);
+            $newClass->end_time = Carbon::parse($end);
             $newClass->course_id = $request->course;
             $newClass->active = 0;
             $newClass->save();
 
-            $startdate = date("Y/m/d", strtotime("$start2 +1 week"));
-            $enddate = date("Y/m/d", strtotime("$end2 +1 week"));
+            $startDate = date("Y/m/d", strtotime("$startDate +1 week"));
+            $endDate = date("Y/m/d", strtotime("$endDate +1 week"));
+
+            $end = $endTime . ' ' . $endDate;
+            $start = $startTime . ' ' . $startDate;
           }
+        }
+        if ($repeat2) {
+          while($startDate > "2018-11-19" && $startDate < "2019-01-25") {
+            $newClass = new Classes();
+            $newClass->start_time = Carbon::parse($start);
+            $newClass->end_time = Carbon::parse($end);
+            $newClass->course_id = $request->course;
+            $newClass->active = 0;
+            $newClass->save();
+
+            $startDate = date("Y/m/d", strtotime("$startDate +1 week"));
+            $endDate = date("Y/m/d", strtotime("$endDate +1 week"));
+
+            $end = $endTime . ' ' . $endDate;
+            $start = $startTime . ' ' . $startDate;
+        }
+        else {
+          $newClass = new Classes();
+          $newClass->start_time = Carbon::parse($start);
+          $newClass->end_time = Carbon::parse($end);
+          $newClass->course_id = $request->course;
+          $newClass->active = 0;
+          $newClass->save();
         }
 
 
