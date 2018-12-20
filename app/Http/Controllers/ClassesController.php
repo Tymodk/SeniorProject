@@ -146,6 +146,12 @@ class ClassesController extends Controller
 
     }
 
+
+    public function classesPerTeacher()
+    {
+
+    }
+
     public function api_class_absent($classid)
     {
         $class = Classes::where('id', $classid)->first();

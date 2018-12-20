@@ -8,6 +8,7 @@ use App\Teachers;
 use App\TeachersCourses;
 use App\User;
 use App\Classes;
+use Carbon\Carbon;
 use Excel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -178,14 +179,29 @@ class TeachersController extends Controller
 
 
 
-
     public function classes()
     {
         $id = Auth::user()->teacher_id;
-        $courses = TeachersCourses::where('teacher_id', $id)->pluck('course_id');
-        $classes = Classes::whereIn('course_id', $courses)->get();
-        $active = Classes::where('active',1)->get();
-        return view('user.index', ['classes' => $classes,'active'=>$active]);
+
+        $classes = TeachersCourses::where('teacher_id',$id)->pluck('course_id');
+
+
+        $classesToday = Classes::whereDate('start_time',Carbon::today())->whereIn('course_id',$classes)->get();
+
+        $nextClass = null;
+
+        if($classesToday)
+        {
+            $nextClass = Classes::whereDate('start_time','>=', Carbon::now()->toDateString())->first();
+
+            if(!isset($nextClass))
+            {
+                $nextClass = null;
+            }
+
+        }
+
+        return view('user.index', ['today'=> $classesToday,'next' => $nextClass]);
     }
 
 

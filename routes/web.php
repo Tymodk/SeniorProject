@@ -1,6 +1,12 @@
 <?php
 
+Route::get('/wireframe',function (){
+    return view('wireframe');
+});
 
+Route::get('/wireframe2',function (){
+    return view('wireframe2 ');
+});
 
 Route::get('/', function () {return view('wireframe');})->name('home')->middleware('auth');
 Route::get('/home', function () {return view('wireframe');})->middleware('auth');
@@ -14,8 +20,8 @@ Route::get('/lesson', function () {
 });
 
 Route::post('/start-class','ClassesController@start')->middleware('auth')->name('user.start-course');
-Route::get('/class','ClassesController@overview')->middleware('auth')->name('user.overview');
-
+Route::get('/mijn-les','ClassesController@overview')->middleware('auth')->name('user.overview');
+ROute::get('/mijn-lessen','ClassesController@classesPerTeacher')->middleware('auth')->name('user.list');
 
 
 
