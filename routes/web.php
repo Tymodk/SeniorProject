@@ -12,6 +12,13 @@ Route::get('/wireframe3',function (){
     return view('wireframe3 ');
 });
 
+
+Route::get('/lessen-overzicht','TeachersController@CoursesOverview')->name('user.courses');
+Route::get('/statistieken/{coursename}','TeachersController@StatisticsOverview')->name('user.statistics');
+
+
+
+
 Route::get('/', function () {return view('wireframe');})->name('home')->middleware('auth');
 Route::get('/home', function () {return view('wireframe');})->middleware('auth');
 Route::post('/', function () {return view('wireframe');})->middleware('csrf');
