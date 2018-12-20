@@ -71,6 +71,13 @@
 
                 <input type="datetime-local" id="end" name="end" class="form-control" value={{ date('Y-m-d\T10:30:00') }}>
             </div>
+
+            <div class="form-group">
+
+                <label for="end">Repeat weekly</label>
+
+                <input type="checkbox" id="repeat" name="repeat" class="form-control float-left" >
+            </div>
             {{ Form::submit('Save class',array('class' => 'btn btn-success col-md-2 mt-5')) }}
 
             {{ Form::close() }}
