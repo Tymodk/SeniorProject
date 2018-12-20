@@ -8,6 +8,7 @@
     <div class="container mt-5">
         <h2><strong>Web Research</strong></h2>
 
+
         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
                 aria-expanded="false" aria-controls="collapseExample">
             Klik voor algemene statistieken
@@ -51,14 +52,18 @@
                          aria-valuemin="0" aria-valuemax="100" style="width:80%">4
                     </div>
                 </div>
+
             </div>
         </div>
+
+
 
         <div class="row pt-2">
             <div class="col-md-6">
                 <h5><strong>Arthur van Passel</strong></h5>
             </div>
             <div class="col-md-6">
+
 
                 <span class="pull-right">6</span>
 
@@ -69,6 +74,8 @@
                 </div>
             </div>
         </div>
+
+
 
 
         <div class="row pt-2">

@@ -63,20 +63,20 @@
 
             <div class="form-group">
                 {{Form::label('Select course')}}
-                {{Form::select('course',$courses,array('class'=>'form-control'))}}
+                {{Form::select('course',$courses,$class->course_id,array('class'=>'form-control'))}}
             </div>
             <div class="form-group">
 
                 <label for="start">Start</label>
 
-                <input type="datetime-local" id="start" class="form-control" value="{{$class->start()}}">
+                <input type="datetime-local" id="start" class="form-control" value="{{date_format(date_create($class->start_time),"Y-m-d\TH:i")}}">
             </div>
 
             <div class="form-group">
 
                 <label for="end">Start</label>
 
-                <input type="datetime-local" id="end" class="form-control" value="{{$class->end()}}">
+                <input type="datetime-local" id="end" class="form-control" value="{{date_format(date_create($class->end_time),"Y-m-d\TH:i")}}">
             </div>
 
             {{ Form::submit('Save class',array('class' => 'btn btn-success col-md-2 mt-5')) }}
@@ -86,4 +86,3 @@
         </div>
     </div>
 @endsection
-
