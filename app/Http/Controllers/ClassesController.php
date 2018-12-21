@@ -75,6 +75,7 @@ class ClassesController extends Controller
 
         $end = $endTime . ' ' . $endDate;
         $repeat1 = $request->repeat1;
+        $repeat2 = $request->repeat2;
 
         if ($repeat1) {
           while($startDate < "2018-10-26" && $startDate > "2018-10-01") {
@@ -106,6 +107,7 @@ class ClassesController extends Controller
 
             $end = $endTime . ' ' . $endDate;
             $start = $startTime . ' ' . $startDate;
+          }
         }
         else {
           $newClass = new Classes();
