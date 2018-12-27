@@ -66,22 +66,59 @@ class ClassesController extends Controller
 
     public function store(Request $request)
     {
-        $start = substr($request->start, 11);
-        $end = substr($request->start, 0, 10);
+        $startTime = substr($request->start, 11);
+        $startDate = substr($request->start, 0, 10);
+        $start = $startTime . ' ' . $startDate;
 
-        $start = $start . ' ' . $end;
+        $endTime = substr($request->end, 11);
+        $endDate = substr($request->end, 0, 10);
+
+        $end = $endTime . ' ' . $endDate;
+        $repeat1 = $request->repeat1;
+        $repeat2 = $request->repeat2;
+
+        if ($repeat1) {
+          while($startDate < "2018-10-26" && $startDate > "2018-10-01") {
+            $newClass = new Classes();
+            $newClass->start_time = Carbon::parse($start);
+            $newClass->end_time = Carbon::parse($end);
+            $newClass->course_id = $request->course;
+            $newClass->active = 0;
+            $newClass->save();
+
+            $startDate = date("Y/m/d", strtotime("$startDate +1 week"));
+            $endDate = date("Y/m/d", strtotime("$endDate +1 week"));
+
+            $end = $endTime . ' ' . $endDate;
+            $start = $startTime . ' ' . $startDate;
+          }
+        }
+        if ($repeat2) {
+          while($startDate > "2018-11-19" && $startDate < "2019-01-25") {
+            $newClass = new Classes();
+            $newClass->start_time = Carbon::parse($start);
+            $newClass->end_time = Carbon::parse($end);
+            $newClass->course_id = $request->course;
+            $newClass->active = 0;
+            $newClass->save();
+
+            $startDate = date("Y/m/d", strtotime("$startDate +1 week"));
+            $endDate = date("Y/m/d", strtotime("$endDate +1 week"));
+
+            $end = $endTime . ' ' . $endDate;
+            $start = $startTime . ' ' . $startDate;
+          }
+        }
+        else {
+          $newClass = new Classes();
+          $newClass->start_time = Carbon::parse($start);
+          $newClass->end_time = Carbon::parse($end);
+          $newClass->course_id = $request->course;
+          $newClass->active = 0;
+          $newClass->save();
+        }
 
 
-        $start2 = substr($request->end, 11);
-        $end = substr($request->end, 0, 10);
-
-        $start2 = $start2 . ' ' . $end;
-        $newClass = new Classes();
-        $newClass->start_time = Carbon::parse($start);
-        $newClass->end_time = Carbon::parse($start2);
-        $newClass->course_id = $request->course;
-        $newClass->active = 0;
-        $newClass->save();
 
         Session::flash('message', $request->start);
         return Redirect::to('/admin/classes');

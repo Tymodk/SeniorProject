@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\StudentsCourses;
 use DateTime;
 use App\Courses;
 use App\Imports\UsersImport;
@@ -221,9 +222,27 @@ class TeachersController extends Controller
         ]);
     }
 
+    public function CoursesOverview()
+    {
+        //courses
 
     // api routes
 
+        $students = StudentsCourses::where('course_id',$course->id)->get();
+
+
+        return view('user.statistics',['total'=>$countClasses,'students'=>$students,'course'=>$course]) ;
+    }
+
+
+    /* api routes
+     *
+     *
+     *
+     *
+     *
+     *
+     */
 
     public function myClasses()
     {
