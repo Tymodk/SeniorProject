@@ -90,9 +90,9 @@ class TeachersController extends Controller
     {
         try {
             $teacher = Teachers::findOrFail($id);
-            $tc = TeachersCourses::where('teacher_id',$teacher->id)->pluck('course_id');
-            $courses = Courses::whereIn('id',$tc)->get();
-            return view('teachers.show', ['teacher' => $teacher,'courses'=>$courses]);
+            $tc = TeachersCourses::where('teacher_id', $teacher->id)->pluck('course_id');
+            $courses = Courses::whereIn('id', $tc)->get();
+            return view('teachers.show', ['teacher' => $teacher, 'courses' => $courses]);
         } catch (ModelNotFoundException $e) {
             return back()->withInput()->withErrors();
         }
@@ -143,8 +143,7 @@ class TeachersController extends Controller
             $teacher = Teachers::findOrFail($id);
             $user = User::where('teacher_id', $teacher->id)->first();
             $teacher->delete();
-            if(isset($user))
-            {
+            if (isset($user)) {
                 $user->delete();
             }
 
@@ -173,80 +172,73 @@ class TeachersController extends Controller
                 $failure->attribute(); // either heading key (if using heading row concern) or column index
                 $failure->errors(); // Actual error messages from Laravel validator
             }
-                return back()->withInput()->withErrors(['failures'=>$failures]);
-            }
+            return back()->withInput()->withErrors(['failures' => $failures]);
         }
-
-
+    }
 
 
     public function classes()
     {
         $id = Auth::user()->teacher_id;
 
-        $courses = TeachersCourses::where('teacher_id',$id)->pluck('course_id');
+        $courses = TeachersCourses::where('teacher_id', $id)->pluck('course_id');
 
         $firstClass = Classes::
-                whereIn('course_id', $courses)
-                ->where('end_time', '>', date('Y/m/d'))
-                ->firstOrFail();
+        whereIn('course_id', $courses)
+            ->where('end_time', '>', date('Y/m/d'))
+            ->first();
 
-        $datetime1 = new DateTime($firstClass->start_time);
-        $datetime2 = new DateTime(date("Y-m-d H:i:s"));
-        $interval = $datetime1->diff($datetime2);
+
 
         $classesActive = Classes::
         whereIn('course_id', $courses)
-        ->where('active', 1)
-        ->orderBy('start_time')
-        ->get();
+            ->where('active', 1)
+            ->orderBy('start_time')
+            ->get();
 
         $classesToday = Classes::
-          whereIn('course_id', $courses)
-          ->where('active', 0)
-          ->where('end_time', '>', date('Y/m/d'))
-          ->where('end_time', '<', date("Y-m-d", strtotime("+1 day")))
-          ->orderBy('start_time')
-          ->get();
+        whereIn('course_id', $courses)
+            ->where('active', 0)
+            ->where('end_time', '>', date('Y/m/d'))
+            ->where('end_time', '<', date("Y-m-d", strtotime("+1 day")))
+            ->orderBy('start_time')
+            ->get();
 
         $classesWeek = Classes::
-                whereIn('course_id', $courses)
-                ->where('start_time', '>', date("Y-m-d", strtotime("+1 day")))
-                ->where('end_time', '<', date("Y-m-d", strtotime("+1 Week")))
-                ->orderBy('start_time')
-                ->get();
+        whereIn('course_id', $courses)
+            ->where('start_time', '>', date("Y-m-d", strtotime("+1 day")))
+            ->where('end_time', '<', date("Y-m-d", strtotime("+1 Week")))
+            ->orderBy('start_time')
+            ->get();
 
 
         return view('user.index', [
-          'classesToday' => $classesToday,
-          'classesThisWeek' => $classesWeek,
-          'classesActive' => $classesActive,
-          'firstClass' => $firstClass,
-          'interval' => $interval
+            'classesToday' => $classesToday,
+            'classesThisWeek' => $classesWeek,
+            'classesActive' => $classesActive,
+            'firstClass' => $firstClass,
+            
         ]);
     }
-
-
 
 
     // api routes
 
 
-
-
-    public  function myClasses()
+    public function myClasses()
     {
         #$id = Auth::user()->teacher_id;
         #$courses = TeachersCourses::where('teacher_id', $id)->pluck('course_id');
         $classes = Teachers::get();
-        return  response()->json($classes);
+        return response()->json($classes);
     }
 
-    public function storeclasses(Request $request){
+    public function storeclasses(Request $request)
+    {
 
         $teacher = new Teachers();
         $teacher->name = $request->body;
-        $teacher->email = 'testtest'.$request->body;
+        $teacher->email = 'testtest' . $request->body;
         $teacher->password = 'fsdfsdf';
         $teacher->save();
 

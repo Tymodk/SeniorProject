@@ -12,12 +12,8 @@ Route::get('/wireframe3',function (){
     return view('wireframe3 ');
 });
 
-Route::get('/', function () {return view('wireframe');})->name('home')->middleware('auth');
-Route::get('/home', function () {return view('wireframe');})->middleware('auth');
-Route::post('/', function () {return view('wireframe');})->middleware('csrf');
-Route::post('/home', function () {return view('wireframe');})->middleware('csrf');
 
-Route::get('/homepage','TeachersController@classes')->middleware('auth')->name('user.index');
+Route::get('/','TeachersController@classes')->middleware('auth')->name('user.index');
 
 Route::get('/lesson', function () {
     return view('lesson');
