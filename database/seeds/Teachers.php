@@ -10,8 +10,8 @@
   $teachers = [
 
       [   'name'=>'Sam Serrien',
-          'email'=>'sam.serien@kdg.be',
-          'password'=>'sam-serien'],
+          'email'=>'sam.serrien@kdg.be',
+          'password'=>'sam-serrien'],
       [   'name'=>'Koen Heylen',
           'email'=>'koen.heylen@kdg.be',
           'password'=>'koen-heylen'],

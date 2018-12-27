@@ -35,7 +35,8 @@
 
               <thead></thead>
               <tbody>
-                <?php foreach ($classesActive as $class): ?>
+              @if(!empty($classesActive))
+               @foreach ($classesActive as $class)
                   <tr>
                     <td><i class="fas fa-satellite-dish text-success"></i></td>
                     <td>{{ date("H:i", strtotime($class->start_time)) }} - {{ date("H:i", strtotime($class->end_time)) }}</td>
@@ -45,17 +46,24 @@
                             resultaten</a>
                     </td>
                   </tr>
-                <?php endforeach; ?>
-                <?php foreach ($classesToday as $class): ?>
+                @endforeach
+               @endif
+              @if(count($classesToday) > 0)
+                @foreach ($classesToday as $class)
                   <tr>
                       <td><i class="fas fa-satellite-dish" style="color: lightgray;"></i></td>
                       <td>{{ date("H:i", strtotime($class->start_time)) }} - {{ date("H:i", strtotime($class->end_time)) }}</td>
                       <td>{{ $class->course->name }}</td>
                       <td><a href="" class="btn btn-outline-success btn-block">Les starten</a></td>
                   </tr>
-                <?php endforeach; ?>
+                @endforeach
+              @else
+                  <p>Geen lessen vandaag</p>
+              @endif
+
                 </tbody>
               </table>
+
         </div>
     </div>
     <div class="mt-5 mb-5">
@@ -65,14 +73,18 @@
             <table class="table   text-center p-5">
                 <thead></thead>
                 <tbody>
-                  <?php foreach ($classesThisWeek as $class): ?>
+                @if(count($classesThisWeek) > 0)
+                  @foreach ($classesThisWeek as $class)
                     <tr>
                         <td><i class="fas fa-satellite-dish" style="color: lightgray;"></i></td>
                         <td><?php setlocale(LC_ALL, 'nl_NL'); echo date("l", strtotime($class->start_time)) ?></td>
                         <td>{{ date("H:i", strtotime($class->start_time)) }} - {{ date("H:i", strtotime($class->end_time)) }}</td>
                         <td>{{ $class->course->name }}</td>
                     </tr>
-                  <?php endforeach; ?>
+                  @endforeach
+                    @else
+                <p>Geen lessen deze week</p>
+                    @endif
                 </tbody>
             </table>
         </div>
