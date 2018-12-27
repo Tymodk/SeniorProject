@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="container mt-3">
-        <a href="">Terug gaan</a>
+        <a href="{!! route('user.index') !!}">Terug gaan</a>
     </div>
 
     <div class="container mt-5">
@@ -11,14 +11,15 @@
 
         <table class="table table-hover">
             <tbody>
-@foreach($courses as $course)
-            <tr>
+            @foreach($courses as $course)
+                <tr>
 
-                <td>{{$course->name}} </td>
-                <td><a href="{!! route('user.statistics',['coursename'=> $course->id]) !!}"> Bekijk statistieken </a></td>
+                    <td>{{$course->name}} </td>
+                    <td><a href="{!! route('user.statistics',['coursename'=> $course->slug]) !!}"> Bekijk
+                            statistieken </a></td>
 
-            </tr>
-    @endforeach
+                </tr>
+            @endforeach
 
             </tbody>
         </table>

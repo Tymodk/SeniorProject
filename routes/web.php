@@ -14,14 +14,11 @@ Route::get('/wireframe3',function (){
 
 
 Route::get('/','TeachersController@classes')->middleware('auth')->name('user.index');
+Route::get('/mijn-lessen','ClassesController@classesPerTeacher')->middleware('auth')->name('user.list');
+Route::get('/statistieken/{slug}','TeachersController@CoursesOverview')->name('user.statistics');
 
-Route::get('/lesson', function () {
-    return view('lesson');
-});
 
 Route::post('/start-class','ClassesController@start')->middleware('auth')->name('user.start-course');
-Route::get('/mijn-les','ClassesController@overview')->middleware('auth')->name('user.overview');
-ROute::get('/mijn-lessen','ClassesController@classesPerTeacher')->middleware('auth')->name('user.list');
 
 
 

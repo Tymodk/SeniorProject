@@ -186,7 +186,10 @@ class ClassesController extends Controller
 
     public function classesPerTeacher()
     {
+        $teacherCourses = TeachersCourses::where('teacher_id',Auth::user()->teacherid())->pluck('course_id');
+        $courses = Courses::whereIn('id',$teacherCourses)->get();
 
+        return view('user.courses',['courses'=>$courses]);
     }
 
     public function api_class_absent($classid)
