@@ -217,7 +217,7 @@ class TeachersController extends Controller
             'classesToday' => $classesToday,
             'classesThisWeek' => $classesWeek,
             'classesActive' => $classesActive,
-            'firstClass' => $firstClass,
+            'next' => $firstClass,
             
         ]);
     }

@@ -192,6 +192,16 @@ class ClassesController extends Controller
         return view('user.courses',['courses'=>$courses]);
     }
 
+
+    public function archive()
+    {
+        $courses = TeachersCourses::where('teacher_id',Auth::user()->teacherid())->pluck('course_id');
+        $classes = Classes::whereIn('course_id',$courses)->where('archive',0)->get();
+        return view('user.archive',['classes'=>$classes]);
+    }
+
+
+
     public function api_class_absent($classid)
     {
         $class = Classes::where('id', $classid)->first();

@@ -16,7 +16,7 @@ Route::get('/wireframe3',function (){
 Route::get('/','TeachersController@classes')->middleware('auth')->name('user.index');
 Route::get('/mijn-lessen','ClassesController@classesPerTeacher')->middleware('auth')->name('user.list');
 Route::get('/statistieken/{slug}','TeachersController@CoursesOverview')->name('user.statistics');
-
+Route::get('/mijn-archief','ClassesController@archive')->name('user.archive');
 
 Route::post('/start-class','ClassesController@start')->middleware('auth')->name('user.start-course');
 
