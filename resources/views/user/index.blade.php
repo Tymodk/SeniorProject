@@ -25,12 +25,12 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
+    <div class="m-5">
+
             <a href="{!! route('user.list') !!}" class="btn btn-primary kdg mr-2">Mijn lessen</a>
             <a href="{!! route('user.archive') !!}" class="btn btn-primary kdg">Mijn archief</a>
 
-        </div>
+
     </div>
     <div class="mt-5 mb-5">
         <h3 class=" m-5 "><strong>Vandaag</strong></h3>
@@ -38,16 +38,30 @@
             <!-- start agenda -->
             <table class="table   text-center p-5">
 
-                <thead></thead>
+                <thead style="background-color: black;color: white;">
+                <tr>
+                    <th scope="col">Status</th>
+                    <th scope="col">Uur</th>
+                    <th scope="col">Vak</th>
+                    <th scope="col">Starten / bekijken</th>
+                </tr>
+                </thead>
                 <tbody>
+                <tr style="border: none">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
                 @if(!empty($classesActive))
                     @foreach ($classesActive as $class)
                         <tr>
                             @if($class->active == 1)
-                                <td class="text-left" style="width: 10%"><i
-                                        class="fas fa-satellite-dish text-success"></i></td>
+                                <td class="" style="width: 10%"><i
+                                        class="fas fa-satellite-dish text-success" style="font-size: 15px"></i></td>
                             @else
-                                <td><a href="" class="btn btn-warning">Wijzig deze les</a></td>
+                                <td><a href="{!! route('user.editClass',['id'=>$class->id]) !!}"
+                                       class="btn btn-warning">Wijzig deze les</a></td>
                             @endif
                             <td>{{ date("H:i", strtotime($class->start_time)) }}
                                 - {{ date("H:i", strtotime($class->end_time)) }}</td>
@@ -65,13 +79,28 @@
                             @if($class->active == 1)
                                 <td><i class="fas fa-satellite-dish text-success"></i></td>
                             @else
-                                <td class="text-left"><a href="" class="btn btn-warning">Wijzig <i class="far
+                                <td class="text-left"><a href="{!! route('user.editClass',['id'=>$class->id]) !!}"
+                                                         class="btn btn-warning">Wijzig <i class="far
                                             fa-edit"> </i></a></td>
                             @endif
                             <td>{{ date("H:i", strtotime($class->start_time)) }}
                                 - {{ date("H:i", strtotime($class->end_time)) }}</td>
                             <td>{{ $class->course->name }}</td>
-                            <td><a href="" class="btn btn-outline-success btn-block">Les starten</a></td>
+                            @if($class->active == 1)
+                                <a href="{!! route('user.overview') !!}" class="btn btn-success active btn-block ">Bekijk
+                                    resultaten</a>
+                            @else
+                                <td>
+                                    <form action="{!! route('user.start-course') !!}" method="post">
+                                        @csrf
+                                        <input type="hidden" value="{{$class->id}}" name="classid">
+                                        <button type="submit" class="btn btn-outline-success btn-block"> Les starten
+                                        </button>
+                                    </form>
+
+                                </td>
+                            @endif
+
                         </tr>
                     @endforeach
                 @else
@@ -93,7 +122,8 @@
                 @if(count($classesThisWeek) > 0)
                     @foreach ($classesThisWeek as $class)
                         <tr>
-                            <td class="text-left"><a href="" class="btn btn-warning">Wijzig <i class="far
+                            <td class="text-left"><a href="{!! route('user.editClass',['id'=>$class->id]) !!}"
+                                                     class="btn btn-warning">Wijzig <i class="far
                                             fa-edit"> </i></a></td>
                             <td><?php setlocale(LC_ALL, 'nld_nld'); echo strftime('%A', strtotime($class->start_time));   ?></td>
                             <td>{{ date("H:i", strtotime($class->start_time)) }}

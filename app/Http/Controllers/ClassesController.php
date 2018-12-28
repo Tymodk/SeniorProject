@@ -47,7 +47,7 @@ class ClassesController extends Controller
 
     public function show($id)
     {
-        try{
+        try {
             $class = Classes::findOrFail($id);
 
             $teachers = TeachersCourses::where('course_id', $class->course_id)->pluck('teacher_id');
@@ -57,8 +57,8 @@ class ClassesController extends Controller
 
             return view('classes.show', ['teachers' => $teachers, 'students' => $totalStudents, 'class' => $class]);
 
-        }catch (ModelNotFoundException $e){
-            return back()->withInput()->withErrors('message','Class not found');
+        } catch (ModelNotFoundException $e) {
+            return back()->withInput()->withErrors('message', 'Class not found');
         }
 
 
@@ -78,46 +78,44 @@ class ClassesController extends Controller
         $repeat2 = $request->repeat2;
 
         if ($repeat1) {
-          while($startDate < "2018-10-26" && $startDate > "2018-10-01") {
-            $newClass = new Classes();
-            $newClass->start_time = Carbon::parse($start);
-            $newClass->end_time = Carbon::parse($end);
-            $newClass->course_id = $request->course;
-            $newClass->active = 0;
-            $newClass->save();
+            while ($startDate < "2018-10-26" && $startDate > "2018-10-01") {
+                $newClass = new Classes();
+                $newClass->start_time = Carbon::parse($start);
+                $newClass->end_time = Carbon::parse($end);
+                $newClass->course_id = $request->course;
+                $newClass->active = 0;
+                $newClass->save();
 
-            $startDate = date("Y/m/d", strtotime("$startDate +1 week"));
-            $endDate = date("Y/m/d", strtotime("$endDate +1 week"));
+                $startDate = date("Y/m/d", strtotime("$startDate +1 week"));
+                $endDate = date("Y/m/d", strtotime("$endDate +1 week"));
 
-            $end = $endTime . ' ' . $endDate;
-            $start = $startTime . ' ' . $startDate;
-          }
+                $end = $endTime . ' ' . $endDate;
+                $start = $startTime . ' ' . $startDate;
+            }
         }
         if ($repeat2) {
-          while($startDate > "2018-11-19" && $startDate < "2019-01-25") {
+            while ($startDate > "2018-11-19" && $startDate < "2019-01-25") {
+                $newClass = new Classes();
+                $newClass->start_time = Carbon::parse($start);
+                $newClass->end_time = Carbon::parse($end);
+                $newClass->course_id = $request->course;
+                $newClass->active = 0;
+                $newClass->save();
+
+                $startDate = date("Y/m/d", strtotime("$startDate +1 week"));
+                $endDate = date("Y/m/d", strtotime("$endDate +1 week"));
+
+                $end = $endTime . ' ' . $endDate;
+                $start = $startTime . ' ' . $startDate;
+            }
+        } else {
             $newClass = new Classes();
             $newClass->start_time = Carbon::parse($start);
             $newClass->end_time = Carbon::parse($end);
             $newClass->course_id = $request->course;
             $newClass->active = 0;
             $newClass->save();
-
-            $startDate = date("Y/m/d", strtotime("$startDate +1 week"));
-            $endDate = date("Y/m/d", strtotime("$endDate +1 week"));
-
-            $end = $endTime . ' ' . $endDate;
-            $start = $startTime . ' ' . $startDate;
-          }
         }
-        else {
-          $newClass = new Classes();
-          $newClass->start_time = Carbon::parse($start);
-          $newClass->end_time = Carbon::parse($end);
-          $newClass->course_id = $request->course;
-          $newClass->active = 0;
-          $newClass->save();
-        }
-
 
 
         Session::flash('message', $request->start);
@@ -159,6 +157,31 @@ class ClassesController extends Controller
         #validation!!
 
     }
+    public function teacherEdit($id)
+    {
+        $class = Classes::where('id',$id)->first();
+        return view('user.edit',['class'=>$class]);
+    }
+
+    public function teacherEditSave(Request $request)
+    {
+
+        $class = Classes::find($request->classid);
+
+        $start = substr($request->start, 11);
+        $end = substr($request->start, 0, 10);
+        $start = $start . ' ' . $end;
+
+        $start2 = substr($request->end, 11);
+        $end = substr($request->end, 0, 10);
+        $start2 = $start2 . ' ' . $end;
+
+        $class->start_time = Carbon::parse($start);
+        $class->end_time = Carbon::parse($start2);
+
+        $class->save();
+        return redirect()->route('user.index');
+    }
 
 
     public function start(Request $request)
@@ -169,8 +192,18 @@ class ClassesController extends Controller
         $class->active = 1;
         $class->save();
 
-        $active = Classes::where('active', 1)->get();
-        return back()->withInput()->with(['active' => $active]);
+        //$active = Classes::where('active', 1)->get();
+        return back()->withInput();
+    }
+
+    public function stop($class)
+    {
+        $class = Classes::where('id', $class)->first();
+        $class->archive = 1;
+        $class->active = 0;
+        $class->save();
+
+        return redirect()->route('user.index');
     }
 
     public function overview()
@@ -186,46 +219,97 @@ class ClassesController extends Controller
 
     public function classesPerTeacher()
     {
-        $teacherCourses = TeachersCourses::where('teacher_id',Auth::user()->teacherid())->pluck('course_id');
-        $courses = Courses::whereIn('id',$teacherCourses)->get();
+        $teacherCourses = TeachersCourses::where('teacher_id', Auth::user()->teacherid())->pluck('course_id');
+        $courses = Courses::whereIn('id', $teacherCourses)->get();
 
-        return view('user.courses',['courses'=>$courses]);
+        return view('user.courses', ['courses' => $courses]);
     }
 
 
     public function archive()
     {
-        $courses = TeachersCourses::where('teacher_id',Auth::user()->teacherid())->pluck('course_id');
-        $classes = Classes::whereIn('course_id',$courses)->where('archive',0)->get();
-        return view('user.archive',['classes'=>$classes]);
+        $courses = TeachersCourses::where('teacher_id', Auth::user()->teacherid())->pluck('course_id');
+        $classes = Classes::whereIn('course_id', $courses)->where('archive', 1)->orderBy('created_at')->get();
+        return view('user.archive', ['classes' => $classes]);
+    }
+
+    public function archiveDetail($class)
+    {
+        $class = Classes::where('id', $class)->first();
+        $present = Presences::where('class_id', $class->id)->where('present', 1)->get();
+        $pres = Presences::where('class_id', $class->id)->where('present', 1)->pluck('student_id');
+
+        $absent = StudentsCourses::where('course_id', $class->course_id)->whereNotIn('student_id', $pres)->get();
+        $ill = Presences::where('class_id', $class)->where('ill', 1)->get();
+
+        return view('user.archiveOverview',
+            ['class' => $class,
+                'present' => $present,
+                'absent' => $absent,
+                'ill' => $ill]);
     }
 
 
+    public function manual($class, $student)
+    {
+        $presence = new Presences();
+        $presence->student_id = $student;
+        $presence->class_id = $class;
+        $presence->present = 1;
+        $presence->save();
+        return response()->json($presence);
+    }
+
+    public function manualDelete($class, $student)
+    {
+        $presence = Presences::where('class_id', $class)->where('student_id', $student)->first();
+
+        $presence->delete();
+        return response()->json($presence);
+    }
+
+    public function manualIll($class, $student)
+    {
+        $presence = new Presences();
+        $presence->class_id = $class;
+        $presence->student_id = $student;
+        $presence->ill = 1;
+        $presence->save();
+        return response()->json($presence);
+    }
 
     public function api_class_absent($classid)
     {
         $class = Classes::where('id', $classid)->first();
-        $presence = Presences::where('class_id', $classid)->where('present', 1)->pluck('students_courses_id');
-        $studentC = StudentsCourses::whereNotIn('id', $presence)->where('course_id', $class->course_id)->pluck('student_id');
-        $notPresentStudents = Students::whereIn('id', $studentC)->get();
+        $presence = Presences::where('class_id', $classid)->where('present', 1)->orWhere('ill', 1)->pluck('student_id');
+        $studentC = Students::whereNotIn('id', $presence)->get();
 
-        return response()->json($notPresentStudents);
+        return response()->json($studentC);
 
     }
 
     public function api_class_present($classid)
     {
 
-        $presentStudentsCourses = Presences::select('students_courses_id')->where('class_id', $classid)->where('present', 1)->get();
+        $presentStudentsCourses = Presences::select('student_id')->where('class_id', $classid)->where('present', 1)->get();
 
         if (isset($presentStudentsCourses)) {
             $studentCourse = StudentsCourses::whereIn('id', $presentStudentsCourses)->pluck('student_id');
             $present = Students::whereIn('id', $studentCourse)->get();
-            return response()->json($present);
+            $test = Presences::where('class_id', $classid)->where('present', 1)
+                ->join('students', 'student_id', '=', 'students.id')->select('presences.*', 'students.name', 'students.card_id')->get();
+            return response()->json($test);
         } else {
             return response()->json($presentStudentsCourses);
         }
 
 
+    }
+
+    public function api_class_ill($classid)
+    {
+        $ill = Presences::where('class_id', $classid)->where('ill', 1)->pluck('student_id');
+        $result = Students::whereIn('id', $ill)->get();
+        return response()->json($result);
     }
 }

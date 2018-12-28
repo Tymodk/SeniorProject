@@ -14,8 +14,8 @@
             @foreach($classes as $class)
                 <tr>
 
-                    <td>{{$class->name}} </td>
-                    <td><a href="{!! route('user.statistics',['coursename'=> $class->slug]) !!}"> Bekijk
+                    <td>{{$class->course->name}} - {{$class->created_at}} </td>
+                    <td><a href="{!! route('user.archiveDetail',['class'=> $class->id]) !!}"> Bekijk
                             statistieken </a></td>
 
                 </tr>
