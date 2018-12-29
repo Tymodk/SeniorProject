@@ -24,7 +24,7 @@ class StudentsCourses extends Model
     {
 
         $classes = Classes::where('course_id',$courseId)->pluck('id');
-        $total = Presences::where('student_id',$this->id)->where('present',1)->whereIn('class_id',$classes)->count();
+        $total = Presences::where('student_id',$this->student_id)->where('present',1)->whereIn('class_id',$classes)->count();
 
         return $total;
     }

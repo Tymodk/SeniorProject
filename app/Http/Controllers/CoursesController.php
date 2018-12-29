@@ -43,6 +43,7 @@ class CoursesController extends Controller
             try {
                 $course = new Courses;
                 $course->name = Input::get('name');
+                $course->slug = str_slug(Input::get('name'),'-');
                 $course->save();
 
                 Session::flash('message', 'Successfully created the course!');
@@ -97,6 +98,7 @@ class CoursesController extends Controller
             try {
                 $course = Courses::findOrFail($id);
                 $course->name = Input::get('name');
+                $course->slug = str_slug(Input::get('name'),'-');
                 $course->save();
 
                 Session::flash('message', 'Successfully updated the course!');

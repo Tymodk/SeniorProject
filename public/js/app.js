@@ -57944,12 +57944,65 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             absent: [],
             present: [],
+            ill: [],
             classBox: '',
             class_id: this.classid,
             user: ''
@@ -57963,6 +58016,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     created: function created() {
         this.getAbsent();
         this.getPresent();
+        this.getIll();
         this.listen();
     },
 
@@ -57972,7 +58026,6 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
             axios.get('/api/classes/absent/' + this.class_id).then(function (response) {
 
                 this.absent = response.data;
-                console.log(response);
             }.bind(this));
         },
         getPresent: function getPresent() {
@@ -57980,6 +58033,28 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
                 this.present = response.data;
             }.bind(this));
+        },
+        getIll: function getIll() {
+            axios.get('/api/classes/ill/' + this.class_id).then(function (response) {
+                this.ill = response.data;
+            }.bind(this));
+        },
+        add: function add(id) {
+            console.log('geklikt' + id);
+            ///manueel-aanwezig/{class}/{student}
+            axios.get('/manueel-aanwezig/' + this.class_id + '/' + id);
+            this.getPresent();
+            this.getAbsent();
+        },
+        isIll: function isIll(id) {
+            axios.get('/manueel-ziek/' + this.class_id + '/' + id);
+            this.getIll();
+            this.getAbsent();
+        },
+        remove: function remove(id) {
+            axios.get('/manueel-verwijderen/' + this.class_id + '/' + id);
+            this.getPresent();
+            this.getAbsent();
         },
         listen: function listen() {
             var _this = this;
@@ -57989,6 +58064,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 _this.present = [].concat(_toConsumableArray(_this.present), [classes[0]]);
 
                 _this.getAbsent();
+                _this.getIll();
             });
         },
         indexWhere: function indexWhere(array, conditionFn) {
@@ -58012,7 +58088,7 @@ var render = function() {
       _c(
         "a",
         {
-          staticClass: "btn btn-primary",
+          staticClass: "btn btn-primary kdg",
           attrs: {
             "data-toggle": "collapse",
             href: "#present",
@@ -58023,33 +58099,64 @@ var render = function() {
         },
         [
           _vm._v(
-            "\n            Present (" +
+            "\n            Aanwezig ( " +
               _vm._s(_vm.present.length) +
-              ")\n        "
+              " )\n        "
           )
         ]
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "collapse", attrs: { id: "present" } }, [
-      _c(
-        "div",
-        { staticClass: "card card-body p-2" },
-        _vm._l(_vm.present, function(student) {
-          return _c("p", [
-            _vm._v(
-              "\n                " + _vm._s(student.name) + "\n            "
-            )
-          ])
-        })
-      )
+    _c("div", { staticClass: "collapse show", attrs: { id: "present" } }, [
+      _c("div", { staticClass: "card card-body p-3" }, [
+        _c("table", { staticClass: "table table-borderless " }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.present, function(student) {
+              return _c("tr", [
+                _c("td", [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(student.name) +
+                      "\n                    "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(student.card_id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(student.created_at))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "a",
+                    {
+                      on: {
+                        click: function($event) {
+                          _vm.remove(student.student_id)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fas fa-times text-danger float-right"
+                      })
+                    ]
+                  )
+                ])
+              ])
+            })
+          )
+        ])
+      ])
     ]),
     _vm._v(" "),
-    _c("h3", [
+    _c("h3", { staticClass: "mt-5" }, [
       _c(
         "a",
         {
-          staticClass: "btn btn-primary",
+          staticClass: "btn btn-primary kdg",
           attrs: {
             "data-toggle": "collapse",
             href: "#absent",
@@ -58060,7 +58167,7 @@ var render = function() {
         },
         [
           _vm._v(
-            "\n            Not present (" +
+            "\n            Nog niet gescand (" +
               _vm._s(_vm.absent.length) +
               ")\n        "
           )
@@ -58069,21 +58176,107 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "collapse", attrs: { id: "absent" } }, [
+      _c("div", { staticClass: "card card-body p-3" }, [
+        _c("table", { staticClass: "table table-borderless" }, [
+          _c(
+            "tbody",
+            _vm._l(_vm.absent, function(student) {
+              return _c("tr", [
+                _c("td", [
+                  _vm._v(_vm._s(student.name) + "\n                        "),
+                  _c("span", { staticClass: "float-right" }, [
+                    _c(
+                      "a",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.add(student.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fas fa-plus text-success pr-2"
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.isIll(student.id)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fas fa-ambulance text-danger" })]
+                    )
+                  ])
+                ])
+              ])
+            })
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("h3", { staticClass: "mt-5" }, [
       _c(
-        "div",
-        { staticClass: "card card-body p-2" },
-        _vm._l(_vm.absent, function(student) {
-          return _c("p", [
-            _vm._v(
-              "\n                " + _vm._s(student.name) + "\n            "
-            )
-          ])
-        })
+        "a",
+        {
+          staticClass: "btn btn-primary kdg",
+          attrs: {
+            "data-toggle": "collapse",
+            href: "#ill",
+            role: "button",
+            "aria-expanded": "false",
+            "aria-controls": "collapseExample"
+          }
+        },
+        [
+          _vm._v(
+            "\n            Zieken ( " + _vm._s(_vm.ill.length) + " )\n        "
+          )
+        ]
       )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "collapse", attrs: { id: "ill" } }, [
+      _c("div", { staticClass: "card card-body p-3" }, [
+        _c("table", { staticClass: "table table-borderless" }, [
+          _c(
+            "tbody",
+            _vm._l(_vm.ill, function(student) {
+              return _c("tr", [
+                _c("td", [
+                  _vm._v(_vm._s(student.name) + " "),
+                  _c("i", { staticClass: "fas fa-ambulance text-danger" })
+                ])
+              ])
+            })
+          )
+        ])
+      ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("td", [_c("strong", [_vm._v("Naam ")])]),
+        _vm._v(" "),
+        _c("td", [_c("strong", [_vm._v(" Kaartnummer")])]),
+        _vm._v(" "),
+        _c("td", [_c("strong", [_vm._v("Ingescanned om ")])])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

@@ -10,12 +10,14 @@ use App\Classes;
 use App\StudentsCourses;
 use App\Presences;
 use App\Events\addPresence;
+use Illuminate\Support\Facades\Input;
 class PresencesController extends Controller
 {
 
 
-    public function store($studentCardID)
+    public function store(Request $request)
     {
+        $studentCardID = Input::get('arduino_id');
         try{
             $student = Students::where('card_id',$studentCardID)->first();
             $followedCourses = StudentsCourses::where('student_id', $student->id)->pluck('course_id');
@@ -24,7 +26,7 @@ class PresencesController extends Controller
             if (isset($classActive) && $notScanned < 1 ) {
 
                 $presence = new Presences();
-                $presence->students_id = $student->id;
+                $presence->student_id = $student->id;
                 $presence->class_id = $classActive->id;
                 $presence->present = 1;
                 $presence->save();
@@ -34,15 +36,15 @@ class PresencesController extends Controller
 
                 event(new addPresence($student,$classActive));
 
+                return response("gelukt");
 
-                return response()->json($student);
             }
             else
             {
-                return "nog niet gelukt maar ge bent er bijna!";
+                return response("gelukt");
             }
         }catch(ModelNotFoundException $e){
-            return "niet gelukt";
+            return response("gelukt");
         }
 
 

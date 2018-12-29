@@ -17,6 +17,9 @@ Route::get('/my-classes','TeachersController@myClasses');
 Route::post('/classes','TeachersController@storeclasses');
 Route::get('/classes/absent/{classid}','ClassesController@api_class_absent');
 Route::get('/classes/present/{classid}','ClassesController@api_class_present');
+Route::get('/classes/ill/{classid}','ClassesController@api_class_ill');
+
+Route::post('/new-presence','PresencesController@store');
 
 Route::get('/newPrecense/{studentCardID}', 'PresencesController@store');
 

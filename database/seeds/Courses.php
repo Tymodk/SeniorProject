@@ -10,11 +10,11 @@
 
 $courses = [
 
-    ['name' => 'Communicatie - Frans'],
-    ['name' => 'RZL'],
-    ['name' => 'Web Research'],
-    ['name' => 'Sociale Innovatie'],
-    ['name' => 'Web Development'],
-    ['name' => 'Web Design'],
-    ['name' => 'Projecten Web-UX'],
+    ['name' => 'Communicatie - Frans','slug'=>'communicatie-frans'],
+    ['name' => 'RZL','slug'=>'rzl'],
+    ['name' => 'Web Research','slug'=>'web-research'],
+    ['name' => 'Sociale Innovatie','slug'=>'sociale-innovatie'],
+    ['name' => 'Web Development','slug'=>'web-development'],
+    ['name' => 'Web Design','slug'=>'web-design'],
+    ['name' => 'Projecten Web-UX','slug'=>'projecten-web-ux'],
 ];

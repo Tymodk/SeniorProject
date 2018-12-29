@@ -187,11 +187,9 @@ class TeachersController extends Controller
         $firstClass = Classes::
         whereIn('course_id', $courses)
             ->where('end_time', '>', date('Y/m/d'))
-            ->firstOrFail();
+            ->first();
 
-        $datetime1 = new DateTime($firstClass->start_time);
-        $datetime2 = new DateTime(date("Y-m-d H:i:s"));
-        $interval = $datetime1->diff($datetime2);
+
 
         $classesActive = Classes::
         whereIn('course_id', $courses)
@@ -219,33 +217,16 @@ class TeachersController extends Controller
             'classesToday' => $classesToday,
             'classesThisWeek' => $classesWeek,
             'classesActive' => $classesActive,
-            'firstClass' => $firstClass,
-            'interval' => $interval
+            'next' => $firstClass,
+            
         ]);
     }
 
-    public function CoursesOverview()
+    public function CoursesOverview($slug)
     {
-        //courses
-
-        $coursesId = TeachersCourses::where('teacher_id',Auth::user()->teacher_id)->pluck('course_id');
-        $myCourses = Courses::whereIn('id',$coursesId)->get();
-        return view('user.courses',['courses' => $myCourses]);
-    }
-
-
-    public function StatisticsOverview($coursename)
-    {
-        $course = Courses::where('id',$coursename)->first();
-        $countClasses = Classes::where('course_id',$course->id)->where('archive',1)->count();
-
-        //alle leerlingen die deze les volgen oplijsten -> tellen hoeveel keer ze gekomen zijn
-
-
-        //lijst van studenten
-
+        $course = Courses::where('slug',$slug)->first();
+        $countClasses = Classes::where('course_id',$course->id)->count();
         $students = StudentsCourses::where('course_id',$course->id)->get();
-
 
         return view('user.statistics',['total'=>$countClasses,'students'=>$students,'course'=>$course]) ;
     }
