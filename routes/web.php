@@ -13,7 +13,10 @@ Route::get('/wireframe3', function () {
 });
 
 
+Route::get('/', 'HomeController@index')->middleware('admin')->name('home');
 Route::get('/', 'TeachersController@classes')->middleware('auth')->name('user.index');
+
+
 Route::get('/mijn-lessen', 'ClassesController@classesPerTeacher')->middleware('auth')->name('user.list');
 Route::get('/statistieken/{slug}', 'TeachersController@CoursesOverview')->name('user.statistics');
 Route::get('/mijn-archief', 'ClassesController@archive')->name('user.archive');
@@ -34,7 +37,7 @@ Route::get('/les-stoppen/{class}', 'ClassesController@stop')->name('user.class.s
 Route::post('/start-class', 'ClassesController@start')->middleware('auth')->name('user.start-course');
 Route::post('/new-presence','PresencesController@store');
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin','middleware'=>['admin']], function () {
     Route::get('/', 'AdminController@index')->name('admin.home');
     Route::resource('courses', 'CoursesController');
     Route::resource('students', 'StudentsController');
