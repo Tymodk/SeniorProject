@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Presences;
 use App\StudentsCourses;
 use DateTime;
 use App\Courses;
@@ -190,7 +191,6 @@ class TeachersController extends Controller
             ->first();
 
 
-
         $classesActive = Classes::
         whereIn('course_id', $courses)
             ->where('active', 1)
@@ -218,17 +218,31 @@ class TeachersController extends Controller
             'classesThisWeek' => $classesWeek,
             'classesActive' => $classesActive,
             'next' => $firstClass,
-            
+
         ]);
     }
 
     public function CoursesOverview($slug)
     {
-        $course = Courses::where('slug',$slug)->first();
-        $countClasses = Classes::where('course_id',$course->id)->count();
-        $students = StudentsCourses::where('course_id',$course->id)->get();
+        $course = Courses::where('slug', $slug)->first();
+        $classes = Classes::where('course_id',$course->id)->pluck('id');
+        $countClasses = Classes::where('course_id', $course->id)->count();
+        $students = StudentsCourses::where('course_id', $course->id)->get();
+        $aS = StudentsCourses::where('course_id', $course->id)->count();
 
-        return view('user.statistics',['total'=>$countClasses,'students'=>$students,'course'=>$course]) ;
+
+        //aantal klassen maal studenten = totaal aantal gescande studenten
+
+        $scanned = Presences::whereIn('class_id', $classes)->count();
+        $notScanned = $aS - $scanned;
+
+        return view('user.statistics',
+            ['total' => $countClasses,
+                'students' => $students,
+                'course' => $course,
+                'scanned'=>$scanned,
+                'notScanned' => $notScanned,
+                'totalS' => $aS]);
     }
 
 

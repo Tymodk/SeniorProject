@@ -5,37 +5,39 @@
     <div class="container mt-3">
         <a href="{!! route('user.list') !!}">Terug gaan</a>
     </div>
-
-
     @if($total > 0)
         <div class="container mt-5">
             <h2><strong>{{$course->name}}</strong></h2>
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+            <button class="btn btn-primary kdg" type="button" data-toggle="collapse" data-target="#collapseExample"
                     aria-expanded="false" aria-controls="collapseExample">
                 Klik voor algemene statistieken
             </button>
             <div class="collapse" id="collapseExample">
-                <div class="col-md-9 mt-2">
+                <div class="col-md-12 mt-2">
                     <div class="row">
-                        <div class="col-md-5 pt-3 pl-0">
-                            <h4>Aanwezigheden over {{$total}} @if($total > 1)lessen @else les @endif</h4>
+                        <div class="col-md-12 pt-3 pl-0">
+                            <h4><strong>Algemene statistieken</strong></h4>
 
 
+                            <p> Afwezigheden opgenomen van <strong>  {{$course->average()}}</strong> lessen </p>
 
-                            Totaal<span class="pull-right strong"></span>
-                            {{$course->average()}}
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="85"
-                                     aria-valuemin="0" aria-valuemax="100" style="width:85%">85%
-                                </div>
+                            <div class="row">
+                                <div class="col-md-5"> <h5> Studenten die dit vak volgen: </h5></div>
+                                <div class="col-md-5"> {{$totalS}}</div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5"> <h5> Totaal gescande studenten:</h5></div>
+                                <div class="col-md-5"> {{$scanned}}</div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5"> <h5>Totaal niet gescande studenten:</h5></div>
+                                <div class="col-md-5 strong"> {{$notScanned}}</div>
+
                             </div>
 
-                            Gem. per les<span class="pull-right strong"></span>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80"
-                                     aria-valuemin="0" aria-valuemax="100" style="width:80%">80%
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>

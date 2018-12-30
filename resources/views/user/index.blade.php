@@ -94,7 +94,7 @@
         </div>
     </div>
     <div class="mt-5 mb-5">
-        <h3 class=" m-5 "><strong>Deze week</strong></h3>
+        <h3 class=" m-5 "><strong>Komende dagen</strong></h3>
         <div class="container-fluid m-0 pl-5 pr-5">
             <!-- start agenda -->
             <table class="table   text-center p-5">

@@ -20,14 +20,14 @@
 
                 <label for="start">Start</label>
 
-                <input type="datetime-local" id="start" class="form-control" value="{{$class->start()}}">
+                <input type="datetime-local" id="start" name="start" class="form-control" value="{{$class->start()}}">
             </div>
 
             <div class="form-group">
 
-                <label for="end">Start</label>
+                <label for="end">Eind</label>
 
-                <input type="datetime-local" id="end" class="form-control" value="{{$class->end()}}">
+                <input type="datetime-local" id="end" name="end" class="form-control" value="{{$class->end()}}">
             </div>
 
             <button type="submit" class="btn btn-primary kdg"> Wijziging opslaan</button>

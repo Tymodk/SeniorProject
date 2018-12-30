@@ -9,6 +9,9 @@ use App\Classes;
 class Courses extends Model
 {
 
+
+
+
     public function average()
     {
         $classes = Classes::where('course_id',$this->id)->get();

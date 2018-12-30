@@ -168,18 +168,21 @@ class ClassesController extends Controller
 
         $class = Classes::find($request->classid);
 
-        $start = substr($request->start, 11);
-        $end = substr($request->start, 0, 10);
-        $start = $start . ' ' . $end;
+        $startTime = substr($request->start, 11);
+        $startDate = substr($request->start, 0, 10);
+        $start = $startTime . ' ' . $startDate;
 
-        $start2 = substr($request->end, 11);
-        $end = substr($request->end, 0, 10);
-        $start2 = $start2 . ' ' . $end;
+        $endTime = substr($request->end, 11);
+        $endDate = substr($request->end, 0, 10);
+
+        $end = $endTime . ' ' . $endDate;
 
         $class->start_time = Carbon::parse($start);
-        $class->end_time = Carbon::parse($start2);
+        $class->end_time = Carbon::parse($end);
 
         $class->save();
+        Session::flash('message', 'Je les is succesvol gewijzigd!');
+
         return redirect()->route('user.index');
     }
 
