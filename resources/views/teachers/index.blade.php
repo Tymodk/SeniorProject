@@ -5,32 +5,32 @@
     @include('layouts.adminnav',['active' => "teachers"])
     @include('layouts.teachernav')
     <div class="container mb-5">
-        <h1 class="mt-5">
+      <div class='mt-5'>
+        <h1 class="float-left">
             Teachers
         </h1>
-        @if(isset($excel))
-            <?= var_dump($excel)?>
-        @endif
-        <div class="dropdown mt-5 mb-3 ">
+        <div class="dropdown ml-2 float-left">
             <button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle"
                     data-toggle="dropdown" id="dropdownMenuButton" type="button">
                 Filter
             </button>
             <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
-                <a class="dropdown-item" href="{{ Request::fullUrl() . '?filter=name' }}">
+                <a class="dropdown-item" href="{{ Request::url() . '?filter=name' }}">
                     Naam
                 </a>
-                <a class="dropdown-item" href="{{ Request::fullUrl() . '?filter=email' }}">
+                <a class="dropdown-item" href="{{ Request::url() . '?filter=email' }}">
                     Email
                 </a>
-                <a class="dropdown-item" href="{{ Request::fullUrl() . '?filter=created-first' }}">
+                <a class="dropdown-item" href="{{ Request::url() . '?filter=created-first' }}">
                     Datum aflopend
                 </a>
-                <a class="dropdown-item" href="{{ Request::fullUrl() . '?filter=created-last' }}">
+                <a class="dropdown-item" href="{{ Request::url() . '?filter=created-last' }}">
                     Datum oplopend
                 </a>
             </div>
         </div>
+      </div>
+
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
@@ -64,8 +64,8 @@
                         {{ $value->email }}
                     </td>
                     <td>
-                        <a href="{{ route('tc.teacher',['id'=>$value->id])}}">
-                            view
+                        <a href="{{ route('tc.teacher',['id'=>$value->id])}}" class="btn btn-success ">
+                            show / add
                         </a>
                     </td>
                     <td>
@@ -80,7 +80,7 @@
                             <i class="far fa-edit">
                             </i>
                         </a>
-                        {{ Form::submit('Delete', array('class' => 'btn btn-small btn-danger')) }}
+                        {{ Form::submit('Delete', array('class' => 'btn btn-small w-50 btn-danger')) }}
                         {{ Form::close() }}
 
                     </td>

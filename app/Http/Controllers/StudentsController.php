@@ -16,6 +16,16 @@ class StudentsController extends Controller
     public function index()
     {
         $students = Students::all();
+        if (Input::get('filter')) {
+            if (Input::get('filter') == 'created-first') {
+                $students = Students::OrderBy('created_at', 'ASC')->paginate(10);
+            } elseif (Input::get('filter') == 'created-last') {
+                $students = Students::OrderBy('created_at', 'DESC')->paginate(10);
+            } else {
+                $students = Students::OrderBy(Input::get('filter'))->paginate(10);
+            }
+
+        }
         return view('students.index', ['students' => $students]);
 
     }
