@@ -181,6 +181,14 @@ class TeachersController extends Controller
 
     public function classes()
     {
+      $admin = Auth::check() && Auth::user()->isAdmin();
+
+      if($admin)
+      {
+          return redirect()->route('admin.home');
+      }
+      else
+      {
         $id = Auth::user()->teacher_id;
 
         $courses = TeachersCourses::where('teacher_id', $id)->pluck('course_id');
@@ -220,6 +228,7 @@ class TeachersController extends Controller
             'next' => $firstClass,
 
         ]);
+      }
     }
 
     public function CoursesOverview($slug)
