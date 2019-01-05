@@ -44,24 +44,16 @@
                     Email
                 </td>
                 <td>
-                    Password
+                    Courses
                 </td>
                 <td>
-                    Courses
+                    Actions
                 </td>
             </tr>
             </thead>
             <tbody>
             @foreach($teachers as $key => $value)
                 <tr>
-                    <td>
-                    <span class="custom-checkbox">
-                        <input id="checkbox1" name="options[]" type="checkbox" value="1">
-                            <label for="checkbox1">
-                            </label>
-                        </input>
-                    </span>
-                    </td>
                     <td>
                         {{ $value->id }}
                     </td>
@@ -77,6 +69,8 @@
                         </a>
                     </td>
                     <td>
+                        {{ Form::open(array('url' => '/admin/teachers/' . $value->id, 'class' => 'btn float-left')) }}
+                        {{ Form::hidden('_method', 'DELETE') }}
                         <a class="btn btn-small btn-info" href="{{ URL::to('admin/teachers/' . $value->id) }}">
                             <i class="far fa-eye">
                             </i>
@@ -86,11 +80,7 @@
                             <i class="far fa-edit">
                             </i>
                         </a>
-
-                        {{ Form::open(array('url' => '/admin/teachers/' . $value->id, 'class' => 'float-right')) }}
-                        {{ Form::hidden('_method', 'DELETE') }}
-
-                        {{ Form::submit('Delete', array('class' => 'btn btn-danger float-right')) }}
+                        {{ Form::submit('Delete', array('class' => 'btn btn-small btn-danger')) }}
                         {{ Form::close() }}
 
                     </td>
@@ -98,14 +88,5 @@
             @endforeach
             </tbody>
         </table>
-        {{ $teachers->links() }}
-
-        {!! Form::open(['route' => 'admin.upload', 'files' => true]) !!}
-
-        {!! Form::file('excel') !!}
-
-        {!! Form::submit('Excel uploaden', ['class' => 'btn btn-outline-primary']) !!}
-
-        {!! Form::close() !!}
     </div>
 @endsection
