@@ -13,7 +13,7 @@
 @endif
 @if (Session::has('message'))
     <div class="alert alert-success">
-        <h5 class="m-0">
+        <h5 class="m-0 text-center" >
             {{ Session::get('message') }}
         </h5>
     </div>

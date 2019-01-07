@@ -23,8 +23,8 @@ class StudentsCourses extends Model
     public function countPresence($courseId)
     {
 
-        $classes = Classes::where('course_id',$courseId)->pluck('id');
-        $total = Presences::where('student_id',$this->student_id)->where('present',1)->whereIn('class_id',$classes)->count();
+        $classes = Classes::where('course_id',$courseId)->where('archive',1)->pluck('id');
+        $total = Presences::where('student_id',$this->student_id)->where('present',1)->orWhere('ill',1)->whereIn('class_id',$classes)->count();
 
         return $total;
     }

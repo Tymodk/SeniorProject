@@ -7,9 +7,9 @@
         Teachers
     </a>
     <a class="{{ ($active === 'students')? 'btn btn-primary' : 'btn btn-outline-primary'  }}" href="/admin/students">
-        students
+        Students
     </a>
     <a class="{{ ($active === 'courses')? 'btn btn-primary' : 'btn btn-outline-primary'  }}" href="/admin/courses">
-        courses
+        Courses
     </a>
 </div>

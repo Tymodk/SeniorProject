@@ -16,6 +16,16 @@ class CoursesController extends Controller
     public function index()
     {
         $courses = Courses::paginate(15);
+        if (Input::get('filter')) {
+            if (Input::get('filter') == 'created-first') {
+                $courses = Courses::OrderBy('created_at', 'ASC')->paginate(10);
+            } elseif (Input::get('filter') == 'created-last') {
+                $courses = Courses::OrderBy('created_at', 'DESC')->paginate(10);
+            } else {
+                $courses = Courses::OrderBy(Input::get('filter'))->paginate(10);
+            }
+
+        }
         return view('courses.index', ['courses' => $courses]);
 
     }

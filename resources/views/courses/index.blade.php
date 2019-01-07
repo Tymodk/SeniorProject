@@ -10,16 +10,32 @@
 @include('layouts.adminnav',['active' => "courses"])
 @include('layouts.coursenav')
 <div class="container">
-
-
-<h1 class="mt-5">All the Nerds</h1>
-
+  <div class='mt-5'>
+    <h1 class="float-left">Courses</h1>
+    <div class="dropdown ml-2 float-left">
+      <button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle"
+              data-toggle="dropdown" id="dropdownMenuButton" type="button">
+          Filter
+      </button>
+      <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
+          <a class="dropdown-item" href="{{ Request::url() . '?filter=name' }}">
+              Naam
+          </a>
+          <a class="dropdown-item" href="{{ Request::url() . '?filter=created-first' }}">
+              Datum aflopend
+          </a>
+          <a class="dropdown-item" href="{{ Request::url() . '?filter=created-last' }}">
+              Datum oplopend
+          </a>
+      </div>
+    </div>
+  </div>
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
             <td>ID</td>
             <td>Name</td>
-        
+
             <td>Actions</td>
         </tr>
     </thead>
@@ -28,7 +44,7 @@
         <tr>
             <td>{{ $value->id }}</td>
             <td>{{ $value->name }}</td>
-    
+
             <td>
 
 

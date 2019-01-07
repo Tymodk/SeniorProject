@@ -76,45 +76,97 @@ class ClassesController extends Controller
         $end = $endTime . ' ' . $endDate;
         $repeat1 = $request->repeat1;
         $repeat2 = $request->repeat2;
+        $repeat3 = $request->repeat3;
+        $repeat4 = $request->repeat4;
+
+        $newClass = new Classes();
+        $newClass->start_time = Carbon::parse($start);
+        $newClass->end_time = Carbon::parse($end);
+        $newClass->course_id = $request->course;
+        $newClass->active = 0;
+        $newClass->save();
 
         if ($repeat1) {
-            while ($startDate < "2018-10-26" && $startDate > "2018-10-01") {
+            while ($startDate < "2019-09-10") {
+                $startDate = date("Y-m-d", strtotime("$startDate +1 week"));
+                $endDate = date("Y-m-d", strtotime("$endDate +1 week"));
+            }
+            while ($startDate < "2018-10-20") {
+                $startDate = date("Y-m-d", strtotime("$startDate +1 week"));
+                $endDate = date("Y-m-d", strtotime("$endDate +1 week"));
+
+                $end = $endTime . ' ' . $endDate;
+                $start = $startTime . ' ' . $startDate;
+
                 $newClass = new Classes();
                 $newClass->start_time = Carbon::parse($start);
                 $newClass->end_time = Carbon::parse($end);
                 $newClass->course_id = $request->course;
                 $newClass->active = 0;
                 $newClass->save();
-
-                $startDate = date("Y/m/d", strtotime("$startDate +1 week"));
-                $endDate = date("Y/m/d", strtotime("$endDate +1 week"));
-
-                $end = $endTime . ' ' . $endDate;
-                $start = $startTime . ' ' . $startDate;
             }
         }
         if ($repeat2) {
-            while ($startDate > "2018-11-19" && $startDate < "2019-01-25") {
+            while ($startDate < "2018-11-12") {
+                $startDate = date("Y-m-d", strtotime("$startDate +1 week"));
+                $endDate = date("Y-m-d", strtotime("$endDate +1 week"));
+            }
+            while ($startDate < "2019-01-05") {
+                $startDate = date("Y-m-d", strtotime("$startDate +1 week"));
+                $endDate = date("Y-m-d", strtotime("$endDate +1 week"));
+
+                $end = $endTime . ' ' . $endDate;
+                $start = $startTime . ' ' . $startDate;
+
                 $newClass = new Classes();
                 $newClass->start_time = Carbon::parse($start);
                 $newClass->end_time = Carbon::parse($end);
                 $newClass->course_id = $request->course;
                 $newClass->active = 0;
                 $newClass->save();
+            }
+        }
 
-                $startDate = date("Y/m/d", strtotime("$startDate +1 week"));
-                $endDate = date("Y/m/d", strtotime("$endDate +1 week"));
+        if ($repeat3) {
+            while ($startDate < "2019-01-21") {
+                $startDate = date("Y-m-d", strtotime("$startDate +1 week"));
+                $endDate = date("Y-m-d", strtotime("$endDate +1 week"));
+            }
+            while ($startDate < "2019-03-09") {
+                $startDate = date("Y-m-d", strtotime("$startDate +1 week"));
+                $endDate = date("Y-m-d", strtotime("$endDate +1 week"));
 
                 $end = $endTime . ' ' . $endDate;
                 $start = $startTime . ' ' . $startDate;
+
+                $newClass = new Classes();
+                $newClass->start_time = Carbon::parse($start);
+                $newClass->end_time = Carbon::parse($end);
+                $newClass->course_id = $request->course;
+                $newClass->active = 0;
+                $newClass->save();
             }
-        } else {
-            $newClass = new Classes();
-            $newClass->start_time = Carbon::parse($start);
-            $newClass->end_time = Carbon::parse($end);
-            $newClass->course_id = $request->course;
-            $newClass->active = 0;
-            $newClass->save();
+        }
+
+        if ($repeat4) {
+            while ($startDate < "2019-03-25") {
+                $startDate = date("Y-m-d", strtotime("$startDate +1 week"));
+                $endDate = date("Y-m-d", strtotime("$endDate +1 week"));
+            }
+            while ($startDate < "2019-05-18") {
+                $startDate = date("Y-m-d", strtotime("$startDate +1 week"));
+                $endDate = date("Y-m-d", strtotime("$endDate +1 week"));
+
+                $end = $endTime . ' ' . $endDate;
+                $start = $startTime . ' ' . $startDate;
+
+                $newClass = new Classes();
+                $newClass->start_time = Carbon::parse($start);
+                $newClass->end_time = Carbon::parse($end);
+                $newClass->course_id = $request->course;
+                $newClass->active = 0;
+                $newClass->save();
+            }
         }
 
 
@@ -168,18 +220,21 @@ class ClassesController extends Controller
 
         $class = Classes::find($request->classid);
 
-        $start = substr($request->start, 11);
-        $end = substr($request->start, 0, 10);
-        $start = $start . ' ' . $end;
+        $startTime = substr($request->start, 11);
+        $startDate = substr($request->start, 0, 10);
+        $start = $startTime . ' ' . $startDate;
 
-        $start2 = substr($request->end, 11);
-        $end = substr($request->end, 0, 10);
-        $start2 = $start2 . ' ' . $end;
+        $endTime = substr($request->end, 11);
+        $endDate = substr($request->end, 0, 10);
+
+        $end = $endTime . ' ' . $endDate;
 
         $class->start_time = Carbon::parse($start);
-        $class->end_time = Carbon::parse($start2);
+        $class->end_time = Carbon::parse($end);
 
         $class->save();
+        Session::flash('message', 'Je les is succesvol gewijzigd!');
+
         return redirect()->route('user.index');
     }
 
@@ -193,7 +248,7 @@ class ClassesController extends Controller
         $class->save();
 
         //$active = Classes::where('active', 1)->get();
-        return back()->withInput();
+        return $this->overview();
     }
 
     public function stop($class)
@@ -203,7 +258,7 @@ class ClassesController extends Controller
         $class->active = 0;
         $class->save();
 
-        return redirect()->route('user.index');
+        return redirect()->route('user.home');
     }
 
     public function overview()
@@ -239,8 +294,10 @@ class ClassesController extends Controller
         $present = Presences::where('class_id', $class->id)->where('present', 1)->get();
         $pres = Presences::where('class_id', $class->id)->where('present', 1)->pluck('student_id');
 
-        $absent = StudentsCourses::where('course_id', $class->course_id)->whereNotIn('student_id', $pres)->get();
-        $ill = Presences::where('class_id', $class)->where('ill', 1)->get();
+        $ill = Presences::where('class_id', $class->id)->where('ill', 1)->get();
+        $illgroup = Presences::where('class_id', $class->id)->where('ill', 1)->pluck('student_id');
+
+        $absent = StudentsCourses::where('course_id', $class->course_id)->whereNotIn('student_id', $pres)->whereNotIn('student_id', $illgroup)->get();
 
         return view('user.archiveOverview',
             ['class' => $class,

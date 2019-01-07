@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+@include('layouts.adminnav',['active' => "students"])
 <div class="contianer mt-5 courses">
     <h2>
         Student:
@@ -32,8 +34,8 @@
             </tbody>
         </table>
         @else
-student has no courses yet
-@endif
+        <span>student has no courses yet</span>
+        @endif
     </div>
     <div class="container mt-5 p-0">
         <h3 class="pt-3">
@@ -41,10 +43,9 @@ student has no courses yet
         </h3>
         @if(isset($courses))
 
-
-    {{ Form::open(array('url' => 'admin/studentcourses/store')) }}
-    {{ Form::hidden('userid',  $student->id) }}
-    @foreach($courses as $course)
+        {{ Form::open(array('url' => 'admin/studentcourses/store')) }}
+        {{ Form::hidden('userid',  $student->id) }}
+        @foreach($courses as $course)
         <div class="checkbox">
             <label class="col-md-3" style="border: solid 1px black">
                 <i class="fas fa-check text-success" style="font-size: 100px">
@@ -58,17 +59,14 @@ student has no courses yet
             </label>
         </div>
         @endforeach
-
-
-{{ Form::submit('Submit!', array('class' => 'btn btn-success')) }}
-
-{{ Form::close() }}
-    @endif
+        {{ Form::submit('Submit!', array('class' => 'btn btn-success w-25 d-inline-block')) }}
+        {{ Form::close() }}
+        @endif
     </div>
 </div>
 <script>
-    $(document).ready(function () { 
-    
+    $(document).ready(function () {
+
 $('input:checkbox').change(function(){
 
     if($(this).is(":checked")) {

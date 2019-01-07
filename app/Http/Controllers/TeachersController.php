@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Presences;
 use App\StudentsCourses;
 use DateTime;
 use App\Courses;
@@ -178,8 +179,16 @@ class TeachersController extends Controller
     }
 
 
-    public function classes()
+    public function login()
     {
+      $admin = Auth::check() && Auth::user()->isAdmin();
+
+      if($admin)
+      {
+          return redirect()->route('admin.home');
+      }
+      else
+      {
         $id = Auth::user()->teacher_id;
 
         $courses = TeachersCourses::where('teacher_id', $id)->pluck('course_id');
@@ -188,7 +197,6 @@ class TeachersController extends Controller
         whereIn('course_id', $courses)
             ->where('end_time', '>', date('Y/m/d'))
             ->first();
-
 
 
         $classesActive = Classes::
@@ -218,17 +226,78 @@ class TeachersController extends Controller
             'classesThisWeek' => $classesWeek,
             'classesActive' => $classesActive,
             'next' => $firstClass,
-            
+
+        ]);
+      }
+    }
+
+
+    public function classes()
+    {
+      $id = Auth::user()->teacher_id;
+
+        $courses = TeachersCourses::where('teacher_id', $id)->pluck('course_id');
+
+        $firstClass = Classes::
+        whereIn('course_id', $courses)
+            ->where('end_time', '>', date('Y/m/d'))
+            ->first();
+
+
+        $classesActive = Classes::
+        whereIn('course_id', $courses)
+            ->where('active', 1)
+            ->where('archive', 0)
+            ->orderBy('start_time')
+            ->get();
+
+        $classesToday = Classes::
+        whereIn('course_id', $courses)
+            ->where('archive', 0)
+            ->where('end_time', '>', date('Y/m/d'))
+            ->where('end_time', '<', date("Y-m-d", strtotime("+1 day")))
+            ->orderBy('start_time')
+            ->get();
+
+        $classesWeek = Classes::
+        whereIn('course_id', $courses)
+            ->where('archive', 0)
+            ->where('start_time', '>', date("Y-m-d", strtotime("+1 day")))
+            ->where('end_time', '<', date("Y-m-d", strtotime("+1 Week")))
+            ->orderBy('start_time')
+            ->get();
+
+
+        return view('user.index', [
+            'classesToday' => $classesToday,
+            'classesThisWeek' => $classesWeek,
+            'classesActive' => $classesActive,
+            'next' => $firstClass,
+
         ]);
     }
 
     public function CoursesOverview($slug)
     {
-        $course = Courses::where('slug',$slug)->first();
-        $countClasses = Classes::where('course_id',$course->id)->count();
-        $students = StudentsCourses::where('course_id',$course->id)->get();
+        $course = Courses::where('slug', $slug)->first();
+        $classes = Classes::where('course_id',$course->id)->pluck('id');
+        $countClasses = Classes::where('course_id', $course->id)->count();
+        $students = StudentsCourses::where('course_id', $course->id)->get();
+        $aS = StudentsCourses::where('course_id', $course->id)->count();
 
-        return view('user.statistics',['total'=>$countClasses,'students'=>$students,'course'=>$course]) ;
+
+        //aantal klassen maal studenten = totaal aantal gescande studenten
+
+        $scanned = Presences::whereIn('class_id', $classes)->count();
+        $notScanned = $aS - $scanned;
+
+        return view('user.statistics',
+            ['total' => $countClasses,
+                'students' => $students,
+                'course' => $course,
+                'scanned'=>$scanned,
+                'notScanned' => $notScanned,
+                'totalS' => $aS]);
     }
 
 

@@ -83,6 +83,14 @@
                   <input type="checkbox" id="repeat2" name="repeat2" class="checkbox" >
                   <label>Periode 2</label>
                 </div>
+                <div class="vertical-align-center">
+                  <input type="checkbox" id="repeat3" name="repeat3" class="checkbox" >
+                  <label>Periode 3</label>
+                </div>
+                <div class="vertical-align-center">
+                  <input type="checkbox" id="repeat4" name="repeat4" class="checkbox" >
+                  <label>Periode 4</label>
+                </div>
             </div>
             {{ Form::submit('Save class',array('class' => 'btn btn-success col-md-2 mt-5')) }}
 
