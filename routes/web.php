@@ -12,7 +12,6 @@ Route::get('/wireframe3', function () {
     return view('wireframe3 ');
 });
 
-
 Route::get('/', 'TeachersController@classes')->middleware('auth')->name('user.index');
 Route::get('/mijn-lessen', 'ClassesController@classesPerTeacher')->middleware('auth')->name('user.list');
 Route::get('/statistieken/{slug}', 'TeachersController@CoursesOverview')->name('user.statistics');
@@ -30,9 +29,12 @@ Route::get('/manueel-aanwezig/{class}/{student}', 'ClassesController@manual')->n
 Route::get('/manueel-verwijderen/{class}/{student}', 'ClassesController@manualDelete')->name('user.manual');
 Route::get('/manueel-ziek/{class}/{student}', 'ClassesController@manualIll')->name('user.manual');
 Route::get('/les-stoppen/{class}', 'ClassesController@stop')->name('user.class.stop');
-
 Route::post('/start-class', 'ClassesController@start')->middleware('auth')->name('user.start-course');
+
+
 Route::post('/new-presence','PresencesController@store');
+
+
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index')->name('admin.home');

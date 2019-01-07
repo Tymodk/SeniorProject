@@ -41,10 +41,10 @@ class PresencesController extends Controller
             }
             else
             {
-                return response("gelukt");
+                return response("niet gelukt");
             }
         }catch(ModelNotFoundException $e){
-            return response("gelukt");
+            return response("Niet gelukt");
         }
 
 
