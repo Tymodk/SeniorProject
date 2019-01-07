@@ -68,8 +68,11 @@
                                 - {{ date("H:i", strtotime($class->end_time)) }}</td>
                             <td>{{ $class->course->name }}</td>
                             @if($class->active == 1)
-                                <a href="{!! route('user.overview') !!}" class="btn btn-success active btn-block ">Bekijk
+                                <td>
+                                    <a href="{!! route('user.overview') !!}" class="btn btn-success active btn-block ">Bekijk
                                     resultaten</a>
+
+                                </td>
                             @else
                                 <td>
                                     <form action="{!! route('user.start-course') !!}" method="post">

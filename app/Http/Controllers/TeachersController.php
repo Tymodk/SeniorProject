@@ -179,7 +179,7 @@ class TeachersController extends Controller
     }
 
 
-    public function classes()
+    public function login()
     {
       $admin = Auth::check() && Auth::user()->isAdmin();
 
@@ -229,6 +229,52 @@ class TeachersController extends Controller
 
         ]);
       }
+    }
+
+
+    public function classes()
+    {
+      $id = Auth::user()->teacher_id;
+
+        $courses = TeachersCourses::where('teacher_id', $id)->pluck('course_id');
+
+        $firstClass = Classes::
+        whereIn('course_id', $courses)
+            ->where('end_time', '>', date('Y/m/d'))
+            ->first();
+
+
+        $classesActive = Classes::
+        whereIn('course_id', $courses)
+            ->where('active', 1)
+            ->where('archive', 0)
+            ->orderBy('start_time')
+            ->get();
+
+        $classesToday = Classes::
+        whereIn('course_id', $courses)
+            ->where('archive', 0)
+            ->where('end_time', '>', date('Y/m/d'))
+            ->where('end_time', '<', date("Y-m-d", strtotime("+1 day")))
+            ->orderBy('start_time')
+            ->get();
+
+        $classesWeek = Classes::
+        whereIn('course_id', $courses)
+            ->where('archive', 0)
+            ->where('start_time', '>', date("Y-m-d", strtotime("+1 day")))
+            ->where('end_time', '<', date("Y-m-d", strtotime("+1 Week")))
+            ->orderBy('start_time')
+            ->get();
+
+
+        return view('user.index', [
+            'classesToday' => $classesToday,
+            'classesThisWeek' => $classesWeek,
+            'classesActive' => $classesActive,
+            'next' => $firstClass,
+
+        ]);
     }
 
     public function CoursesOverview($slug)

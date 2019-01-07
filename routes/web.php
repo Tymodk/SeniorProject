@@ -13,8 +13,8 @@ Route::get('/wireframe3', function () {
 });
 
 
-Route::get('/home', 'TeachersController@classes')->middleware(['auth'])->name('user.index');
-Route::get('/', 'TeachersController@classes')->middleware('auth')->name('user.index');
+Route::get('/home', 'TeachersController@classes')->middleware(['auth'])->name('user.home');
+Route::get('/', 'TeachersController@login')->middleware('auth')->name('user.index');
 
 
 Route::get('/mijn-lessen', 'ClassesController@classesPerTeacher')->middleware('auth')->name('user.list');

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mt-3">
-        <a href="{!! route('user.index') !!}">Terug gaan</a>
+        <a href="{!! route('user.home') !!}">Terug gaan</a>
     </div>
     <div class="container mt-3">
         <div class="row">
