@@ -17,8 +17,9 @@ class PresencesController extends Controller
 
     public function store(Request $request)
     {
-        $studentCardID = Input::get('arduino_id');
         try{
+        $studentCardID = Input::get('arduino_id');
+
             $student = Students::where('card_id',$studentCardID)->first();
             $followedCourses = StudentsCourses::where('student_id', $student->id)->pluck('course_id');
             $classActive = Classes::whereIn('course_id', $followedCourses)->where('active', 1)->first();
