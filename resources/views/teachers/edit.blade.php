@@ -30,7 +30,7 @@
     </div>
    
 
-    {{ Form::submit('Save', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Save', array('class' => 'kdg btn btn-primary')) }}
 
 {{ Form::close() }}
 

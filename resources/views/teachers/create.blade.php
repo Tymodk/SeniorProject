@@ -31,7 +31,7 @@
     </div>
    
 
-    {{ Form::submit('Submit', array('class' => 'btn btn-success')) }}
+    {{ Form::submit('Submit', array('class' => 'kdg btn btn-success')) }}
 
 {{ Form::close() }}
 

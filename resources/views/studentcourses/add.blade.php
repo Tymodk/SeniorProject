@@ -3,7 +3,7 @@
 @section('content')
 
 @include('layouts.adminnav',['active' => "students"])
-<div class="contianer mt-5 courses">
+<div class="container mt-5 courses">
     <h2>
         Student:
         <span class="text-info">
@@ -59,10 +59,10 @@
             </label>
         </div>
         @endforeach
-        {{ Form::submit('Submit!', array('class' => 'btn btn-success w-25 d-inline-block')) }}
+        {{ Form::submit('Submit!', array('class' => 'kdg btn btn-success w-25 d-inline-block btninput')) }}
         {{ Form::close() }}
         @endif
-    </div>
+    </diwwwwwwv>
 </div>
 <script>
     $(document).ready(function () {

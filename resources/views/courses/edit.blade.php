@@ -23,7 +23,7 @@
 
     
 
-    {{ Form::submit('Edit the Nerd!', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Edit the Nerd!', array('class' => 'kdg btn btn-primary')) }}
 
 {{ Form::close() }}
 

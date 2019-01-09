@@ -22,7 +22,7 @@
 
     
 
-    {{ Form::submit('Save', array('class' => 'btn btn-success')) }}
+    {{ Form::submit('Save', array('class' => 'kdg btn btn-success')) }}
 
 {{ Form::close() }}
 

@@ -22,7 +22,7 @@
 
    
 
-    {{ Form::submit('Create the Course!', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Create the Course!', array('class' => 'kdg btn btn-primary')) }}
 
 {{ Form::close() }}
 
