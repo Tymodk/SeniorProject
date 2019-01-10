@@ -266,7 +266,11 @@ class ClassesController extends Controller
 
         $teachercourse = TeachersCourses::where('teacher_id', Auth::user()->teacherid())->pluck('course_id');
         $class = Classes::where('active', 1)->whereIn('course_id', $teachercourse)->first();
-        $allStudents = StudentsCourses::where('course_id', $class)->get();
+
+
+        $allStudents = StudentsCourses::where('course_id', $class->course_id)->get();
+
+
         return view('user.overview', ['notpresent' => $allStudents, 'class' => $class]);
 
     }
@@ -339,7 +343,9 @@ class ClassesController extends Controller
     {
         $class = Classes::where('id', $classid)->first();
         $presence = Presences::where('class_id', $classid)->where('present', 1)->orWhere('ill', 1)->pluck('student_id');
-        $studentC = Students::whereNotIn('id', $presence)->get();
+        $studentsVakWel = StudentsCourses::where('course_id',$class->course_id)->whereNotIn('student_id',$presence)->pluck('student_id');
+        $studentC = Students::whereIn('id', $studentsVakWel)->get();
+
 
         return response()->json($studentC);
 
