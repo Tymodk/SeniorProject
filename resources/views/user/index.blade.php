@@ -7,11 +7,10 @@
     <div class="container-fluid justify-content-center text-center mt-5">
         <div class="row">
             <div class="col-md-4">
-                <h2 class="text-center pt-3">Welkom {{Auth::user()->name}}!</h2>
+                <h2 class="text-center">Welkom {{Auth::user()->name}}!</h2>
             </div>
             <div class="col-md-4">
-                <h2 id="time"></h2>
-                <h2 id="date"></h2>
+                <h3 id="time"></h3>
             </div>
             <div class="col-md-4">
                 @if(isset($next))
@@ -125,16 +124,26 @@
 @endsection
 @push('scripts')
     <script type="text/javascript">
-        $(document).ready()
-        var time = new Date().toLocaleTimeString();
-        var date = new Date().toLocaleDateString();
-        var timer = setInterval(timer, 1000);
-
-
-        function timer() {
-            $('#time').html(time);
-            $('#date').html(date);
-
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
         }
+
+        function startTime() {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            // add a zero in front of numbers<10
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+            t = setTimeout(function() {
+                startTime()
+            }, 500);
+        }
+        startTime();
     </script>
 @endpush
