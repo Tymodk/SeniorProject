@@ -9,10 +9,10 @@
         <h1 class="float-left">
             Teachers
         </h1>
-        <div class="dropdown ml-2 float-left">
+        <div class="dropdown ml-2 float-left pl-2">
             <button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle"
                     data-toggle="dropdown" id="dropdownMenuButton" type="button">
-                Filter
+                Sorteer
             </button>
             <div aria-labelledby="dropdownMenuButton" class="dropdown-menu">
                 <a class="dropdown-item" href="{{ Request::url() . '?filter=name' }}">
@@ -21,12 +21,7 @@
                 <a class="dropdown-item" href="{{ Request::url() . '?filter=email' }}">
                     Email
                 </a>
-                <a class="dropdown-item" href="{{ Request::url() . '?filter=created-first' }}">
-                    Datum aflopend
-                </a>
-                <a class="dropdown-item" href="{{ Request::url() . '?filter=created-last' }}">
-                    Datum oplopend
-                </a>
+
             </div>
         </div>
       </div>
@@ -64,7 +59,7 @@
                         {{ $value->email }}
                     </td>
                     <td>
-                        <a href="{{ route('tc.teacher',['id'=>$value->id])}}" class="btn btn-success ">
+                        <a href="{{ route('tc.teacher',['id'=>$value->id])}}" class="btn btn-success kdg ">
                             show / add
                         </a>
                     </td>

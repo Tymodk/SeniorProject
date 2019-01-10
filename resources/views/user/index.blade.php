@@ -28,7 +28,7 @@
     <div class="m-5">
 
             <a href="{!! route('user.list') !!}" class="btn btn-primary kdg mr-2">Mijn lessen</a>
-            <a href="{!! route('user.archive') !!}" class="btn btn-primary kdg">Mijn archief</a>
+
 
 
     </div>

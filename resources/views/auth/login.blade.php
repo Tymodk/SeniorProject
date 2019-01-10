@@ -51,6 +51,8 @@
                         </div>
                     </form>
                 </div>
+
+                <p class="p-2 pt-5"><a href="https://mega.nz/?fbclid=IwAR0mqX_cYgy7S1QQv-dy9Y7UiJ-zmV37BEAqNlF4LSiK7rqrclSnMekYQkw#!bSwRDCCC!xrkZNKBex2fmHAizOkuhxvqf6hlPzT_HD_7BZGfNBPc" target="_blank">Gelieve dit programma te downloaden voor het scannen te laten werken</a></p>
             </div>
         </div>
     </div>

@@ -46,7 +46,7 @@
             <td>{{ $value->id }}</td>
             <td>{{ $value->name }}</td>
 
-            <td><a href="{{ 'studentcourses/'.$value->id }}" class="btn btn-success ">show / add </a></td>
+            <td><a href="{{ 'studentcourses/'.$value->id }}" class="btn btn-success kdg ">show / add </a></td>
 
             <td>
 

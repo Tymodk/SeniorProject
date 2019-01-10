@@ -2,7 +2,7 @@
  
 
 	
-        <a class="btn btn-success" href="{{ URL::to('/admin/teachers') }}">View all</a>
-        <a class="btn btn-success" href="{{ URL::to('/admin/teachers/create') }}">Create teacher</a>
+        <a class="btn btn-success kdg" href="{{ URL::to('/admin/teachers') }}">View all</a>
+        <a class="btn btn-success kdg" href="{{ URL::to('/admin/teachers/create') }}">Create teacher</a>
     
     </div>

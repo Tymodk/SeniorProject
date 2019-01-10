@@ -3,23 +3,23 @@
 <div class="container">
     <h1 class="mt-5 mb-5 text-dark">ADMIN PANEL</h1>
 	<h2>Crud links</h2>
-    <a class="btn btn-outline-primary" href="/admin/teachers">
+    <a class="btn btn-outline-primary kdg" href="/admin/teachers">
         Teachers <span class="badge badge-light">{{ $info[0] }}</span>
     </a>
-    <a class="btn btn-outline-primary" href="/admin/students">
+    <a class="btn btn-outline-primary kdg" href="/admin/students">
         students <span class="badge badge-light">{{ $info[1] }}</span>
     </a>
-    <a class="btn btn-outline-primary" href="/admin/courses">
+    <a class="btn btn-outline-primary kdg" href="/admin/courses">
         courses <span class="badge badge-light">{{ $info[2] }}</span>
     </a>
 </div>
 
 <div class="container mt-5 mb-5">
     
-    <a class="btn btn-outline-primary" href="/admin/teachercourses">
+    <a class="btn btn-outline-primary kdg" href="/admin/teachercourses">
         Courses with teachers<span class="badge badge-light"></span>
     </a>
-    <a class="btn btn-outline-primary" href="/admin/classes">
+    <a class="btn btn-outline-primary kdg" href="/admin/classes">
         Classes <span class="badge badge-light"></span>
     </a>
 

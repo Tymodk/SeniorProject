@@ -30,7 +30,7 @@
 			
 			<td>{{ $value->name }}</td>
 			<td><a href="{{route('tc.single',['id'=>$value->id])}}">View teachers</a></td>
-			<td><a href="{{ route('tc.add',['id'=>$value->id]) }}" class="btn btn-success">add</a></td>
+			<td><a href="{{ route('tc.add',['id'=>$value->id]) }}" class="btn btn-success kdg">add</a></td>
 			
 		</tr>
 		@endforeach
