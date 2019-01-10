@@ -28,6 +28,7 @@
 
             <a href="{!! route('user.list') !!}" class="btn btn-primary kdg mr-2">Mijn lessen</a>
 
+        {{dd($classesToday)}}
 
 
     </div>

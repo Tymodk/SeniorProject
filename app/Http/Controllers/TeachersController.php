@@ -254,8 +254,8 @@ class TeachersController extends Controller
         $classesToday = Classes::
         whereIn('course_id', $courses)
             ->where('archive', 0)
-            ->where('end_time', '>', date('Y/m/d'))
-            ->where('end_time', '<', date("Y-m-d", strtotime("+1 day")))
+            ->whereDate('end_time', '>', date('Y/m/d'))
+            ->whereDate('end_time', '<', date("Y-m-d", strtotime("+1 day")))
             ->orderBy('start_time')
             ->get();
 
