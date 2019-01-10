@@ -48,7 +48,5 @@ class PresencesController extends Controller
             return response("Niet gelukt");
         }
 
-
-
     }
 }
